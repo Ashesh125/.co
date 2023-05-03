@@ -1,0 +1,43 @@
+[
+    {
+      "action": "move_forward",
+      "key_code": 87,
+      "button_code": 12
+    },
+    {
+      "action": "move_backward",
+      "key_code": 83,
+      "button_code": 13
+    },
+    {
+      "action": "turn_left",
+      "key_code": 65,
+      "button_code": 14
+    },
+    {
+      "action": "turn_right",
+      "key_code": 68,
+      "button_code": 15
+    },
+    {
+      "action": "command",
+      "key_code": 32,
+      "button_code": 0
+    },
+    {
+      "action": "return",
+      "key_code": 1,
+      "button_code": 7
+    },
+    {
+      "action": "inventory",
+      "key_code": 69,
+      "button_code": 1
+    },
+    {
+      "action": "menu",
+      "key_code": 69,
+      "button_code": 1
+    }
+
+  ]
