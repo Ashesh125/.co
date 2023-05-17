@@ -1,28 +1,28 @@
 {
-  "name": "co",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Ashesh125/.co.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Ashesh125/.co/issues"
-  },
-  "homepage": "https://github.com/Ashesh125/.co#readme",
-  "devDependencies": {
-    "animejs": "^3.2.1",
-    "bootstrap": "^5.2.3",
-    "jquery": "^3.7.0",
-    "webpack": "^5.82.1",
-    "webpack-cli": "^5.1.1"
-  }
+    "name": "co",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "webpack"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Ashesh125/.co.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/Ashesh125/.co/issues"
+    },
+    "homepage": "https://github.com/Ashesh125/.co#readme",
+    "devDependencies": {
+        "animejs": "^3.2.1",
+        "bootstrap": "^5.2.3",
+        "jquery": "^3.7.0",
+        "webpack": "^5.82.1",
+        "webpack-cli": "^5.1.1"
+    }
 }
