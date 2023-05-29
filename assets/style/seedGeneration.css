@@ -1,0 +1,42 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Graduate';
+}
+
+body {
+    background-color: #E5E5E5;
+}
+
+div {
+    margin: 8px 0px 8px 0px;
+}
+
+.seed-container {
+    margin-top: 13.4rem;
+    align-items: center;
+    text-align: center;
+}
+
+#seed-input {
+    background-color: #373243;
+}
+
+p {
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 55px;
+    color: #000000;
+}
+
+#start-btn {
+    background-color: #373243;
+    border-radius: 5px;
+    border: 0px;
+}
+
+#random-seed-btn {
+    background-color: #373243;
+    border-radius: 5px;
+    border: 0px;
+}
