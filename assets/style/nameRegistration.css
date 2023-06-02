@@ -1,0 +1,30 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Graduate';
+}
+
+body {
+    background-color: #E5E5E5;
+}
+
+.registration-container {
+    margin-top: 13.4rem;
+    text-align: center;
+}
+
+.title {
+    font-weight: 400;
+    font-size: 36px;
+    line-height: 55px;
+    text-align: center;
+    color: #000000;
+}
+
+#user-name {
+    font-weight: 400;
+    font-size: 36px;
+    line-height: 55px;
+    text-align: center;
+    color: #000000;
+}
