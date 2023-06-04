@@ -1,41 +1,57 @@
-export default class TerrainGenerator {
+import {Maths} from './Maths.js';
+import {Tile,TileType} from './Tile.js';
+let SNOW_LEVEL = 255
+
+export class TerrainGenerator {
     constructor(noiseGenerator) {
         this.noiseGenerator = noiseGenerator
         this.chunk = null
         this.configs = {
             octaves: 9,
             amplitude: 100,
-            persistance: 0.7,
-            smoothness: 250
+            persistance: 1,
+            smoothness: 2
         }
         this.noiseGenerator.setConfigs(this.configs)
     }
 
-    generate(chunk) {
+    generate(chunk,id) {
         this.chunk = chunk
         const heightMap = this.getHeightMap()
+        this.chunk.tiles = heightMap;
         const level = {
-            [PixelType.Water]: 0.1,
-            [PixelType.Sand]: 0.11,
-            [PixelType.Grass]: 0.3,
-            [PixelType.Dirt]: 0.7
+            [TileType.Water]: 0.1,
+            [TileType.Sand]: 0.14,
+            [TileType.Grass]: 0.4,
+            [TileType.Forest]: 0.6,
+            [TileType.Dirt]: 0.7
         }
-        for (var x = 0; x < CHUNK_SIZE; x++) {
-            for (var z = 0; z < CHUNK_SIZE; z++) {
+        console.log(chunk);
+        var b = document.getElementById('chunk-'+id);
+        for (var x = 0; x < 10; x++) {
+            for (var z = 0; z < 10; z++) {
+                var div = document.createElement('div');
+                div.classList.add('tile');
+                div.id = id+'/'+x+','+z;
+                div.innerHTML = id+'/'+x+','+z;
                 var h = heightMap[x][z]
-                if (h < level[PixelType.Water]) {
-                    chunk.setPixel(x, z, PixelType.Water, h / level[PixelType.Water])
-                } else if (h < level[PixelType.Sand]) {
-                    chunk.setPixel(x, z, PixelType.Sand, h / level[PixelType.Sand])
-                } else if (h < level[PixelType.Grass]) {
-                    chunk.setPixel(x, z, PixelType.Grass, h / level[PixelType.Grass])
-                } else if (h < level[PixelType.Dirt]) {
-                    chunk.setPixel(x, z, PixelType.Dirt, h / level[PixelType.Dirt])
+                if (h < level[TileType.Water]) {
+                    div.classList.add('water');
+                } else if (h < level[TileType.Sand]) {
+                    div.classList.add('sand');
+                } else if (h < level[TileType.Grass]) {
+                    div.classList.add('grass');
+                } else if (h < level[TileType.Forest]) {
+                    div.classList.add('forest');
+                } else if (h < level[TileType.Dirt]) {
+                    div.classList.add('dirt');
                 } else {
-                    chunk.setPixel(x, z, PixelType.Snow, h)
+                    div.classList.add('snow');
                 }
+                b.appendChild(div);
             }
         }
+        
     }
 
     getHeightAt(x, z) {
@@ -50,8 +66,8 @@ export default class TerrainGenerator {
         const topRight = this.getHeightAt(xMax, zMax)
         for (var x = xMin; x < xMax; x++) {
             for (var z = zMin; z < zMax; z++) {
-                if (x === CHUNK_SIZE) continue
-                if (z === CHUNK_SIZE) continue
+                if (x === 10) continue
+                if (z === 10) continue
 
                 var h = Maths.smoothInterpolation(bottomLeft, topLeft, bottomRight, topRight, xMin, xMax, zMin, zMax, x, z)
                 if (!heights[x]) {
@@ -64,7 +80,7 @@ export default class TerrainGenerator {
 
     getHeightMap() {
         const part = 2
-        const PART_SIZE = CHUNK_SIZE / part
+        const PART_SIZE = 10 / part
         var heights = []
         for (var zPart = 0; zPart < part; zPart++) {
             for (var xPart = 0; xPart < part; xPart++) {
@@ -77,7 +93,6 @@ export default class TerrainGenerator {
                 )
             }
         }
-
         return heights
     }
 }

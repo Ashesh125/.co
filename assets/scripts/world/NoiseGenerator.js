@@ -43,7 +43,7 @@ export default class NoiseGenerator{
     }
 
     getNoise(x, z){
-        return this.getNoiseValue(x + z * CHUNK_SIZE)
+        return this.getNoiseValue(x + z *10)
     }
 
     cosineInterpolate(a, b, t){
