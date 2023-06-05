@@ -1,0 +1,6 @@
+{
+    "name": "co",
+    "world": {
+      "CHUNK_SIZE": 10
+    }
+}
