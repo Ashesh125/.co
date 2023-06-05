@@ -1,97 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, ini  tial-scale=1.0">
     <title>Document</title>
     <script src="../scripts/jquery/jquery.min.js"></script>
     <script type="module" src="../scripts/world/Constants.js"></script>
     <script type="module" src="../scripts/world/main.js"></script>
 </head>
+
 <body>
     <div class="container">
         <div class="chunk-row" id="chunk-row-0">
-          <div class="chunk" id="chunk-0"></div>
-          <div class="chunk" id="chunk-1"></div>
-          <div class="chunk" id="chunk-2"></div>
+            <div class="chunk" id="chunk-0"></div>
+            <div class="chunk" id="chunk-1"></div>
+            <div class="chunk" id="chunk-2"></div>
         </div>
         <div class="chunk-row" id="chunk-row-1">
-          <div class="chunk" id="chunk-3"></div>
-          <div class="chunk" id="chunk-4"></div>
-          <div class="chunk" id="chunk-5"></div>
+            <div class="chunk" id="chunk-3"></div>
+            <div class="chunk" id="chunk-4"></div>
+            <div class="chunk" id="chunk-5"></div>
         </div>
         <div class="chunk-row" id="chunk-row-2">
-          <div class="chunk" id="chunk-6"></div>
-          <div class="chunk" id="chunk-7"></div>
-          <div class="chunk" id="chunk-8"></div>
+            <div class="chunk" id="chunk-6"></div>
+            <div class="chunk" id="chunk-7"></div>
+            <div class="chunk" id="chunk-8"></div>
         </div>
-      </div>
+    </div>
     <!-- <script type="module" src="../dist/bundle.js"></script> -->
 </body>
+
 </html>
 <style>
-  body{
-    overflow: hidden;
-  }
-
-  .container {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    padding: 0;
-  }
-
-  .chunk-row {
-    display: flex;
-    justify-content: center;
-    width: 100vw;
-    flex-direction: row;
-  }
-
-  .chunk {
-    height: 600px; 
-    width: 600px;
-    display: flex;
-    flex-wrap: wrap;
-  }
-
-  #chunk-row-0{
-    margin-top: -30vh;
-  }
-
-  .water{
-    background-color: aqua;
-  }
-
-  .grass{
-    background-color: green;
-  }
-
-  .sand{
-    background-color: yellow;
-  }
-
-  .dirt{
-    background-color: gray;
-  }
-
-  .snow{
-    background-color: wheat;
-  }
-
-  .forest{
-    background-color: darkgreen;
-  }
-
-  .tile{
-  width: 60px;  
-  height: 60px; 
-  }
-
-  .player{
-    background-color: red;
-  }
+    body {
+        overflow: hidden;
+    }
+    
+    .container {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        padding: 0;
+    }
+    
+    .chunk-row {
+        display: flex;
+        justify-content: center;
+        width: 1800px;
+        flex-direction: row;
+    }
+    
+    .chunk {
+        height: 600px;
+        width: 600px;
+        display: flex;
+        flex-wrap: wrap;
+    }
+    
+    #chunk-row-0 {
+        margin-top: -42vh;
+    }
+    
+    .water {
+        background-color: aqua;
+        background-image: url('../images/tiles/water.png');
+    }
+    
+    .grass {
+        background-color: green;
+        background-image: url('../images/tiles/grass.png');
+    }
+    
+    .sand {
+        background-color: yellow;
+        background-image: url('../images/tiles/sand.png');
+    }
+    
+    .dirt {
+        background-color: gray;
+        background-image: url('../images/tiles/dirt.png');
+    }
+    
+    .snow {
+        background-image: url('../images/tiles/mountains.png');
+    }
+    
+    .forest {
+        background-color: darkgreen;
+        background-image: url('../images/tiles/tree.png');
+    }
+    
+    .tile {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .player {
+        background-color: red;
+    }
+    
+    @media screen {}
 </style>
