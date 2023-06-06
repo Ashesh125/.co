@@ -8,8 +8,21 @@ export const TileType = {
 }
 
 export class Tile{
-    constructor(){
-        this.type = TileType.Air
+    constructor(c,x,z){
         this.heightMap = 1
+        this.chunk = c;
+        this.position = {x: x,z: z};
+    }
+
+    checkTile(type){
+        return document.getElementById(this.chunk+"/"+this.position.x+","+this.position.z).classList.contains(type); 
+    }
+
+    addClass(classes){
+        document.getElementById(this.chunk+"/"+this.position.x+","+this.position.z).classList.add(classes);
+    }
+
+    getTile(){
+        console.log(document.getElementById(this.chunk+"/"+this.position.x+","+this.position.z));
     }
 }

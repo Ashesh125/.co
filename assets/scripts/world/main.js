@@ -1,17 +1,19 @@
 import NoiseGenerator from './NoiseGenerator.js';
 import {World} from './World.js';
-import {Player} from '../entities/Player.js';
 import {Helper} from '../helpers/Helper.js';
 
 $(document).ready(function(){
-    
-    var counter = 0;
+    const seed =58465 ;
+    var counter = 1;
     let CHUNK_SIZE = 10; 
-    const noiseGenerator = new NoiseGenerator(1221);
+    const noiseGenerator = new NoiseGenerator(seed);
     const world = new World(noiseGenerator);
     world.loadChunks();
 
-    var player = new Player();
-    world.placePlayer(player);
+    world.placePlayer();
 
+    $(document).keydown(function(event) {
+        // console.log("key:"+event.key);
+        world.action(event.key);
+      });
  });

@@ -1,4 +1,4 @@
-let counter = 0;
+let counter = 1;
 
 export class Chunk {
     constructor(position) {
