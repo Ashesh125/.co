@@ -1,3 +1,5 @@
+import {Tile} from '../world/Tile.js';
+
 export class Helper {
     static convertJsonIntoHashMap(json) {
         const hashMap = new Map();
@@ -44,17 +46,18 @@ export class Helper {
         let steps = 1;
         let count = 0;
         
-        let tile = document.getElementById(chunk_id+'/'+x+','+z);
-        if(!this.checkTile(tile,'water')){
-            return {x: this.x , z:this.z};
+        let tile = new Tile(chunk_id,x,z);
+        if(!tile.checkTile('water')){
+            return {x: x , z: z};
         }else{
             while (x !== 0 || z !== 0) {
                 x += directions[directionIndex][0];
                 z += directions[directionIndex][1];
     
-                let tile = document.getElementById(chunk.id+'/'+x+','+z);
+                let tile = new Tile(chunk_id+'/'+x+','+z);
+                console.log(x+","+z);
                 if(!this.checkTile(tile,'water')){
-                    return {x: this.x , z:this.z};
+                    return {x: x , z:z};
                 }
                 count++;
                 if (count === steps) {
@@ -70,8 +73,5 @@ export class Helper {
         return null;
     }
 
-    checkTile(tile,type){
-        return tile.hasClass(type); 
-    }
       
 }

@@ -26,7 +26,7 @@ export class TerrainGenerator {
             [TileType.Forest]: 0.6,
             [TileType.Dirt]: 0.7
         }
-        console.log(chunk);
+        // console.log(chunk);
         var b = document.getElementById('chunk-'+id);
         for (var x = 0; x < 10; x++) {
             for (var z = 0; z < 10; z++) {
