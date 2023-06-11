@@ -11,7 +11,7 @@ export class Helper {
 
     static openFile(event) {
         return new Promise(function(resolve, reject) {
-            const input = event.target;
+            const input = event.target; 
             const reader = new FileReader();
             reader.onload = function() {
                 const text = reader.result;
@@ -54,9 +54,8 @@ export class Helper {
                 x += directions[directionIndex][0];
                 z += directions[directionIndex][1];
     
-                let tile = new Tile(chunk_id+'/'+x+','+z);
-                console.log(x+","+z);
-                if(!this.checkTile(tile,'water')){
+                let tile = new Tile(chunk_id,x,z);
+                if(!tile.checkTile("water")){
                     return {x: x , z:z};
                 }
                 count++;

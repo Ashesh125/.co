@@ -3,7 +3,7 @@ import {World} from './World.js';
 import {Helper} from '../helpers/Helper.js';
 
 $(document).ready(function(){
-    const seed =58465 ;
+    const seed =42131557 ;
     var counter = 1;
     let CHUNK_SIZE = 10; 
     const noiseGenerator = new NoiseGenerator(seed);

@@ -1,4 +1,3 @@
-import { Chunk } from "../world/Chunk.js";
 import { Tile } from "../world/Tile.js";
 
 export class Player{
@@ -8,6 +7,7 @@ export class Player{
         this.x = x;
         this.z = z;
         this.chunk_id = c;
+        this.chunkChanged = false;
         this.tile = new Tile(this.chunk_id, this.x, this.z);
         this.sprite = null;
         this.gold = null;
@@ -66,6 +66,11 @@ export class Player{
             } 
         }
         
+        if(this.chunk_id != next_position.c){
+            this.chunkChanged = true;
+        }else{
+            this.chunkChanged = false;
+        }
         
         //check obstackle    
         if(this.checkWorldObstackle(next_position.c,next_position.x,next_position.z)){
@@ -74,7 +79,6 @@ export class Player{
         }else{   
             this.x = next_position.x;
             this.z = next_position.z;
-            this.chunk_id = next_position.c;
             console.log("new pos:"+this.chunk_id+"/"+this.x+","+this.z)
             return true;
         }
