@@ -1,19 +1,17 @@
-let counter = 1;
-
 export class Chunk {
-    constructor(position) {
+    constructor(position,id) {
         this.tiles = new Array(10 * 10)
         this.isLoaded = false
         this.isBuffered = false
         this.position = position
-        this.id = counter++ ;
+        this.id = id;
     }
 
-    load(generator,id) {
-        if (!this.isLoaded) {
-            generator.generate(this,id)
-            this.isLoaded = true
-        }
+    load(generator) {
+        // if (!this.isLoaded) {
+            generator.generate(this);
+        //     this.isLoaded = true
+        // }
     }
 
     setPixel(x, z, type, heightMap = 1) {
@@ -37,4 +35,5 @@ export class Chunk {
         }
         return false
     }
+
 }
