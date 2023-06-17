@@ -72,7 +72,10 @@ export class World {
 
     action(key){
         if(this.player.inPOI == null){
-            switch(key){
+            if(key === 'I' || key === 'i'){
+            $("#inventory-modal").modal("toggle");
+        }
+        switch(key){
                 case "ArrowRight":
                     if(this.player.move('right')){
                         if(this.player.chunkChanged){

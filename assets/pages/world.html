@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, ini  tial-scale=1.0">
-    <title>Document</title>
+    <title>Document</title>    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Graduate&display=swap');
     </style>
@@ -36,6 +36,21 @@
             <div class="chunk" id="chunk-9"></div>
         </div>
     </div>
+
+    <div class="modal modal-xl" id="inventory-modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+                <div class="inventory-modal-body">
+                        asdasdddddddd
+                        <div>asdasdasd</div>
+                        <div>asdasdasd</div>
+                        <div>asdasdasd</div>
+                   
+                </div>
+            
+          </div>
+        </div>
+      </div>
    
     <div class="modal fade" id="POIModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-xl modal-dialog-centered">
@@ -53,8 +68,32 @@
     <!-- <script type="module" src="../dist/bundle.js"></script> -->
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+
+    <div class="modal modal-xl" id="inventory-modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+                <div class="inventory-modal-body">
+                        asdasdddddddd
+                        <div>asdasdasd</div>
+                        <div>asdasdasd</div>
+                        <div>asdasdasd</div>
+                   
+                </div>
+            
+          </div>
+        </div>
+      </div>
+    <!-- <script type="module" src="../dist/bundle.js"></script> -->
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+
 </html>
 <style>  
+    * {
+        margin: 0px;
+        padding: 0px;
+        font-family: 'Graduate';
+    }
     * {
         margin: 0px;
         padding: 0px;
@@ -93,7 +132,22 @@
         width: 1800px;
         flex-direction: row;
     }
-    
+
+    .modal-body{
+        padding: 0;
+        height: 0px;
+    }
+
+    .inventory-modal-body{
+        height: 80vh;
+        background-image: url("../sprites/inventory/0.png");    
+        background-size: 122% 140%;
+        margin-left: -60px;
+        margin-top: -40px;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
     .chunk {
         height: 600px;
         width: 600px;
