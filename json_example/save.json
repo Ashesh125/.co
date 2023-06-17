@@ -1,0 +1,40 @@
+{
+  "name": "somethign",
+  "gold": 100,
+  "party_members": 3,
+
+  "config": {
+    "seed": 123123123,
+    "created_at": "Date",
+    "last_saved": "date"
+  },
+  "characters": [
+    {
+      "id": 12123123,
+      "name": "naam",
+      "gender": "male",
+      "class": "something",
+      "quote": "tes asd da sd w a",
+      "stats": {
+        "attack": 12,
+        "health": 20,
+        "max_health": 25
+      },
+      "equipped":{
+        "head": "helmet",
+        "body": "chestplate",
+        "weapon": "sword"
+      }
+    },
+    {},
+    {}
+  ],
+  "inventory":[
+    {
+      "id":123123,
+      "name": "portion",
+      "quantity": 12
+    },
+    {}
+  ]
+}

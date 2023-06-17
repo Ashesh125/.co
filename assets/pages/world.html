@@ -6,15 +6,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, ini  tial-scale=1.0">
     <title>Document</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Graduate&display=swap');
+    </style>
     <script src="../scripts/jquery/jquery.min.js"></script>
     <script src="../scripts/animejs/anime.min.js"></script>
     <script type="module" src="../scripts/world/Constants.js"></script>
     <script type="module" src="../scripts/world/main.js"></script>
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </head>
 
 <body>
-    <div class="container">
+
+    <div class="container-main" id="container">
         <div class="chunk-row" id="chunk-row-0">
             <div class="chunk" id="chunk-1"></div>
             <div class="chunk" id="chunk-2"></div>
@@ -31,17 +36,40 @@
             <div class="chunk" id="chunk-9"></div>
         </div>
     </div>
+   
+    <div class="modal fade" id="POIModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content p-5">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">{ TownName }</h5>
+          </div>
+          <div class="modal-body d-flex justify-content-center">
+                <div class="POI-chunk" id="POI-chunk">
+                </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- <script type="module" src="../dist/bundle.js"></script> -->
 </body>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 </html>
 <style>  
+    * {
+        margin: 0px;
+        padding: 0px;
+        font-family: 'Graduate';
+    }
 
     body {
         overflow: hidden;
     }
     
-    .container {
+    .modal-body{
+        height: 700px;
+    }
+
+    .container-main {
         width: 100%;
         display: flex;
         flex-direction: row;
@@ -50,6 +78,15 @@
         padding: 0;
     }
     
+    #POI-chunk{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        padding: 0;
+    }
+
+
     .chunk-row {
         display: flex;
         justify-content: center;
@@ -65,7 +102,7 @@
     }
     
     #chunk-row-0 {
-        margin-top: -42vh;
+        margin-top: -40vh;
     }
     
     .water {
@@ -84,6 +121,10 @@
         background-image: url('../images/tiles/dirt.png');
     }
     
+    .town{
+        background-color: red;
+    }
+
     .snow {
         background-image: url('../images/tiles/mountains.png');
     }
@@ -91,10 +132,20 @@
     .forest {
         background-image: url('../images/tiles/tree.png');
     }
+
+    .manxe{
+        background-image: url("../sprites/player.png");
+        background-position: -50% -50%;
+    }
     
     .tile {
         width: 60px;
         height: 60px;
+        font-size: 12px;
+    }
+
+    .wall{
+        background-color: blueviolet;
     }
   
     .player {
@@ -102,4 +153,11 @@
         z-index: 5;
     }
     
+    .exit{
+        background-color: red;
+    }
+
+    .gate{
+        background-color: yellow;
+    }
 </style>

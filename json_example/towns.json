@@ -1,0 +1,41 @@
+[
+  {
+    "id": 213123,
+    "name": "Asd",
+    "position": {
+      "x": 123123,
+      "y": 123123
+    },
+    "layout":[
+      [],[],[],[],[],[],[],[],[]
+    ],
+    "from" : "another_town_id",
+    "to": "next_town_id"
+  },
+  {
+    "id": 213123,
+    "name": "Asd",
+    "position": {
+      "x": 123123,
+      "y": 123123
+    },
+    "layout":[
+      [],[],[],[],[],[],[],[],[]
+    ],
+    "from" : "another_town_id",
+    "to": "next_town_id"
+  },
+  {
+    "id": 213123,
+    "name": "Asd",
+    "position": {
+      "x": 123123,
+      "y": 123123
+    },
+    "layout":[
+      [],[],[],[],[],[],[],[],[]
+    ],
+    "from" : "another_town_id",
+    "to": "next_town_id"
+  }
+]
