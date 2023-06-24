@@ -21,6 +21,7 @@ export class ChunkManager{
             }
             const element = new Chunk({ x, z }, counter++)
             this.chunks.push({x, z, element})
+            // console.log(element);
         }
         return this.getChunkAt(x, z).element
     }

@@ -1,7 +1,6 @@
 import {Tile} from '../world/Tile.js';
 
-export class Helper {
-    static convertJsonIntoHashMap(json) {
+    function convertJsonIntoHashMap(json) {
         const hashMap = new Map();
         for (const [key, value] of Object.entries(json)) {
             hashMap.set(key, value);
@@ -9,27 +8,25 @@ export class Helper {
         return hashMap;
     }
 
-    static openFile(event) {
+    function openFile(event) {
         return new Promise(function(resolve, reject) {
-            const input = event.target; 
             const reader = new FileReader();
             reader.onload = function() {
                 const text = reader.result;
-                const node = document.getElementById('output');
-                node.innerText = text;
                 console.log(reader.result.substring(0, 200));
                 resolve(text);
             };
             reader.onerror = function() {
                 reject(reader.error);
             }
-            reader.readAsText(input.files[0]);
+            reader.readAsText(filePath);
         });
     };
     
     
-    static readFile(event) {
-        openFile(event)
+    function readFile(path) {
+        const file = new File([filePath], filePath);
+        openFile(file)
             .then(function(result) {
                 console.log("suja");
             })
@@ -38,7 +35,7 @@ export class Helper {
             });
     }
  
-    spiralTraverseGraph(chunk_id) {
+    function spiralTraverseGraph(chunk_id) {
         const directions = [[0, 1], [1, 0], [0, -1], [-1, 0]]; // Right, Down, Left, Up
         let x = 5;
         let z = 5;
@@ -72,5 +69,10 @@ export class Helper {
         return null;
     }
 
+    function getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+      }
       
-}
+export {readFile,spiralTraverseGraph,convertJsonIntoHashMap,getRandomInt}

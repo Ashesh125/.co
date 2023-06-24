@@ -11,29 +11,65 @@ export class Player{
         this.tile = new Tile(this.chunk_id, this.x, this.z);
         this.sprite = null;
         this.gold = null;
+        this.inPOI = null;
     }
 
-    moveInWorld(dir){
+    move(dir){
         switch(dir){
             case 'left':
-                return this.move(0,-1);
+                return this.inPOI == null ? this.moveInWorld(0,-1) : this.moveInPOI(0,-1);
                 break;
 
             case 'right':
-                return this.move(0,1);
+                return this.inPOI == null ? this.moveInWorld(0,1) : this.moveInPOI(0,1);
                 break;
 
             case 'up':
-                return this.move(-1,0);
+                return this.inPOI == null ? this.moveInWorld(-1,0) : this.moveInPOI(-1,0);
                 break;
 
             case 'down':
-                return this.move(1,0);
+                return this.inPOI == null ? this.moveInWorld(1,0) : this.moveInPOI(1,0);
                 break;
         }
     }
 
-    move(x,z){
+    moveInPOI(x,z){
+        let next_position = {x: null,z: null};
+        next_position.x = this.tile.position.x + x;
+        next_position.z = this.tile.position.z + z;
+        
+        console.log("s", this.inPOI.id,next_position.x,next_position.z);
+        if(this.checkObstackle(this.inPOI.id,next_position.x,next_position.z)){
+            console.log('obstackle at:'+this.inPOI.id+"/"+next_position.x+","+next_position.z);
+            return false;
+        }else if(this.checkManxe(this.inPOI.id,next_position.x,next_position.z)){
+            console.log('manxe at:'+this.inPOI.id+"/"+next_position.x+","+next_position.z);
+            return false;
+        }else if(this.checkExit(this.inPOI.id,next_position.x,next_position.z)){
+            this.x = this.inPOI.location.x;
+            this.z = this.inPOI.location.z;
+            this.inPOI = null;
+            this.placeInTile(this.chunk_id,this.x,this.z);
+            $("#POIModal").modal('hide');
+            return false;
+        }else{   
+            this.x = next_position.x;
+            this.z = next_position.z;
+            return true;
+        }
+    }
+
+    placeInTile(c,x,z){
+        $(".tile").removeClass("player");
+        
+        let tile = new Tile(c, x, z);
+        console.log(tile);
+        tile.addClass('player');
+        this.tile = new Tile(c, x, z);    
+    }
+
+    moveInWorld(x,z){
         let next_position = {c: null,x: null,z: null};
         if(z == 0){
             if(this.x == 0 && x == -1){
@@ -54,7 +90,6 @@ export class Player{
                 next_position.x = this.x;
                 next_position.z = 9;
                 next_position.c = this.chunk_id - 1;
-                console.log(next_position);
             }else if(this.z == 9 && z == 1){
                 next_position.x = this.x;
                 next_position.z = 0;
@@ -73,21 +108,32 @@ export class Player{
         }
         
         //check obstackle    
-        if(this.checkWorldObstackle(next_position.c,next_position.x,next_position.z)){
+        if(this.checkObstackle(next_position.c,next_position.x,next_position.z)){
             console.log('obstackle at:'+next_position.c+"/"+next_position.x+","+next_position.z);
             return false;
         }else{   
             this.x = next_position.x;
             this.z = next_position.z;
-            console.log("new pos:"+this.chunk_id+"/"+this.x+","+this.z)
             return true;
         }
     }
 
-    checkWorldObstackle(c,x,z){
+    checkObstackle(c,x,z){
         let tile = new Tile(c,x,z);
         // console.log(tile);
         return tile.checkTile('water');
+    }
+
+    checkManxe(c,x,z){
+        let tile = new Tile(c,x,z);
+        // console.log(tile);
+        return tile.checkTile('manxe');
+    }
+
+    checkExit(c,x,z){
+        let tile = new Tile(c,x,z);
+        // console.log(tile);
+        return tile.checkTile('exit');
     }
 
 }
