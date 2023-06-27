@@ -14,6 +14,13 @@ export class World {
         this.currentPOI = null;
     }
 
+    loadSaveState(save){
+        this.coordinates = {x: save.world.player.position.x, z: save.world.player.position.z};
+        this.player = new Player(null, save.world.player.position.x, save.world.player.position.z);
+        this.loadChunks();
+        this.placePlayer();
+    }
+
     draw(renderer) {
         const chunks = this.chunkManager.chunks
         for (var iChunk in chunks) {

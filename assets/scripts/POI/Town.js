@@ -18,9 +18,9 @@ export class Town{
     initialize(){
         var POI_chunk = document.getElementById("POI-chunk");
         POI_chunk.innerHTML = "";
-
-        if(false){
-            this.readTownData();
+        let visited = checkTownVisited(this.id);
+        if(visited){
+            this.readTownData(visited);
         }else{
             this.layout = this.generateNewTown(parseInt(this.id));
         }
@@ -32,7 +32,22 @@ export class Town{
         $("#POIModal").modal('show');
     }
 
+    readTownData(visited){
+        console.log(visited);
+    }
+
+    checkTownVisited(id){
+        for (let i = 0; i < towns.length; i++) {
+            if (towns[i].id === id) {
+              return towns[i];
+            }
+        }
+        return false;
+    }
+
     generateNewTown(seed){
+
+
         const array = [
             ["X","X","X","X","X","X","X","X","X","X","X"],
             ["X","D",15821,"D","W","D","D","D","D","D","X"],
