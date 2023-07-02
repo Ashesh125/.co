@@ -8,7 +8,7 @@ import {Tile} from '../world/Tile.js';
         return hashMap;
     }
 
-    function openFile(event) {
+    function openFile(file) {
         return new Promise(function(resolve, reject) {
             const reader = new FileReader();
             reader.onload = function() {
@@ -19,21 +19,31 @@ import {Tile} from '../world/Tile.js';
             reader.onerror = function() {
                 reject(reader.error);
             }
-            reader.readAsText(filePath);
+            reader.readAsText(file);
         });
     };
     
     
     function readFile(path) {
-        const file = new File([filePath], filePath);
-        openFile(file)
+        const file = new File([path], path);
+        openFile(file)  
             .then(function(result) {
-                console.log("suja");
+                console.log("result",result);
+                return result;
             })
             .catch(function(error) {
                 console.log(error);
             });
     }
+
+    function readFileContents(path) {
+        return fetch(path)
+          .then(response => response.json())
+          .catch(error => {
+            console.error('Error reading file:', error);
+            return null;
+          });
+      }
  
     function spiralTraverseGraph(chunk_id) {
         const directions = [[0, 1], [1, 0], [0, -1], [-1, 0]]; // Right, Down, Left, Up
@@ -73,6 +83,10 @@ import {Tile} from '../world/Tile.js';
         min = Math.ceil(min);
         max = Math.floor(max);
         return Math.floor(Math.random() * (max - min + 1)) + min;
-      }
+    }
+
+    function generateRandomNumber01() {
+        return parseFloat((Math.random()).toFixed(1));
+    }
       
-export {readFile,spiralTraverseGraph,convertJsonIntoHashMap,getRandomInt}
+export {readFile,spiralTraverseGraph,convertJsonIntoHashMap,getRandomInt,readFileContents,generateRandomNumber01}

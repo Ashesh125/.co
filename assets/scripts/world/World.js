@@ -2,7 +2,8 @@ import {ChunkManager} from './ChunkManager.js';
 import { Tile } from './Tile.js';
 import { Player } from '../entities/Player.js';
 import { Town } from '../POI/Town.js';
-import { spiralTraverseGraph } from '../helpers/Helper.js';
+import { spiralTraverseGraph,generateRandomNumber01 } from '../helpers/Helper.js';
+
 
 export class World {
     constructor(noiseGenerator) {
@@ -12,6 +13,13 @@ export class World {
         this.coordinates = {x: 50000,z: 50000};
         this.player = new Player(null,5,5);
         this.currentPOI = null;
+    }
+
+    loadSaveState(save){
+        this.coordinates = {x: save.world.player.position.x, z: save.world.player.position.z};
+        this.player = new Player(null, save.world.player.position.x, save.world.player.position.z);
+        this.loadChunks();
+        this.placePlayer();
     }
 
     draw(renderer) {
@@ -61,16 +69,18 @@ export class World {
         } 
         if(this.player.tile.checkTile('town')){
             this.enterPOI(this.player.tile.getPOI());
-        }
-        
+        }        
     }
 
     enterPOI(POI){
         const parts = POI.split("-");
-        this.currentPOI = new Town(parts[1],this.player);
+        this.currentPOI = new Town(parts[1],this.player,this.coordinates);
     }
 
     action(key){
+        if(key == "Escape"){
+            $('#menuModal').modal('toggle');   
+        }else
         if(this.player.inPOI == null){
             switch(key){
                 case "ArrowRight":
@@ -81,6 +91,7 @@ export class World {
                         }
                         
                         this.placePlayer();
+                        this.checkEncounter();
                     }
                     break;
     
@@ -91,7 +102,7 @@ export class World {
                             this.loadChunks();
                         }
                         
-                        this.placePlayer();
+                        this.placePlayer();this.checkEncounter();
                     }
                     break;
     
@@ -102,7 +113,7 @@ export class World {
                             this.loadChunks();
                         }
                         
-                        this.placePlayer();
+                        this.placePlayer();this.checkEncounter();
                     }
                     break;
     
@@ -112,7 +123,7 @@ export class World {
                             this.coordinates = this.chunkManager.moveChunks(this.coordinates,'down');
                             this.loadChunks();
                         }
-                        this.placePlayer();
+                        this.placePlayer();this.checkEncounter();
                     }
                     break;
             }
@@ -144,5 +155,13 @@ export class World {
             }
         }
         
+    }
+
+    checkEncounter(){
+        let encounter = this.player.tile.getEncounterChance();  
+        let rng = generateRandomNumber01();
+        if(false && rng <= encounter ){
+            alert("enemy");
+        }
     }
 }

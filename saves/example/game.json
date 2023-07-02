@@ -1,0 +1,26 @@
+{
+    "name": "example",
+    "gold": 100,
+    "party_members": 3,
+  
+    "world": {
+      "seed": 58465,
+      "player": {
+        "position":{
+            "x": 50000,
+            "z": 50000
+        },
+        "tile":{
+            "x":5,
+            "y":5
+        }
+      }
+    },
+
+    "dates" :{
+        "created_at": "date",
+        "last_save": "date",
+        "play_time": "time"
+    }
+
+}

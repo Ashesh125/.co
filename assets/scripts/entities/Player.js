@@ -66,7 +66,6 @@ export class Player{
         let tile = new Tile(c, x, z);
         console.log(tile);
         tile.addClass('player');
-        this.tile = new Tile(c, x, z);    
     }
 
     moveInWorld(x,z){

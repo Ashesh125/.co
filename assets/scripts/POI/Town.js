@@ -1,54 +1,78 @@
 import { Tile } from "../world/Tile.js";
-import { getRandomInt } from "../helpers/Helper.js";
+import { getRandomInt,readFileContents } from "../helpers/Helper.js";
+import { readFile } from "../helpers/Helper.js";
 
 export class Town{
 
-    constructor(id,player){
+    constructor(id,player,coordinates){
         this.id = id;  
-        this.initialize();
         this.name = null;
         this.location = {x: player.x,z: player.z}; 
         this.player = player;
         this.layout;
-        this.generate();
-        this.placePlayerinGate();
+        this.coordinates = coordinates;
+        this.from = null;
+        this.to = null;
+        this.initialize();
     }
 
 
-    initialize(){
+    async initialize(){
         var POI_chunk = document.getElementById("POI-chunk");
         POI_chunk.innerHTML = "";
-
-        if(false){
-            this.readTownData();
+        let visited = this.checkTownVisited(this.id);
+        if(visited){
+            this.readTownData(visited);
         }else{
-            this.layout = this.generateNewTown(parseInt(this.id));
+            this.layout = await this.generateNewTown(parseInt(this.id));
+            this.name = await this.getNewTownName(this.id);
+            this.addNewVisitedTown();
         }
-
 
         POI_chunk.style.height = (this.layout.length * 60 ) + "px";
         POI_chunk.style.width = (this.layout[0].length * 60 ) + "px";
-        $('#POIModal').modal({backdrop: 'static', keyboard: false});  
+        $('#POIModal').modal({backdrop: 'static', keyboard: false}); 
+        $("#POIname").text(this.name); 
         $("#POIModal").modal('show');
+        this.generate();
     }
 
-    generateNewTown(seed){
-        const array = [
-            ["X","X","X","X","X","X","X","X","X","X","X"],
-            ["X","D",15821,"D","W","D","D","D","D","D","X"],
-            ["X","D","D","D","W","D","D","D","D","D","X"],
-            ["X","D","D","D","W","W","D","D","D","D","X"],
-            ["X","D","D","D","W","D","D","D","D","D","X"],
-            ["X","G","D","D","W","D","D",10811,"D","D","X"],
-            ["X","G","W","D","W","D","D","D","D","D","X"],
-            ["X","W","W","D","D","D","D","D","D","D","X"],
-            ["X","W","W","W","W","D","D","D","D","D","X"],
-            ["X","D","W","D","W","W","W","W","W","W","W"],
-            ["X","X","X","X","X","X","X","X","X","X","X"],
-        ];
-
-        return array;
+    async getNewTownName(seed){
+        // let rand = parseInt(Math.abs(seed).toString().slice(1, 3));
+        let rand = getRandomInt(0,99);      
+        let names = await readFileContents("../json/towns.json");
+        
+        return names[rand];
     }
+
+    async generateNewTown(seed){
+        // let rand = parseInt(Math.abs(seed).toString().charAt(0));        
+        let rand = getRandomInt(0,7);  
+        let layouts = await readFileContents("../json/town_layouts.json");
+
+        return layouts[rand].layout;
+    }
+
+    readTownData(visited){
+        console.log(visited);
+    }
+
+    checkTownVisited(id){
+        let towns = JSON.parse(localStorage.getItem('towns'));
+        if(towns.length > 0){
+            for (let i = 0; i < towns.length; i++) {
+                if (towns[i].id === id) {
+                  this.layout = towns[i].layout;
+                  this.name = towns[i].name;
+                  this.coordinates = towns[i].coordinates;
+                  return true;
+                }
+            }
+        }
+        
+        return false;
+    }
+
 
     generateRandomNumber(seed) {
         const x = Math.sin(seed) * 10000;
@@ -69,6 +93,8 @@ export class Town{
                 b.appendChild(div);   
             }
         }
+
+        this.placePlayerinGate();
     }
 
     getTileType(value){
@@ -135,5 +161,26 @@ export class Town{
             }
           }
         }
+      }
+
+      addNewVisitedTown(){
+        const existingTowns = JSON.parse(localStorage.getItem('towns'));
+        const newTown = this.createTownObject();
+        existingTowns.push(newTown);
+        localStorage.setItem('towns', JSON.stringify(existingTowns));
+      }
+
+      createTownObject(){
+         return {
+            "id": this.id,
+            "name": this.name,
+            "coordinates": {
+              "x": this.coordinates.x,
+              "z": this.coordinates.z
+            },
+            "layout": this.layout,
+            "from" : 0,
+            "to": 0
+         }   
       }
 }
