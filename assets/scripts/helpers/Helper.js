@@ -83,8 +83,10 @@ import {Tile} from '../world/Tile.js';
         min = Math.ceil(min);
         max = Math.floor(max);
         return Math.floor(Math.random() * (max - min + 1)) + min;
-      }
+    }
 
-
+    function generateRandomNumber01() {
+        return parseFloat((Math.random()).toFixed(1));
+    }
       
-export {readFile,spiralTraverseGraph,convertJsonIntoHashMap,getRandomInt,readFileContents}
+export {readFile,spiralTraverseGraph,convertJsonIntoHashMap,getRandomInt,readFileContents,generateRandomNumber01}

@@ -1,6 +1,7 @@
 import NoiseGenerator from './NoiseGenerator.js';
 import {World} from './World.js';
 import { readFileContents } from '../helpers/Helper.js';
+import { CONSTANTS } from '../constants/Constant.js';
 
 $(document).ready(function(){
     const seed =58465;  
@@ -11,7 +12,11 @@ $(document).ready(function(){
     let loadSave = true;
 
     if(loadSave){
+      
       let save = JSON.parse(localStorage.getItem('save'));
+      if (!localStorage.getItem('towns')) {
+        localStorage.setItem('towns', JSON.stringify([]));
+      }
       const noiseGenerator = new NoiseGenerator(save.world.seed);
       const world = new World(noiseGenerator);
       world.loadSaveState(save);
@@ -20,10 +25,10 @@ $(document).ready(function(){
       // world.placePlayer();
 
 
-    $(document).keydown(function (event) {
-      // console.log("key:"+event.key);
-      world.action(event.key);
-    });
+      $(document).keydown(function (event) {
+        // console.log("key:"+event.key);
+        world.action(event.key);
+      });
     }else{
       let temp = {
         "name": "example",
@@ -66,6 +71,10 @@ $(document).ready(function(){
       //     console.error('Error accessing save file:', error);
       //   }
       // }
+
+      $('#save-button').on('click',function(){
+        alert("Asd");
+      });
  });
 
  

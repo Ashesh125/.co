@@ -1,11 +1,12 @@
 const TileType = {
     Air: { value: 0, danger: 0 },
-    Grass: { value: 1, danger: 0.5 },
+    Grass: { value: 1, danger: 0.3 },
     Water: { value: 2, danger: 0 },
-    Sand: { value: 3, danger: 0.4 },
-    Dirt: { value: 4, danger: 0.5 },
+    Sand: { value: 3, danger: 0.2 },
+    Port : { value: 3.1, danger: 0 },
+    Dirt: { value: 4, danger: 0.4 },
     Snow: { value: 5, danger: 0.3 },
-    Forest: { value: 6, danger: 0.6 },
+    Forest: { value: 6, danger: 0.5 },
     Town: { value: 7, danger: 0 }
   };
 
@@ -39,6 +40,13 @@ class Tile{
         }
     }
 
+    getEncounterChance() {
+        const list = document.getElementById(this.chunk + "/" + this.position.x + "," + this.position.z).classList;
+        let name = list[1];
+        const type = name.charAt(0).toUpperCase() + name.slice(1);
+        
+        return TileType[type] ? TileType[type].danger : 0 ;
+      }
 }
 
 export {TileType, Tile};

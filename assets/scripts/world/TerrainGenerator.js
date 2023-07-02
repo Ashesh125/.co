@@ -25,6 +25,7 @@ export class TerrainGenerator {
         const level = {
             [TileType.Water.value]: 0.1,
             [TileType.Sand.value]: 0.15,
+            [TileType.Port.value]: 0.16,
             [TileType.Grass.value]: 0.4,
             [TileType.Forest.value]: 0.6,
             [TileType.Dirt.value]: 0.7,
@@ -44,6 +45,9 @@ export class TerrainGenerator {
                     div.classList.add('water');
                 } else if (h < level[TileType.Sand.value]) {
                     div.classList.add('sand');
+                }  else if (h.toFixed(4) == level[TileType.Port.value]) {
+                    div.classList.add('town');
+                    div.classList.add('town-'+ (h.toFixed(5)*100000));
                 } else if (h < level[TileType.Grass.value]) {
                     div.classList.add('grass');
                 } else if ((h.toFixed(4)) == level[TileType.Town.value]) {
