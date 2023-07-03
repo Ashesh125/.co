@@ -1,15 +1,20 @@
-import { CharacterData } from "./CharacterData.js";
+import { Character } from "./Character.js";
 
 $(document).ready(function() {
-    const characterdata = new CharacterData();
-
-    // addGender();
-    // addclassGroup();
-    // getCharacterData("characters");
+    const character = new Character();
     $('[data-toggle="tooltip"]').tooltip();
 
     $("#party-name-btn").click(() => {
 
-        characterdata.addcharacterData();
+        character.addcharacterData();
+    });
+    $('.random-stats').on("click", function() {
+        var id = $(this).attr("id").split("-")[1];
+
+
+        const newChar = character.newCharacter();
+        newChar.then((result) => {
+            character.assignCharacter(id, result);
+        });
     });
 });
