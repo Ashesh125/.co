@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, ini  tial-scale=1.0">
-    <title>Document</title>
+    <title id="title-main"></title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Graduate&display=swap');
     </style>
@@ -38,30 +38,64 @@
     </div>
 
     <div class="modal fade" id="POIModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl modal-dialog-centered">
-            <div class="modal-content p-5">
-                <div class="modal-header d-flex justify-content-center">
-                    <h3 class="modal-title" id="POIname"></h3>
+      <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content p-5">
+          <div class="modal-header d-flex justify-content-center">
+            <h3 class="modal-title" id="POIname"></h3>
+          </div>
+          <div class="modal-body poi-modal-body d-flex justify-content-center">
+                <div class="POI-chunk" id="POI-chunk">
                 </div>
-                <div class="modal-body d-flex justify-content-center">
-                    <div class="POI-chunk" id="POI-chunk">
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
+      </div>
     </div>
-    <div class="modal fade" id="menuModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="menuModal" tabindex="-1" aria-labelledby="menuModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-sm modal-dialog-centered">
-            <div class="modal-content p-5">
-                <div class="modal-header d-flex justify-content-center">
-                    <h3 class="modal-title" id="name">MENU</h3>
-                </div>
-                <div class="modal-body d-flex flex-column justify-content-center">
-                    <button class="button" id="save-button">Save</button>
-                    <button class="button" id="save-exit-button">Save and Exit</button>
-                    <button class="button" id="exit-button">Exit</button>
-                </div>
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3 class="modal-title" id="name">MENU</h3>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            <div class="modal-body d-flex flex-column justify-content-center ">
+                <button type="button" class="btn btn-primary save-button m-2" id="save-button-menu">Save</button>
+                <button type="button" class="btn btn-primary save-quit-button m-2" id="save-quit-button-menu">Save and Quit</button>
+                <button type="button" class="btn btn-primary quit-button m-2" id="quit-button-menu">Quit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="menuModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3 class="modal-title" id="name">Confirmation</h3>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body d-flex flex-column justify-content-center">
+                Exit without Saving ???
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary exit-button">Exit</button>
+              </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="pop-up" tabindex="-1" aria-labelledby="pop-upModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3 class="modal-title" id="name">ALERT</h3>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body d-flex flex-column justify-content-center" id="pop-up-content">
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div>
+          </div>
         </div>
     </div>
     <!-- <script type="module" src="../dist/bundle.js"></script> -->
@@ -80,7 +114,7 @@
         overflow: hidden;
     }
     
-    .modal-body {
+    .poi-modal-body{
         height: 700px;
     }
     
