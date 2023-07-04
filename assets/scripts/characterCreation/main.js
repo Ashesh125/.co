@@ -1,20 +1,20 @@
+import { Character } from "./Character.js";
+
 $(document).ready(function() {
+    const character = new Character();
     $('[data-toggle="tooltip"]').tooltip();
 
     $("#party-name-btn").click(() => {
-        console.log($(".username"));
-        let usernames = [$('#username-0'), $('#username-1'), $('#username-2')];
-        let party_name = $('#party-name-input').val();
-        usernames.forEach((username, index) => {
-            console.log(username.val());
-            if (username.val().length == 0) {
-                alert(username.attr("id"));
-            }
+
+        character.addcharacterData();
+    });
+    $('.random-stats').on("click", function() {
+        var id = $(this).attr("id").split("-")[1];
+
+
+        const newChar = character.newCharacter();
+        newChar.then((result) => {
+            character.assignCharacter(id, result);
         });
-        if (party_name.length == 0) {
-            alert("tero name khali xa bee");
-        } else {
-            location.href = "seedGeneration.html";
-        }
     });
 });
