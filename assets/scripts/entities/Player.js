@@ -2,11 +2,11 @@ import { Tile } from "../world/Tile.js";
 
 export class Player{
 
-    constructor(c,x,z) {
+    constructor(x,z) {
         //read values
         this.x = x;
         this.z = z;
-        this.chunk_id = c;
+        this.chunk_id = 5;
         this.chunkChanged = false;
         this.tile = new Tile(this.chunk_id, this.x, this.z);
         this.sprite = null;
@@ -113,6 +113,7 @@ export class Player{
         }else{   
             this.x = next_position.x;
             this.z = next_position.z;
+            console.log('new positoin:'+next_position.c+"/"+next_position.x+","+next_position.z);
             return true;
         }
     }

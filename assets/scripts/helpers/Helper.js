@@ -90,13 +90,55 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function generateRandomNumber01() {
-    return parseFloat((Math.random()).toFixed(1));
-}
 
 function generateRandomStat(min, max) {
     var randomNumber = Math.random() * (max - min) + min; // Generate a random number within the specified range
     randomNumber = randomNumber.toFixed(1); // Limit the number to 1 decimal place
     return parseFloat(randomNumber); // Convert the string back to a number
 }
-export { readFile, spiralTraverseGraph, convertJsonIntoHashMap, getRandomInt, readFileContents, generateRandomNumber01, generateRandomStat }
+    function generateRandomNumber01() {
+        return parseFloat((Math.random()).toFixed(1));
+    }
+      
+    function findObjectById(jsonArray, id) {
+        return jsonArray.find(function(obj) {
+          return obj.id === id;
+        });
+    }
+
+    function replaceObjectById(jsonArray, newObject) {
+        const index = jsonArray.findIndex(function(obj) {
+          return obj.id === newObject.id;
+        });
+      
+        if (index !== -1) {
+          jsonArray[index] = newObject;
+        }
+      
+        return jsonArray;
+      }
+
+      function popUp(message){
+        $('#pop-up').modal("toggle");
+        $("#pop-up-content").text(message);
+      }
+
+      function getCurrentDate() {
+        const date = new Date();
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+      }
+
+      function getCurrentDateTime() {
+        const date = new Date();
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        const seconds = String(date.getSeconds()).padStart(2, '0');
+        return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+      }
+export {popUp,readFile,spiralTraverseGraph,convertJsonIntoHashMap,getRandomInt,readFileContents,generateRandomNumber01,findObjectById,replaceObjectById,getCurrentDate,getCurrentDateTime,generateRandomStat }

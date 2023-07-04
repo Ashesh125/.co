@@ -11,13 +11,14 @@ export class World {
         this.renderDistance = 1;
         this.loadDistance = 2;
         this.coordinates = {x: 50000,z: 50000};
-        this.player = new Player(null,5,5);
+        this.player = new Player(5,5);
         this.currentPOI = null;
     }
 
     loadSaveState(save){
         this.coordinates = {x: save.world.player.position.x, z: save.world.player.position.z};
-        this.player = new Player(null, save.world.player.position.x, save.world.player.position.z);
+        this.player.x = save.world.player.tile.x;
+        this.player.z = save.world.player.tile.z;
         this.loadChunks();
         this.placePlayer();
     }
@@ -78,9 +79,17 @@ export class World {
     }
 
     action(key){
-        if(key == "Escape"){
-            $('#menuModal').modal('toggle');   
-        }else
+        switch(key){
+            case "Escape":
+                $('#menuModal').modal('toggle');
+                break;
+                
+            case "Delete":
+                localStorage.clear();
+                break;
+                            
+        }
+
         if(this.player.inPOI == null){
             switch(key){
                 case "ArrowRight":
