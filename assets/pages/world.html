@@ -36,66 +36,165 @@
             <div class="chunk" id="chunk-9"></div>
         </div>
     </div>
-
-    <div class="modal fade" id="POIModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-xl modal-dialog-centered">
-        <div class="modal-content p-5">
-          <div class="modal-header d-flex justify-content-center">
-            <h3 class="modal-title" id="POIname"></h3>
-          </div>
-          <div class="modal-body poi-modal-body d-flex justify-content-center">
-                <div class="POI-chunk" id="POI-chunk">
+    <div class="modal fade" id="inventory-modal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content text-center">
+                <div class="modal-header text-center ">
+                    <h3 class="modal-title text-center" style="margin:auto;" id="name">MENU</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-          </div>
+                <div class="inventory-modal-body d-flex flex-wrap">
+                    <div class="inventory-content" style="border:1px solid black;">
+                        <div class="inventory-title text-center ">
+                            suja maharjan
+                        </div>
+                        <div class="inventory-left-holder d-flex">
+                            <div class="inventory-info">
+
+                            </div>
+                            <div class="inventory-info">
+
+                            </div>
+                            <div class="inventory-info">
+
+                            </div>
+                            <div class="inventory-info">
+
+                            </div>
+                        </div>
+                        <div class="inventory-left-holder d-flex">
+                            <div class="inventory-info">
+
+                            </div>
+                            <div class="inventory-info">
+
+                            </div>
+                            <div class="inventory-info">
+
+                            </div>
+                            <div class="inventory-info">
+
+                            </div>
+                        </div>
+                        <div class="inventory-left-holder d-flex">
+                            <div class="inventory-info">
+
+                            </div>
+                            <div class="inventory-info">
+
+                            </div>
+                            <div class="inventory-info">
+
+                            </div>
+                            <div class="inventory-info">
+
+                            </div>
+                        </div>
+                        <div class="inventory-left-holder d-flex">
+                            <div class="inventory-info">
+
+                            </div>
+                            <div class="inventory-info">
+
+                            </div>
+                            <div class="inventory-info">
+
+                            </div>
+                            <div class="inventory-info">
+
+                            </div>
+                        </div>
+                        <div class="inventory-left-holder d-flex">
+                            <div class="inventory-info">
+
+                            </div>
+                            <div class="inventory-info">
+
+                            </div>
+                            <div class="inventory-info">
+
+                            </div>
+                            <div class="inventory-info">
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="inventory-content" style="border:1px solid black;">
+                        <div class="inventory-title text-center">
+                            suja maharjan
+                        </div>
+                        <div class="inventory-right-holder">
+                            <div class="inventory-data">
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
         </div>
-      </div>
+    </div>
+    <div class="modal fade" id="POIModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content p-5">
+                <div class="modal-header d-flex justify-content-center">
+                    <h3 class="modal-title" id="POIname"></h3>
+                </div>
+                <div class="modal-body poi-modal-body d-flex justify-content-center">
+                    <div class="POI-chunk" id="POI-chunk">
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="modal fade" id="menuModal" tabindex="-1" aria-labelledby="menuModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-sm modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h3 class="modal-title" id="name">MENU</h3>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="name">MENU</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body d-flex flex-column justify-content-center ">
+                    <button type="button" class="btn btn-primary save-button m-2" id="save-button-menu">Save</button>
+                    <button type="button" class="btn btn-primary save-quit-button m-2" id="save-quit-button-menu">Save and Quit</button>
+                    <button type="button" class="btn btn-primary quit-button m-2" id="quit-button-menu">Quit</button>
+                </div>
             </div>
-            <div class="modal-body d-flex flex-column justify-content-center ">
-                <button type="button" class="btn btn-primary save-button m-2" id="save-button-menu">Save</button>
-                <button type="button" class="btn btn-primary save-quit-button m-2" id="save-quit-button-menu">Save and Quit</button>
-                <button type="button" class="btn btn-primary quit-button-first m-2" id="quit-button-menu">Quit to Main Menu</button>
-            </div>
-          </div>
         </div>
-      </div>
-      <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="menuModalLabel" aria-hidden="true">
+    </div>
+    <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="menuModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-md modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h3 class="modal-title" id="name">Confirmation</h3>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="name">Confirmation</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body d-flex flex-column justify-content-center">
+                    Exit without Saving ???
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary exit-button">Exit</button>
+                </div>
             </div>
-            <div class="modal-body d-flex flex-column justify-content-center">
-                Exit without Saving ???
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary quit-button-second">Quit</button>
-              </div>
-          </div>
         </div>
-      </div>
-      <div class="modal fade" id="pop-up" tabindex="-1" aria-labelledby="pop-upModalLabel" aria-hidden="true">
+    </div>
+    <div class="modal fade" id="pop-up" tabindex="-1" aria-labelledby="pop-upModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-md modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h3 class="modal-title" id="name">ALERT</h3>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="name">ALERT</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body d-flex flex-column justify-content-center" id="pop-up-content">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
             </div>
-            <div class="modal-body d-flex flex-column justify-content-center" id="pop-up-content">
-                
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              </div>
-          </div>
         </div>
     </div>
     <!-- <script type="module" src="../dist/bundle.js"></script> -->
@@ -114,7 +213,7 @@
         overflow: hidden;
     }
     
-    .poi-modal-body{
+    .poi-modal-body {
         height: 700px;
     }
     
@@ -211,5 +310,48 @@
     
     .gate {
         background-color: yellow;
+    }
+    
+    .inventory-modal-body {
+        /* position: fixed; */
+        /* border: 1px solid black; */
+        /* align-items: center; */
+        background: url('../images/menuu.png');
+        background-position: bottom;
+        background-size: cover;
+        background-repeat: no-repeat;
+        /* background-size: 930px 480px; */
+        font-family: 'Graduate';
+        font-size: 24px;
+        text-decoration: underline;
+        line-height: 45px;
+        font-weight: 500;
+    }
+    
+    .inventory-content {
+        flex-basis: 50%;
+    }
+    
+    .inventory-info {
+        width: 80px;
+        height: 80px;
+        background-color: #D9D9D9;
+        border-radius: 5px;
+        margin: 0px 6px 6px 9px;
+    }
+    
+    .inventory-data {
+        width: 50px;
+        height: 50px;
+        background-color: #D9D9D9;
+        border-radius: 5px;
+        margin: 0px 6px 6px 13px;
+    }
+    
+    @media screen and (max-width: 768px) {
+        .inventory-content {
+            flex-basis: 100%;
+            /* Change width to 100% for smaller screens */
+        }
     }
 </style>
