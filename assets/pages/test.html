@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../scripts/jquery/jquery.min.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    $(document).ready(function() {
+        var array = [{
+            "id": "1",
+            "name": "suja mahrjan",
+            "gender": "female",
+            "stats": {
+                "attack": "3.3",
+                "health": "2.3",
+                "crit": "2.3",
+            }
+        }, {
+            "id": "4",
+            "name": "rass mahrjan",
+            "gender": "female",
+            "stats": {
+                "attack": "2.3",
+                "health": "2.3",
+                "crit": "2.3",
+            }
+        }, {
+            "id": "2",
+            "name": "kriti mahrjan",
+            "gender": "female",
+            "stats": {
+                "attack": "1.2",
+                "health": "2.3",
+                "crit": "2.3",
+            }
+        }];
+
+        console.log(sortById(array));
+    });
+
+    function sortById(array) {
+        let arr = array; // Get the array from the class property
+        let length = arr.length;
+        for (let i = 0; i < length; i++) {
+            let j = i - 1;
+            let current = arr[i];
+            while (j > -1 && parseInt(arr[j].stats.attack) > parseInt(current.stats.attack)) {
+                arr[j + 1] = arr[j];
+                j = j - 1;
+            }
+            arr[j + 1] = current;
+        }
+        return arr;
+    }
+</script>
+
+</html>
