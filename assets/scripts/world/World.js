@@ -3,6 +3,7 @@ import { Tile } from './Tile.js';
 import { Player } from '../entities/Player.js';
 import { Town } from '../POI/Town.js';
 import { spiralTraverseGraph, generateRandomNumber01 } from '../helpers/Helper.js';
+import { Book } from './Book.js';
 
 
 export class World {
@@ -90,7 +91,13 @@ export class World {
             case "I":
             case "i":
                 $("#inventory-modal").modal("toggle");
+                const book = new Book();
+                book.getCharacterData();
                 break;
+                // case "c":
+                //     $("#character-profile-modal").modal("toggle");
+                //    
+                //     break;
 
         }
 
@@ -180,4 +187,5 @@ export class World {
             alert("enemy");
         }
     }
+
 }

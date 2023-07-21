@@ -5,12 +5,26 @@ import { CONSTANTS } from '../constants/Constant.js';
 import { Save } from "../save/Save.js";
 
 $(document).ready(function() {
+    $('#profile-body').addClass("d-none");
+    //   };
+    $("#toggle-btn").on('click', function() {
+        if ($("#profile-body").hasClass("d-none")) {
+            $("#inventory-body").addClass("d-none");
+            $('#profile-body').removeClass("d-none");
+            // $("#toggle-btn").text("Inventory");
+        } else {
+            $("#inventory-body").removeClass("d-none");
+            $("#profile-body").addClass("d-none");
+            // $("#toggle-btn").text("Profile");
+        }
+        $(this).text($("#inventory-body").is(":visible") ? "Profile" : "Inventory");
+    });
     // const game = {
-    //   "id" : 2,
-    //   "name": "Test Save 2",
-    //   "gold": 1000,
-    //   "party_members": 5,
-    //   "seed": 514105
+    //     "id": 2,
+    //     "name": "Test Save 2",
+    //     "gold": 1000,
+    //     "party_members": 5,
+    //     "seed": 514105
     // };
     // const game = {
     //     "id" : 1,
@@ -36,6 +50,7 @@ $(document).ready(function() {
         $(document).keydown(function(event) {
             // console.log("key:"+event.key);
             world.action(event.key);
+
         });
 
         $('.save-button').on('click', function() {
@@ -56,11 +71,10 @@ $(document).ready(function() {
         $(".exit-button").on('click', function() {
             window.close();
         });
+
     } else {
 
     }
-
-
 
 
 });
