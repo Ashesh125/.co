@@ -19,17 +19,20 @@
         <div class="col-8 m-auto">
             <div class="title ml2">
                 HERE BEGINS THE ADVENTURE OF
-                <span id="user-name">ENTER YOUR NAME</span>
+                <span id="party-name"></span>
             </div>
         </div>
     </div>
 </body>
 <script>
+    document.getElementById('party-name').innerText = localStorage.getItem('party');
+    localStorage.removeItem("party");
+    localStorage.removeItem("towns");
     var textWrapper = document.querySelector('.ml2');
     textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
 
     anime.timeline({
-            loop: true
+            loop: false
         })
         .add({
             targets: '.ml2 .letter',
@@ -44,7 +47,10 @@
             opacity: 0,
             duration: 1000,
             easing: "easeOutExpo",
-            delay: 1000
+            delay: 1000,
+            complete: function() {
+                window.location.href = 'world.html';
+            }
         });
 </script>
 

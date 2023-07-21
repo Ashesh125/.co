@@ -12,13 +12,16 @@ $(document).ready(function(){
     //   "party_members": 5,
     //   "seed": 514105
     // };
-    const game = {
-        "id" : 1,
-        "name": "Test Save",
-        "gold": 1000,
-        "party_members": 5,
-        "seed": 11223
-      };
+    // const game = {
+    //     "id" : 1,
+    //     "name": "Test Save",
+    //     "gold": 1000,
+    //     "party_members": 5,
+    //     "seed": 11223
+    //   };
+    const game = JSON.parse(localStorage.getItem('gameState'));
+    console.log(game);
+
     let loadSave = true;
 
     if(loadSave){
@@ -43,15 +46,22 @@ $(document).ready(function(){
       $('.save-quit-button').on('click',function(){
         saveObj.saveGame(world);
         popUp("Game has been Saved");
-        window.close();
+        localStorage.removeItem("towns");
+        localStorage.removeItem("characters");
+        localStorage.removeItem("gameState");
+        window.location.href = "./mainpage.html";
       });
 
-      $('.quit-button').on('click',function(){
+      $('.quit-button-first').on('click',function(){
           $("#confirmModal").modal('toggle');
       });
 
-      $(".exit-button").on('click',function(){
-        window.close();
+      $(".quit-button-second").on('click',function(){
+
+        localStorage.removeItem("towns");
+        localStorage.removeItem("characters");
+        localStorage.removeItem("gameState");
+        window.location.href = "./mainpage.html";
       });
     } else {
 

@@ -1,0 +1,55 @@
+[
+    {
+        "id": "00",
+        "name": "Warrior",
+        "stats": {
+            "attack": { "min": 6,"max": 12 },
+            "defence": { "min": 5,"max": 8 },           
+            "crit": { "min": 10,"max": 15 },
+            "speed": { "min": 6,"max": 9 },
+            "health": { "min": 15,"max": 24 },
+            "agility": { "min": 3,"max": 6 },
+            "luck": { "min": 0,"max": 0.8 }
+        }
+    },
+    {
+        "id": "01",
+        "name": "Thief",
+        "stats": {
+            "attack": { "min": 6,"max": 12 },
+            "defence": { "min": 5,"max": 8 },           
+            "crit": { "min": 10,"max": 15 },
+            "speed": { "min": 6,"max": 9 },
+            "health": { "min": 15,"max": 24 },
+            "agility": { "min": 3,"max": 6 },
+            "luck": { "min": 0,"max": 0.8 }
+        }
+    },
+    {
+        "id": "02",
+        "name": "Rogue",
+        "stats": {
+            "attack": { "min": 6,"max": 12 },
+            "defence": { "min": 5,"max": 8 },           
+            "crit": { "min": 10,"max": 15 },
+            "speed": { "min": 6,"max": 9 },
+            "health": { "min": 15,"max": 24 },
+            "agility": { "min": 3,"max": 6 },
+            "luck": { "min": 0,"max": 0.8 }
+        }
+    },
+    {
+        "id": "99",
+        "name": "DEVS",
+        "stats": {
+            "attack": { "min": 98,"max": 99 },
+            "defence": { "min": 98,"max": 99 },           
+            "crit": { "min": 98,"max": 99 },
+            "speed": { "min": 98,"max": 99 },
+            "health": { "min": 98,"max": 99 },
+            "agility": { "min": 98,"max": 99 },
+            "luck": { "min": 0.8,"max": 1 }
+        }
+    }
+    
+]

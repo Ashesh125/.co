@@ -43,3 +43,19 @@ body {
     text-align: center;
     border: 0px;
 }
+
+.load-body{
+    width: 100%;
+    height: 180px;
+    border: 2px solid gray;
+    border-radius: 10px;
+}
+
+.load-body:hover{
+    cursor: pointer;
+    border: 4px solid blue;
+}
+
+.fs-10{
+    font-size: 14px;
+}
