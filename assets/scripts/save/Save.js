@@ -49,7 +49,7 @@ export class Save{
                 "last_save": null,
                 "play_time": null
             },
-            "characters": [],
+            "characters": JSON.parse(localStorage.getItem('characters')),
             "dead_characters":[],
             "towns": [],
         }
@@ -84,7 +84,7 @@ export class Save{
                 "last_save": getCurrentDateTime(),
                 "play_time": "time"
             },
-            "characters": [],
+            "characters": JSON.parse(localStorage.getItem('characters')),
             "dead_characters":[],
             "towns": JSON.parse(localStorage.getItem('towns')),
         }

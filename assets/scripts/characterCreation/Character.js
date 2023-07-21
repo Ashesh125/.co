@@ -1,10 +1,16 @@
-import { getRandomInt, generateRandomStat, readFileContents } from "../helpers/Helper.js";
+import { getRandomInt, getRandomStat, readFileContents, generateRandomNumber01 } from "../helpers/Helper.js";
 
 export class Character {
     constructor() {
-        this.addGender();
-        this.addclassGroup();
+        const classesList = this.getCharacterClasses();
+        this.classes = classesList;
+        classesList.then((classes) => {
+            this.addGender();
+            this.addclassGroup(classes);    
+        });
+        this.characterArr = [];
     }
+
     addGender() {
         const genderdata = ["male", "female"];
         var selects = document.getElementsByClassName('gender');
@@ -20,131 +26,133 @@ export class Character {
         }
     }
 
-    addclassGroup() {
-        const classGroup = ["smthg", "smthg"];
+    addclassGroup(classes) {
         var selects = document.getElementsByClassName('class-name');
-        for (var j = 0; j < selects.length; j++) {
-            var select = selects[j];
-            for (var i = 0; i < classGroup.length; i++) {
-                var optn = classGroup[i];
-                var el = document.createElement("option");
-                el.textContent = optn;
-                el.value = optn;
-                select.appendChild(el);
-            }
-        }
-    }
-
-    addToLocalStorage(dataKey, newData) {
-        // Retrieve existing data from localStorage
-        var existingData = localStorage.getItem(dataKey);
-        var updatedData;
-
-        if (existingData) {
-            // If data exists, parse it from a string to an object
-            updatedData = JSON.parse(existingData);
-
-            // Update the data with the new data
-            updatedData.push(newData);
-        } else {
-            // If no existing data, create a new array with the new data
-            updatedData = [newData];
-        }
-
-        // Store the updated data back in localStorage
-        localStorage.setItem(dataKey, JSON.stringify(updatedData));
-
-        var newupdateddata = JSON.stringify(updatedData);
-
-        var blob = new Blob([newupdateddata], { type: "application/json" });
-
-        // Save the file using FileSaver.js
-        saveAs(blob, "data.json");;
-    }
-    addPartyToLocalStorage(dataKey, newData) {
-        var existingData = localStorage.getItem(dataKey);
-        var updatedData;
-
-        if (existingData) {
-            updatedData = JSON.parse(existingData);
-            updatedData.push(newData);
-        } else {
-            updatedData = [newData];
-        }
-        localStorage.setItem(dataKey, JSON.stringify(updatedData));
-
-        var newupdateddata = JSON.stringify(updatedData);
-
-        var blob = new Blob([newupdateddata], { type: "application/json" });
-
-        // Save the file using FileSaver.js
-        saveAs(blob, "patyinfo.json");;
-    }
-
-    addcharacterData() {
-        var userdata = [];
-        var party = $('#party-name-input').val();
-        for (var i = 0; i < 3; i++) {
-            var username = $('#username-' + i).val();
-            var gender = $('#gender-' + i).val();
-            var classGroup = $('#class-name-' + i).val();
-            var attack = $('#attack-stat-' + i).text();
-            var crit = $('#crit-stat-' + i).text();
-            var defence = $('#defence-stat-' + i).text();
-            var health = $('#health-stat-' + i).text();
-            var agility = $('#agility-stat-' + i).text();
-            var speed = $('#speed-stat-' + i).text();
-            var luck = $('#luck-stat-' + +i).text();
-
-            userdata[i] = {
-                "name": username,
-                "gender": gender,
-                "class": classGroup,
-                "stats": {
-                    "attack": attack,
-                    "crit": crit,
-                    "defence": defence,
-                    "health": health,
-                    "agility": agility,
-                    "speed": speed,
-                    "luck": luck
+            for (var j = 0; j < selects.length; j++) {
+                var select = selects[j];
+                for (var i = 0; i < classes.length; i++) {
+                    var optn = classes[i].name;
+                    var el = document.createElement("option");
+                    el.textContent = optn;
+                    el.value = optn;
+                    select.appendChild(el);
                 }
-
-            };
-        }
-        this.addToLocalStorage("characters", userdata);
-        this.addPartyToLocalStorage("parties", party);
-
+            }
     }
 
-    async newCharacter() {
-        const first_name = await this.getFirstName(123);
-        const last_name = await this.getLastName(123);
+    loadStarters(){
+        let count = 3;
+        let types = [];
+
+        this.classes.then((classes) => { 
+            for(let i =0; i<count; i++){
+                types[i] = classes[getRandomInt(0,classes.length - 1)];
+                let newChar = this.newCharacter(types[i]);
+                newChar.then((data) => {
+                    this.characterArr[i] = data;
+                    this.assignCharacter(i, data);
+                });
+
+        }});
+    }
+
+    loadOne(id,type){
+        this.classes.then((classes) => { 
+            type = classes.filter(item => item.name === type);
+            let newChar = this.newCharacter(type[0]);
+            newChar.then((data) => {
+                this.characterArr[id] = data;
+                this.assignCharacter(id, data); 
+            });
+        });
+    }
+
+    saveCharacterData() {
+        var party = $('#party-name-input').val();
+        if(!party){
+            alert("Assign a Party Name!!!!!!!!!!!");
+        }
+        localStorage.setItem("characters", JSON.stringify(this.characterArr));
+        localStorage.setItem("party", party);
+    }
+
+    async newCharacter(type) {
+        const first_name = await this.getFirstName(13);
+        const last_name = await this.getLastName(13);
+        const saying = await this.getSaying(13);
         var character = {
             "name": first_name + " " + last_name,
+            "saying": saying,
             "stats": {
-                "attack": this.calculateStat("attack", 5, 10),
-                "crit": this.calculateStat("crit", 5, 10),
-                "defence": this.calculateStat("defence", 5, 10),
-                "health": this.calculateStat("health", 5, 10),
-                "agility": this.calculateStat("agility", 5, 10),
-                "speed": this.calculateStat("speed", 5, 10),
-                "luck": this.calculateStat("luck", 5, 10)
+                "attack": this.calculateStat("attack",type),
+                "crit": this.calculateStat("crit", type),
+                "defence": this.calculateStat("defence", type),
+                "health": this.calculateStat("health", type),
+                "agility": this.calculateStat("agility", type),
+                "speed": this.calculateStat("speed", type),
+                "luck": this.calculateStat("luck", type)
             }
-        }
-
+        };
         return character;
+    }
+
+
+
+    calculateStat(statType, classType) {
+        let min,max = 0;
+        switch (statType) {
+            case "attack":
+                min = classType.stats.attack.min;
+                max = classType.stats.attack.max;
+                break;
+                
+            case "crit":
+                min = classType.stats.crit.min;
+                max = classType.stats.crit.max;
+                break;
+                
+            case "defence":
+                min = classType.stats.defence.min;
+                max = classType.stats.defence.max;
+                break;
+                
+            case "health":
+                min = classType.stats.health.min;
+                max = classType.stats.health.max;
+                break;
+                
+            case "agility":
+                min = classType.stats.agility.min;
+                max = classType.stats.agility.max;
+                break;
+                
+            case "speed":
+                min = classType.stats.speed.min;
+                max = classType.stats.speed.max;
+                break;
+                
+            case "luck":
+                min = classType.stats.luck.min;
+                max = classType.stats.luck.max;
+                break;
+
+            default:
+                break;
+        }   
+
+        return getRandomStat(min, max);
     }
 
     assignCharacter(id, character) {
         $('#username-' + id).val(character.name);
+        $("#review-" + id).text(character.saying);
         $('#attack-stat-' + id).text(character.stats.attack);
-        $('#crit-stat-' + id).text(character.stats.attack);
-        $('#defence-stat-' + id).text(character.stats.attack);
-        $('#health-stat-' + id).text(character.stats.attack);
-        $('#agility-stat-' + id).text(character.stats.attack);
-        $('#speed-stat-' + id).text(character.stats.attack);
-        $('#luck-stat-' + id).text(character.stats.attack);
+        $('#crit-stat-' + id).text(character.stats.crit);
+        $('#defence-stat-' + id).text(character.stats.defence);
+        $('#health-stat-' + id).text(character.stats.health);
+        $('#agility-stat-' + id).text(character.stats.agility);
+        $('#speed-stat-' + id).text(character.stats.speed);
+        $('#luck-stat-' + id).text(character.stats.luck);
     }
 
     async getFirstName(seed) {
@@ -162,18 +170,19 @@ export class Character {
 
         return names[rand];
     }
-    calculateStat(type, min, max) {
-        switch (type) {
-            case "attack":
-            case "crit":
-            case "defence":
-            case "health":
-            case "agility":
-            case "speed":
-            case "luck":
-                return generateRandomStat(min, max);
-            default:
-                throw new Error("Invalid type of stat");
-        }
+
+    async getSaying(seed) {
+        // let rand = parseInt(Math.abs(seed).toString().slice(1, 3));
+        let rand = getRandomInt(0, 50);
+        let names = await readFileContents("../json/sayings.json");
+
+        return names[rand];
+    }
+    
+
+    async getCharacterClasses() {
+        let classes = await readFileContents("../json/classes.json");
+
+        return classes;
     }
 }
