@@ -6,7 +6,7 @@ export class Player{
         //read values
         this.x = x;
         this.z = z;
-        this.chunk_id = 5;
+        this.chunk_id = null;
         this.chunkChanged = false;
         this.tile = new Tile(this.chunk_id, this.x, this.z);
         this.sprite = null;

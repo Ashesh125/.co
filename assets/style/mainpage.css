@@ -13,8 +13,8 @@ body {
 }
 
 .logo-img {
-    width: 150px;
-    height: 150px;
+    width: 10vw;
+    height: 20vh;
 }
 
 .card {
@@ -24,13 +24,20 @@ body {
 
 .list-group {
     align-items: center;
-    border: 0px;
+    padding: 10px;
+    margin: 10px;
+    border-image: url("../images/pngwing.com.png");
+    border-image-slice: 10 fill;
+    border-image-width: 20px;
+    border-image-outset: 20px;
+    border-image-repeat: round;
 }
 
 .list-group-item a {
     text-decoration: none;
     color: #FFFFFF;
 }
+
 
 .list-group-item {
     background-color: transparent;
@@ -46,9 +53,12 @@ body {
 
 .load-body{
     width: 100%;
-    height: 180px;
-    border: 2px solid gray;
+    border: 2px solid gray; 
     border-radius: 10px;
+    /* border-image: url("../images/pngwing.com.png");
+    border-image-slice: 5 fill;
+    border-image-width: 1px;
+    border-image-outset: 25px; */
 }
 
 .load-body:hover{

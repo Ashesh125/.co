@@ -60,6 +60,7 @@ export class World {
             this.player.tile = new Tile(this.player.chunk_id, this.player.x, this.player.z);
         } else { // put in center of world
             //check 0,0 is suitable
+            this.player.chunk_id = 5;
             let id = 5;
             let freePosition = spiralTraverseGraph(id);
             let tile = new Tile(id, freePosition.x, freePosition.z);
