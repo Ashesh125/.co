@@ -36,66 +36,324 @@
             <div class="chunk" id="chunk-9"></div>
         </div>
     </div>
-
-    <div class="modal fade" id="POIModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-xl modal-dialog-centered">
-        <div class="modal-content p-5">
-          <div class="modal-header d-flex justify-content-center">
-            <h3 class="modal-title" id="POIname"></h3>
-          </div>
-          <div class="modal-body poi-modal-body d-flex justify-content-center">
-                <div class="POI-chunk" id="POI-chunk">
+    <div class="modal fade" id="inventory-modal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content text-center">
+                <div class="modal-header text-center ">
+                    <h3 class="modal-title text-center" style="margin:auto;" id="name">MENU</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-          </div>
+                <!-- ---------------------inventory content------------- -->
+                <div class="modal-body inventory-modal-body d-flex flex-wrap d-block p-1" id="inventory-body">
+                    <div class="inventory-content" style="border:1px solid black;">
+                        <div class="inventory-title my-5">
+                            suja maharjan
+                        </div>
+                        <div class="inventory-holder">
+                            <div class="inventory-left-holder d-flex">
+                                <div class="inventory-info">
+
+                                </div>
+                                <div class="inventory-info">
+
+                                </div>
+                                <div class="inventory-info">
+
+                                </div>
+                                <div class="inventory-info">
+
+                                </div>
+                            </div>
+                            <div class="inventory-left-holder d-flex">
+                                <div class="inventory-info">
+
+                                </div>
+                                <div class="inventory-info">
+
+                                </div>
+                                <div class="inventory-info">
+
+                                </div>
+                                <div class="inventory-info">
+
+                                </div>
+                            </div>
+                            <div class="inventory-left-holder d-flex">
+                                <div class="inventory-info">
+
+                                </div>
+                                <div class="inventory-info">
+
+                                </div>
+                                <div class="inventory-info">
+
+                                </div>
+                                <div class="inventory-info">
+
+                                </div>
+                            </div>
+                            <div class="inventory-left-holder d-flex">
+                                <div class="inventory-info">
+
+                                </div>
+                                <div class="inventory-info">
+
+                                </div>
+                                <div class="inventory-info">
+
+                                </div>
+                                <div class="inventory-info">
+
+                                </div>
+                            </div>
+                            <div class="inventory-left-holder d-flex">
+                                <div class="inventory-info">
+
+                                </div>
+                                <div class="inventory-info">
+
+                                </div>
+                                <div class="inventory-info">
+
+                                </div>
+                                <div class="inventory-info">
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="inventory-content" style="border:1px solid black;">
+                        <div class="inventory-title mt-5">
+                            suja maharjan
+                        </div>
+                        <div class="inventory-holder">
+                            <div class="inventory-right-holder">
+                                <div class="inventory-data">
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <!-- ---------------------profile content------------ -->
+                <div class="modal-body profile-modal-body d-flex flex-wrap d-none p-1" id="profile-body">
+                    <div class="profile-content" style="border:1px solid black;">
+                        <div class="profile-title my-5">
+                            suja maharjan
+                        </div>
+                        <div class="profile-holder">
+                            <div class="profile-left-holder d-flex" id="profile-detail">
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="profile-content" style="border:1px solid black;">
+                        <div class="profile-title mt-5">
+                            suja maharjan
+                        </div>
+                        <div class="profile-holder " style="border:1px solid black;">
+                            <div class="profile-detail d-flex" id="profile-detail-holder">
+                                <div class="profile-img m-4"></div>
+
+                                <div id="profile-form mt-4">
+                                    <div class="input-group input-group-sm my-2">
+                                        <input type="text" class="form-control character-data" id="username" readonly>
+                                    </div>
+
+                                    <div class="input-group input-group-sm my-2">
+                                        <input type="text" class="form-control character-data" id="gender" readonly>
+                                    </div>
+                                    <div class="input-group input-group-sm my-2">
+                                        <input type="text" class="form-control character-data" id="class-name" readonly>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="stats-holder mb-2">
+                                <div class="text-dark text-start mx-3 form-control-lg">STATS</div>
+                                <div class="bonus-section mx-4 align-items-center">
+                                    <table class="table bonus-table">
+                                        <tr>
+                                            <td>
+                                                <div class="bonus-detail d-flex justify-content-between" id="stats-detail">
+                                                    <div class="bonus-img m-auto" data-toggle="tooltip" data-placement="top" title="Hooray!">
+                                                        <img src="../images/iron_sword.png">
+                                                    </div>
+                                                    <div class="bonus-data m-auto">
+                                                        ATTACK
+                                                    </div>
+                                                    <div class="bonus-rank p-1 bg-white m-auto" id="attack-stat">
+                                                        7.5
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="bonus-detail d-flex justify-content-between ">
+                                                    <div class="bonus-img m-auto">
+                                                        <img src="../images/wooden.png">
+                                                    </div>
+                                                    <div class="bonus-data m-auto">
+                                                        CRIT
+                                                    </div>
+                                                    <div class="bonus-rank p-1 bg-white m-auto" id="crit-stat">
+                                                        7.5
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="bonus-detail d-flex justify-content-between ">
+                                                    <div class="bonus-img m-auto">
+                                                        <img src="../images/defence.png">
+                                                    </div>
+                                                    <div class="bonus-data m-auto">
+                                                        DEFENCE
+                                                    </div>
+                                                    <div class="bonus-rank p-1 bg-white m-auto" id="defence-stat">
+                                                        7.5
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="bonus-detail d-flex justify-content-between ">
+                                                    <div class="bonus-img m-auto">
+                                                        <img src="../images/iron_sword.png">
+                                                    </div>
+                                                    <div class="bonus-data m-auto">
+                                                        AGILITY
+                                                    </div>
+                                                    <div class="bonus-rank p-1 bg-white m-auto" id="agility-stat">
+                                                        7.5
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="bonus-detail d-flex justify-content-between ">
+                                                    <div class="bonus-img m-auto">
+                                                        <img src="../images/speed.png">
+                                                    </div>
+                                                    <div class="bonus-data m-auto">
+                                                        SPEED
+                                                    </div>
+                                                    <div class="bonus-rank p-1 bg-white m-auto" id="speed-stat">
+                                                        7.5
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="bonus-detail d-flex justify-content-between ">
+                                                    <div class="bonus-img m-auto">
+                                                        <img src="../images/iron_sword.png">
+                                                    </div>
+                                                    <div class="bonus-data m-auto">
+                                                        LUCK
+                                                    </div>
+                                                    <div class="bonus-rank p-1 bg-white m-auto" id="luck-stat">
+                                                        7.5
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="bonus-detail d-flex justify-content-between ">
+                                                    <div class="bonus-img m-auto">
+                                                        <img src="../images/health.png">
+                                                    </div>
+                                                    <div class="bonus-data m-auto">
+                                                        HEALTH
+                                                    </div>
+                                                    <div class="bonus-rank p-1 bg-white m-auto" id="health-stat">
+                                                        7.5
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <div>
+                    <button id="toggle-btn" class="m-1">Profile</button>
+                </div>
+            </div>
         </div>
-      </div>
+    </div>
+    <div class="modal fade" id="POIModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content p-5">
+                <div class="modal-header d-flex justify-content-center">
+                    <h3 class="modal-title" id="POIname"></h3>
+                </div>
+                <div class="modal-body poi-modal-body d-flex justify-content-center">
+                    <div class="POI-chunk" id="POI-chunk">
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="modal fade" id="menuModal" tabindex="-1" aria-labelledby="menuModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-sm modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h3 class="modal-title" id="name">MENU</h3>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="name">MENU</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body d-flex flex-column justify-content-center ">
+                    <button type="button" class="btn btn-primary save-button m-2" id="save-button-menu">Save</button>
+                    <button type="button" class="btn btn-primary save-quit-button m-2" id="save-quit-button-menu">Save and Quit</button>
+                    <button type="button" class="btn btn-primary quit-button m-2" id="quit-button-menu">Quit</button>
+                </div>
             </div>
-            <div class="modal-body d-flex flex-column justify-content-center ">
-                <button type="button" class="btn btn-primary save-button m-2" id="save-button-menu">Save</button>
-                <button type="button" class="btn btn-primary save-quit-button m-2" id="save-quit-button-menu">Save and Quit</button>
-                <button type="button" class="btn btn-primary quit-button-first m-2" id="quit-button-menu">Quit to Main Menu</button>
-            </div>
-          </div>
         </div>
-      </div>
-      <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="menuModalLabel" aria-hidden="true">
+    </div>
+    <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="menuModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-md modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h3 class="modal-title" id="name">Confirmation</h3>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="name">Confirmation</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body d-flex flex-column justify-content-center">
+                    Exit without Saving ???
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary exit-button">Exit</button>
+                </div>
             </div>
-            <div class="modal-body d-flex flex-column justify-content-center">
-                Exit without Saving ???
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary quit-button-second">Quit</button>
-              </div>
-          </div>
         </div>
-      </div>
-      <div class="modal fade" id="pop-up" tabindex="-1" aria-labelledby="pop-upModalLabel" aria-hidden="true">
+    </div>
+    <div class="modal fade" id="pop-up" tabindex="-1" aria-labelledby="pop-upModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-md modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h3 class="modal-title" id="name">ALERT</h3>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="name">ALERT</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body d-flex flex-column justify-content-center" id="pop-up-content">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
             </div>
-            <div class="modal-body d-flex flex-column justify-content-center" id="pop-up-content">
-                
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              </div>
-          </div>
         </div>
     </div>
     <!-- <script type="module" src="../dist/bundle.js"></script> -->
@@ -114,7 +372,7 @@
         overflow: hidden;
     }
     
-    .poi-modal-body{
+    .poi-modal-body {
         height: 700px;
     }
     
@@ -211,5 +469,138 @@
     
     .gate {
         background-color: yellow;
+    }
+    
+    .inventory-modal-body {
+        /* position: fixed; */
+        /* border: 1px solid black; */
+        /* align-items: center; */
+        background: url('../images/menuu.png');
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        /* background-size: 930px 480px; */
+        font-family: 'Graduate';
+        font-size: 16px;
+        text-decoration: underline;
+        line-height: 35px;
+        font-weight: 500;
+    }
+    
+    .inventory-content {
+        flex-basis: 50%;
+    }
+    
+    .inventory-info {
+        width: 60px;
+        height: 60px;
+        background-color: #D9D9D9;
+        border-radius: 5px;
+        margin: 0px 6px 6px 9px;
+    }
+    
+    .inventory-data {
+        width: 50px;
+        height: 50px;
+        background-color: #D9D9D9;
+        border-radius: 5px;
+        margin: 0px 6px 6px 13px;
+    }
+    
+    .profile-modal-body {
+        /* position: fixed; */
+        /* border: 1px solid black; */
+        /* align-items: center; */
+        /* background: url('../images/menuu.png'); */
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        /* background-size: 930px 480px; */
+    }
+    
+    .profile-title {
+        font-family: 'Graduate';
+        font-size: 16px;
+        text-decoration: underline;
+        line-height: 35px;
+        font-weight: 500;
+    }
+    
+    .profile-content {
+        flex-basis: 50%;
+    }
+    
+    .profile-info {
+        width: 60px;
+        height: 60px;
+        background-color: #D9D9D9;
+        border-radius: 5px;
+        margin: 0px 6px 6px 9px;
+    }
+    
+    .profile-img {
+        width: 60px;
+        height: 60px;
+        background-color: #D9D9D9;
+        border-radius: 5px;
+    }
+    
+    .character-data {
+        background: #D9D9D9;
+        border-radius: 10px;
+        border: 1px solid #D9D9D9;
+        height: 20px;
+    }
+    
+    .table>:not(caption)>*>* {
+        padding: .5rem .5rem;
+        background-color: var(--bs-table-bg);
+        border-bottom-width: 0px;
+        box-shadow: inset 0 0 0 9999px var(--bs-table-accent-bg)
+    }
+    
+    .bonus-table td {
+        padding: 6px;
+    }
+    
+    .bonus-section {
+        background: #D9D9D9;
+        border-radius: 10px;
+    }
+    
+    .bonus-img img {
+        max-width: 1.6rem;
+    }
+    
+    .bonus-data {
+        font-style: normal;
+        font-weight: 400;
+        font-size: 10px;
+        line-height: 18px;
+        color: #1B1B1B;
+    }
+    
+    .bonus-rank {
+        font-style: normal;
+        font-weight: 400;
+        font-size: 10px;
+        line-height: 18px;
+        color: #000000;
+        border-radius: 5px;
+    }
+    
+    #toggle-btn {
+        background-color: #373243;
+        border-color: #373243;
+        color: #FFFFFF;
+        border-radius: 5px;
+        padding: 5px 6px 5px;
+    }
+    
+    @media screen and (max-width: 768px) {
+        .inventory-content {
+            flex-basis: 100%;
+            /* Change width to 100% for smaller screens */
+        }
     }
 </style>

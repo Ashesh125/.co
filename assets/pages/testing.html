@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../scripts/jquery/jquery.min.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <h3>Import JSON File</h3>
+    <input type="file" id="importFile" accept=".json">
+    <button id="importButton">Import JSON</button>
+
+    <h3>Export JSON File</h3>
+    <button id="exportButton">Export JSON</button>
+
+
+    <script>
+        $(document).ready(function() {
+            $("#importButton").click(function() {
+                var fileInput = $("#importFile")[0];
+
+                // Check if a file was selected
+                if (fileInput.files.length > 0) {
+                    var file = fileInput.files[0];
+                    var reader = new FileReader();
+
+                    reader.onload = function(event) {
+                        var importedData = event.target.result;
+                        jsonData = JSON.parse(importedData);
+
+                        // Handle the imported data as needed
+                        console.log(jsonData);
+                        fileInput.value = '';
+                    };
+
+                    reader.readAsText(file);
+                }
+            });
+            // $(document).on('change', '#importfile', function(event) {
+            //     var reader = new FileReader();
+
+            //     reader.onload = function(event) {
+            //         var jsonObj = JSON.parse(event.target.result);
+            //         console.log(jsonObj);
+            //     }
+
+            //     reader.readAsText(event.target.files[0]);
+            // });
+        });
+    </script>
+
+</body>
+
+</html>
