@@ -35,7 +35,7 @@ $(document).ready(function() {
     //   };
     const game = JSON.parse(localStorage.getItem('gameState'));
     console.log(game);
-
+    $("#gold").val(game.gold);
     let loadSave = true;
 
     if (loadSave) {
@@ -75,6 +75,13 @@ $(document).ready(function() {
     } else {
 
     }
+    // $('.player').append(
+    //   "<img width='60px' height='60px' src='../images/skull.png'>"
+    // );
+    $("#menu-icon-settings").on('click',function(){
+      $('#menuModal').modal('toggle');
+    });
 
+ });
 
-});
+ 

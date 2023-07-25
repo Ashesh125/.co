@@ -47,6 +47,7 @@ export class Character {
         this.classes.then((classes) => { 
             for(let i =0; i<count; i++){
                 types[i] = classes[getRandomInt(0,classes.length - 1)];
+                $("#class-name-"+i).val(types[i].name);
                 let newChar = this.newCharacter(types[i]);
                 newChar.then((data) => {
                     this.characterArr[i] = data;
@@ -71,9 +72,11 @@ export class Character {
         var party = $('#party-name-input').val();
         if(!party){
             alert("Assign a Party Name!!!!!!!!!!!");
+        }else{
+            localStorage.setItem("characters", JSON.stringify(this.characterArr));
+            localStorage.setItem("party", party);  
+            location.href = "./seedGeneration.html";  
         }
-        localStorage.setItem("characters", JSON.stringify(this.characterArr));
-        localStorage.setItem("party", party);
     }
 
     async newCharacter(type) {
