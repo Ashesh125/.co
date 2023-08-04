@@ -2,16 +2,17 @@ import { Tile } from "../world/Tile.js";
 
 export class Player{
 
-    constructor(x,z) {
+    constructor(game,audio) {
         //read values
-        this.x = x;
-        this.z = z;
+        this.x = game.x;
+        this.z = game.z;
         this.chunk_id = null;
         this.chunkChanged = false;
         this.tile = new Tile(this.chunk_id, this.x, this.z);
         this.sprite = null;
-        this.gold = null;
+        this.gold = game.gold;
         this.inPOI = null;
+        this.audio = audio;
     }
 
     move(dir){
@@ -51,6 +52,8 @@ export class Player{
             this.z = this.inPOI.location.z;
             this.inPOI = null;
             this.placeInTile(this.chunk_id,this.x,this.z);
+            this.audio.stop();
+            this.audio.play('world');
             $("#POIModal").modal('hide');
             return false;
         }else{   

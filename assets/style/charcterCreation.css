@@ -122,3 +122,21 @@ body {
     font-size: 12px;
     border-radius: 0.2rem;
 }
+
+.character-img-holder{
+    background-image: url('../sprites/test/loose\ sprites.png');
+    background-size: 600px 600px;
+    animation: play-sprite 1s steps(4) infinite;
+    width: 80px;
+    height: 80px;
+}
+
+
+@keyframes play-sprite {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: -300px 0; /* Adjust the value based on the total width of your sprite (frame width * number of frames) */
+    }
+}

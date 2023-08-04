@@ -3,8 +3,13 @@ import { World } from './World.js';
 import { popUp } from '../helpers/Helper.js';
 import { CONSTANTS } from '../constants/Constant.js';
 import { Save } from "../save/Save.js";
+import { Commands } from '../Commands/Commands.js';
+
 
 $(document).ready(function() {
+
+
+
     $('#profile-body').addClass("d-none");
     //   };
     $("#toggle-btn").on('click', function() {
@@ -47,6 +52,7 @@ $(document).ready(function() {
         const world = new World(noiseGenerator);
         world.loadSaveState(save);
 
+        const command = new Commands(world,saveObj);
         $(document).keydown(function(event) {
             // console.log("key:"+event.key);
             world.action(event.key);
@@ -82,6 +88,10 @@ $(document).ready(function() {
       $('#menuModal').modal('toggle');
     });
 
+    $(document).on('ended', 'audio', function() {
+        this.currentTime = 0;
+        this.world.audio.play();
+      });
  });
 
  

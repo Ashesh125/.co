@@ -138,7 +138,6 @@ export class Town{
         let tile = new Tile(this.id, pos.x, pos.z);
         console.log(this.id);
         tile.addClass('player');
-
         this.player.tile = new Tile(this.id, pos.x, pos.z);
     }
 
@@ -166,6 +165,10 @@ export class Town{
       addNewVisitedTown(){
         const existingTowns = JSON.parse(localStorage.getItem('towns'));
         const newTown = this.createTownObject();
+
+            
+
+
         existingTowns.push(newTown);
         localStorage.setItem('towns', JSON.stringify(existingTowns));
       }
@@ -175,8 +178,8 @@ export class Town{
             "id": this.id,
             "name": this.name,
             "coordinates": {
-              "x": this.coordinates.x,
-              "z": this.coordinates.z
+              "x": parseInt(this.coordinates.x),
+              "z": parseInt(this.coordinates.z)
             },
             "layout": this.layout,
             "from" : 0,

@@ -19,6 +19,8 @@ export class Save{
                 localStorage.setItem('towns',JSON.stringify([]));
             }else{
                 localStorage.setItem('towns',JSON.stringify(this.save.towns));
+                localStorage.setItem('characters',JSON.stringify(this.save.characters));
+                localStorage.setItem('inventory',JSON.stringify(this.save.inventory));
             } 
         }
 
@@ -52,6 +54,17 @@ export class Save{
             "characters": JSON.parse(localStorage.getItem('characters')),
             "dead_characters":[],
             "towns": [],
+            "inventory": [
+                {
+                    "id": 1,
+                    "quantity": 5,
+                },
+                {
+                    "id": 2,
+                    "quantity": 1,
+                }
+
+            ]
         }
     }
     
@@ -87,6 +100,7 @@ export class Save{
             "characters": JSON.parse(localStorage.getItem('characters')),
             "dead_characters":[],
             "towns": JSON.parse(localStorage.getItem('towns')),
+            "inventory": JSON.parse(localStorage.getItem('inventory'))
         }
     }
 
