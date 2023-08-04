@@ -45,14 +45,14 @@ export class Character {
         let types = [];
 
         this.classes.then((classes) => { 
-            for(let i =0; i<count; i++){
-                types[i] = classes[getRandomInt(0,classes.length - 1)];
-                $("#class-name-"+i).val(types[i].name);
-                let newChar = this.newCharacter(types[i]);
-                newChar.then((data) => {
-                    this.characterArr[i] = data;
-                    this.assignCharacter(i, data);
-                });
+                for(let i =0; i<count; i++){
+                    types[i] = classes[getRandomInt(0,classes.length - 1)];
+                    $("#class-name-"+i).val(types[i].name);
+                    let newChar = this.newCharacter(types[i]);
+                    newChar.then((data) => {
+                        this.characterArr[i] = data;
+                        this.assignCharacter(i, data);
+                    });
 
         }});
     }
@@ -85,6 +85,9 @@ export class Character {
         const saying = await this.getSaying(13);
         var character = {
             "name": first_name + " " + last_name,
+            "gender": "male",
+            "sprite": "asd",
+            "class": type.name,
             "saying": saying,
             "stats": {
                 "attack": this.calculateStat("attack",type),
@@ -96,6 +99,7 @@ export class Character {
                 "luck": this.calculateStat("luck", type)
             }
         };
+        
         return character;
     }
 

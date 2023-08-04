@@ -4,22 +4,27 @@ import { Player } from '../entities/Player.js';
 import { Town } from '../POI/Town.js';
 import { spiralTraverseGraph, generateRandomNumber01 } from '../helpers/Helper.js';
 import { Book } from './Book.js';
-
+import { Audio } from '../sound/Audio.js';
+import { Item } from '../Item/Item.js';
 
 export class World {
     constructor(noiseGenerator) {
+        this.audio = new Audio();
         this.chunkManager = new ChunkManager(noiseGenerator);
         this.renderDistance = 1;
         this.loadDistance = 2;
         this.coordinates = { x: 50000, z: 50000 };
-        this.player = new Player(5, 5);
+        this.player = new Player({x:5, z:5},this.audio);
         this.currentPOI = null;
+        this.item = new Item();
     }
 
     loadSaveState(save) {
-        this.coordinates = { x: save.world.player.position.x, z: save.world.player.position.z };
+        this.coordinates = { x: parseInt(save.world.player.position.x), z: parseInt(save.world.player.position.z) };
         this.player.x = save.world.player.tile.x;
         this.player.z = save.world.player.tile.z;
+        this.player.gold = save.gold;
+        this.audio.play('world');
         this.loadChunks();
         this.placePlayer();
     }
@@ -39,19 +44,19 @@ export class World {
         this.chunkManager.loadChunkRow(0, this.coordinates.x, this.coordinates.z);
         this.chunkManager.loadChunkRow(1, this.coordinates.x, this.coordinates.z);
         this.chunkManager.loadChunkRow(2, this.coordinates.x, this.coordinates.z);
-
         isBuffered = this.chunkManager.addToBuffer(this.coordinates.x * 10, this.coordinates.z * 10);
         if (!isBuffered) {
             this.loadDistance++
         }
         if (this.loadDistance > this.renderDistance) {
             this.loadDistance = 2
-        }
+        }            
     }
 
     placePlayer() {
         //remove player from world
-        console.log(this.player);
+        console.log(this.player);        
+        console.log(this.coordinates);
         $(".tile").removeClass("player");
         //if current data doesnt exists
         if (this.player.chunk_id) {
@@ -78,6 +83,7 @@ export class World {
     enterPOI(POI) {
         const parts = POI.split("-");
         this.currentPOI = new Town(parts[1], this.player, this.coordinates);
+        this.audio.play("town");
     }
 
     action(key) {
@@ -93,12 +99,16 @@ export class World {
             case "i":
                 $("#inventory-modal").modal("toggle");
                 const book = new Book();
-                book.getCharacterData();
+                // book.getCharacterData();
                 break;
                 // case "c":
                 //     $("#character-profile-modal").modal("toggle");
                 //    
                 //     break;
+
+            case 'm':
+
+                break;
 
         }
 
@@ -188,5 +198,4 @@ export class World {
             alert("enemy");
         }
     }
-
 }
