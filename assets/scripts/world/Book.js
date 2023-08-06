@@ -25,7 +25,7 @@ export class Book {
                 },
                 () => {
                     // Hide character details on mouseout
-                    $('#character-details').empty();
+                    $('#profile-details').empty();
                 }
             );
         } else {

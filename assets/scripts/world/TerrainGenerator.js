@@ -1,5 +1,5 @@
-import {Maths} from './Maths.js';
-import {Tile,TileType} from './Tile.js';
+import { Maths } from './Maths.js';
+import { Tile, TileType } from './Tile.js';
 import { getRandomInt } from '../helpers/Helper.js';
 
 let SNOW_LEVEL = 255
@@ -20,20 +20,20 @@ export class TerrainGenerator {
     generate(chunk) {
         this.chunk = chunk
         const heightMap = this.getHeightMap()
-        
+
         this.chunk.tiles = heightMap;
         const level = {
-            [TileType.Water.value]: 0.1,
-            [TileType.Sand.value]: 0.15,
-            [TileType.Port.value]: 0.16,
-            [TileType.Grass.value]: 0.4,
-            [TileType.Forest.value]: 0.6,
-            [TileType.Dirt.value]: 0.7,
-            [TileType.Town.value]: 0.4154,
-        }
-        // console.log(chunk); 
-        var b = document.getElementById('chunk-'+chunk.id);
-     
+                [TileType.Water.value]: 0.1,
+                [TileType.Sand.value]: 0.15,
+                [TileType.Port.value]: 0.16,
+                [TileType.Grass.value]: 0.4,
+                [TileType.Forest.value]: 0.6,
+                [TileType.Dirt.value]: 0.7,
+                [TileType.Town.value]: 0.4154,
+            }
+            // console.log(chunk); 
+        var b = document.getElementById('chunk-' + chunk.id);
+
         b.innerHTML = '';
         for (var x = 0; x < 10; x++) {
             for (var z = 0; z < 10; z++) {
@@ -45,14 +45,15 @@ export class TerrainGenerator {
                     div.classList.add('water');
                 } else if (h < level[TileType.Sand.value]) {
                     div.classList.add('sand');
-                }  else if (h.toFixed(4) == level[TileType.Port.value]) {
+                } else if (h.toFixed(4) == level[TileType.Port.value]) {
                     div.classList.add('town');
-                    div.classList.add('town-'+ (h.toFixed(5)*100000));
+                    div.classList.add('town-' + (h.toFixed(5) * 100000));
+
                 } else if (h < level[TileType.Grass.value]) {
                     div.classList.add('grass');
                 } else if ((h.toFixed(4)) == level[TileType.Town.value]) {
                     div.classList.add('town');
-                    div.classList.add('town-'+ (h.toFixed(5)*100000));
+                    div.classList.add('town-' + (h.toFixed(5) * 100000));
                 } else if (h < level[TileType.Forest.value]) {
                     div.classList.add('forest');
                 } else if (h < level[TileType.Dirt.value]) {
@@ -61,11 +62,11 @@ export class TerrainGenerator {
                     div.classList.add('snow');
                 }
 
-                div.id = chunk.id+'/'+x+','+z;
+                div.id = chunk.id + '/' + x + ',' + z;
                 b.appendChild(div);
             }
         }
-        
+
     }
 
     getHeightAt(x, z) {

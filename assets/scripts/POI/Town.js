@@ -172,7 +172,73 @@ export class Town {
 
         existingTowns.push(newTown);
         localStorage.setItem('towns', JSON.stringify(existingTowns));
-        console.log(existingTowns);
+        this.onEnterTown(existingTowns);
+
+
+
+    }
+
+    onEnterTown(existingTowns) {
+
+
+        const calculateDistance = (x1, z1, x2, z2) => {
+            // Distance formula: sqrt((x2 - x1)^2 + (z2 - z1)^2)
+            return Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((z2 - z1), 2));
+        };
+
+        existingTowns.forEach((town, currentIndex) => {
+            let previousMinDistance = Infinity;
+            let previousMinId = null;
+            let nextData = null;
+            let nextMinDistance = Infinity;
+            let nextMinId = null;
+
+            if (currentIndex > 0 && currentIndex < existingTowns.length) {
+                // previousData = existingTowns[currentIndex - 1]; // Data of the previous index
+
+                // Calculate distances between the current town and all the towns with indices less than the current index
+                for (let i = 0; i < currentIndex; i++) {
+                    const townI = existingTowns[i];
+                    const distance = calculateDistance(
+                        townI.coordinates.x * 10 + townI.position.x,
+                        townI.coordinates.z * 10 + townI.position.z,
+                        town.coordinates.x * 10 + town.position.x,
+                        town.coordinates.z * 10 + town.position.z
+                    );
+                    if (distance < previousMinDistance) {
+                        previousMinDistance = distance;
+                        this.from = townI.id;
+                    }
+                }
+            }
+            // Calculate distances between the current town and all the towns with indices greater than the current index
+            if (currentIndex >= 0 && currentIndex < existingTowns.length - 1) {
+                for (let i = currentIndex + 1; i < existingTowns.length; i++) {
+                    const townI = existingTowns[i];
+                    const distance = calculateDistance(
+                        townI.coordinates.x * 10 + townI.position.x,
+                        townI.coordinates.z * 10 + townI.position.z,
+                        town.coordinates.x * 10 + town.position.x,
+                        town.coordinates.z * 10 + town.position.z
+                    );
+                    if (distance < nextMinDistance) {
+                        nextMinDistance = distance;
+                        this.to = townI.id;
+                    }
+
+                }
+            }
+            town.from = this.from;
+            town.to = this.to;
+
+            console.log("town", town);
+            console.log("Current Index:", currentIndex);
+            console.log("Previous Min Distance:", previousMinDistance);
+            console.log("Previous Min ID:", previousMinId);
+            console.log("Next Min Distance:", nextMinDistance);
+            console.log("Next Min ID:", nextMinId);
+        });
+        localStorage.setItem('towns', JSON.stringify(existingTowns));
     }
 
     createTownObject() {
@@ -185,7 +251,9 @@ export class Town {
             },
             "layout": this.layout,
             "from": 0,
-            "to": 0
+            "to": 0,
+            "position": this.location
         }
     }
+
 }

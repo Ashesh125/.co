@@ -119,6 +119,7 @@ export class World {
                         if (this.player.chunkChanged) {
                             this.coordinates = this.chunkManager.moveChunks(this.coordinates, 'right');
                             this.loadChunks();
+
                         }
 
                         this.placePlayer();

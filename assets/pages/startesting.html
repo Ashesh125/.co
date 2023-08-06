@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../scripts/jquery/jquery.min.js"></script>
+    <title>Document</title>
+    <style>
+        #maze {
+            display: grid;
+            grid-template-columns: repeat(10, 60px);
+            /* Adjust based on your maze size */
+            grid-template-rows: repeat(10, 60px);
+            /* Gap between cells */
+            border: 1px solid black;
+        }
+        
+        .town {
+            width: 40px;
+            height: 40px;
+            background-color: white;
+        }
+        
+        .wall {
+            background-color: black;
+        }
+        
+        .start {
+            background-color: green;
+        }
+        
+        .end,
+        .tile-c {
+            background-color: red;
+        }
+        
+        .path {
+            background-color: yellow;
+        }
+        
+        .tile {
+            height: 60px;
+            width: 60px;
+        }
+        
+        .tile-w {
+            background-color: blue;
+        }
+        
+        .tile-s {
+            background-color: brown;
+        }
+        
+        .tile-m {
+            background-color: wheat;
+        }
+        
+        .tile-t {
+            background-color: green;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="maze">
+        <!-- Your 2D grid representation of the towns (div elements for cells) -->
+        <!-- You can add classes 'town' for valid towns and 'wall' for blocked cells -->
+    </div>
+    <script>
+        function findStart(map) {
+            // Find the starting point (first occurrence of "C") in the map
+            for (let i = 0; i < map.length; i++) {
+                for (let j = 0; j < map[i].length; j++) {
+                    if (map[i][j] === "C") {
+                        return {
+                            row: i,
+                            col: j
+                        };
+                    }
+                }
+            }
+            return null; // Return null if no "C" is found in the map
+        }
+
+        function isValidMove(map, row, col) {
+            // Check if the move is valid (within the bounds and not a wall "W" or visited "V")
+            return row >= 0 && row < map.length && col >= 0 && col < map[0].length && map[row][col] !== "W" && map[row][col] !== "V";
+        }
+
+        function generateShortestPath(map) {
+            const start = findStart(map);
+            const end = {
+                row: 9,
+                col: 8
+            }; // The position of the second "C" in the map
+
+            if (!start) {
+                console.log("No 'C' found in the map.");
+                return;
+            }
+
+            // Copy the map to avoid modifying the original
+            const mapCopy = map.map(row => row.slice());
+
+            // Queue for BFS
+            const queue = [];
+            queue.push({...start,
+                path: []
+            });
+
+            while (queue.length > 0) {
+                const {
+                    row,
+                    col,
+                    path
+                } = queue.shift();
+
+                if (row === end.row && col === end.col) {
+                    // Found the end point, mark the path in the copied map
+                    for (const {
+                            row,
+                            col
+                        }
+                        of path) {
+                        mapCopy[row][col] = "k";
+                    }
+                    break;
+                }
+
+                // Check neighboring cells in all four directions
+                const directions = [{
+                        row: -1,
+                        col: 0
+                    }, // Up
+                    {
+                        row: 1,
+                        col: 0
+                    }, // Down
+                    {
+                        row: 0,
+                        col: -1
+                    }, // Left
+                    {
+                        row: 0,
+                        col: 1
+                    }, // Right
+                ];
+
+                for (const dir of directions) {
+                    const newRow = row + dir.row;
+                    const newCol = col + dir.col;
+
+                    if (isValidMove(mapCopy, newRow, newCol)) {
+                        mapCopy[newRow][newCol] = "V"; // Mark the cell as visited
+                        queue.push({
+                            row: newRow,
+                            col: newCol,
+                            path: [...path, {
+                                row,
+                                col
+                            }]
+                        });
+                    }
+                }
+            }
+
+            // Print the modified map with the path
+            for (let i = 0; i < mapCopy.length; i++) {
+                console.log(mapCopy[i].join(" "));
+            }
+
+            return mapCopy;
+        }
+        document.addEventListener("DOMContentLoaded", function() {
+            let map = [
+                ["T", "C", "T", "W", "W", "W", "W", "S", "S", "S"],
+                ["T", "P", "T", "T", "T", "W", "W", "S", "S", "S"],
+                ["T", "T", "T", "T", "T", "W", "W", "W", "S", "S"],
+                ["W", "T", "T", "T", "T", "W", "M", "M", "S", "S"],
+                ["W", "T", "T", "T", "T", "W", "M", "M", "M", "S"],
+                ["W", "T", "T", "T", "T", "W", "M", "M", "S", "S"],
+                ["W", "T", "T", "T", "T", "W", "S", "S", "T", "S"],
+                ["W", "T", "T", "T", "T", "T", "T", "T", "S", "S"],
+                ["S", "S", "S", "S", "S", "S", "T", "T", "T", "S"],
+                ["S", "S", "S", "S", "S", "S", "S", "S", "C", "S"],
+            ];
+
+
+            map = generateShortestPath(map);
+
+
+            for (let i = 0; i < map.length; i++) {
+                for (let j = 0; j < map[i].length; j++) {
+                    const div = document.createElement("div");
+                    const className = `tile tile-${map[i][j].toLowerCase()}`;
+                    div.className = className;
+                    $("#maze").append(div);
+                }
+            }
+
+
+        });
+    </script>
+
+
+
+</body>
+
+
+</html>
