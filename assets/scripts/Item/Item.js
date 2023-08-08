@@ -63,8 +63,7 @@ export class Item {
         });
     }
 
-    getInventory(items) {
-        console.log(items);
+    getInventory(items){
         return items
             .filter(item => this.inventoryStorage.some(inventoryItem => inventoryItem.id === item.id))
             .map(item => {

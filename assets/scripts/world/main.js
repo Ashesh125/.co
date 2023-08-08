@@ -36,10 +36,9 @@ $(document).ready(function() {
     //     "seed": 11223
     //   };
     const game = JSON.parse(localStorage.getItem('gameState'));
-    console.log(game);
-    $("#gold").val(game.gold);
-    let loadSave = true;
 
+    let loadSave = true;
+    console.log(game);
     if (loadSave) {
         $("#title-main").text(game.name + ".co");
         var saveObj = new Save(game);
@@ -48,10 +47,9 @@ $(document).ready(function() {
         const noiseGenerator = new NoiseGenerator(save.world.seed);
         const world = new World(noiseGenerator);
         world.loadSaveState(save);
-
-        const command = new Commands(world, saveObj);
+        $("#gold").val(world.player.gold);
+        const command = new Commands(world,saveObj);
         $(document).keydown(function(event) {
-            // console.log("key:"+event.key);
             world.action(event.key);
 
         });
@@ -64,7 +62,7 @@ $(document).ready(function() {
         $('.save-quit-button').on('click', function() {
             saveObj.saveGame(world);
             popUp("Game has been Saved");
-            window.close();
+            window.location.href = "./mainpage.html";
         });
 
         $('.quit-button').on('click', function() {
@@ -72,9 +70,30 @@ $(document).ready(function() {
         });
 
         $(".exit-button").on('click', function() {
-            window.close();
+            window.location.href = "./mainpage.html";
         });
 
+        $(".towns-list").on("click", ".teleport-btn", function(event) {
+            let id = $(this).attr('id').split("-");
+            let towns = JSON.parse(localStorage.getItem("towns"));
+            let foundTown = towns.find((town) => town.id === id[1]);
+            
+            if(world.player.gold > parseInt(id[2]) ){
+                world.player.gold -= parseInt(id[2]);
+                if (foundTown) {
+                    world.coordinates.x = foundTown.coordinates.x;
+                    world.coordinates.z = foundTown.coordinates.z;
+        
+                    world.player.x = foundTown.position.x;
+                    world.player.z = foundTown.position.z;
+                } 
+                console.log(world);
+                saveObj.saveGame(world);
+                window.location.reload();            
+            }else{
+                alert("Not enough Gold!!!!!");
+            }
+        });
     } else {
 
     }
@@ -84,6 +103,9 @@ $(document).ready(function() {
     $("#menu-icon-settings").on('click', function() {
         $('#menuModal').modal('toggle');
     });
+
+ 
+
 
     $(document).on('ended', 'audio', function() {
         this.currentTime = 0;

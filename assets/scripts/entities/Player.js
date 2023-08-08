@@ -1,4 +1,6 @@
 import { Tile } from "../world/Tile.js";
+import { distanceFormula } from "../helpers/Helper.js";
+import { World } from "../world/World.js";
 
 export class Player{
 
@@ -12,6 +14,7 @@ export class Player{
         this.sprite = null;
         this.gold = game.gold;
         this.inPOI = null;
+        this.coordinates = game.coordinates;
         this.audio = audio;
     }
 
@@ -55,6 +58,28 @@ export class Player{
             this.audio.stop();
             this.audio.play('world');
             $("#POIModal").modal('hide');
+            return false;
+        }else if(this.checkWaypoint(this.inPOI.id,next_position.x,next_position.z)){
+            $(".towns-list").empty();
+            $("#waypoint-confirmation-modal").modal('toggle');
+            const towns = JSON.parse(localStorage.getItem('towns'));
+            towns.forEach(town => {
+                if (this.inPOI.id !== town.id) {
+                    let gold_cost = Math.ceil(distanceFormula(town.coordinates, { x: parseInt(this.coordinates.x), z: parseInt(this.coordinates.z) }) / 2);
+                    $(".towns-list").append(`
+                        <div class="border border-1 m-1 p-2 town-block">
+                            <div class="fs-6">(${town.id})</div>
+                            <div>${town.name} <span class="float-end">
+                                <span class="icon gold-icon col-2">
+                                    <img src="../sprites/Golden Coin.png">
+                                    <span>${gold_cost}</span>
+                                </span>
+                            </div>
+                            <div><button class='btn btn-primary teleport-btn' id="teleport-${town.id}-${gold_cost}">Teleport</button></div>
+                        </div>
+                    `);
+                }
+            });
             return false;
         }else{   
             this.x = next_position.x;
@@ -137,6 +162,12 @@ export class Player{
         let tile = new Tile(c,x,z);
         // console.log(tile);
         return tile.checkTile('exit');
+    }
+
+    checkWaypoint(c,x,z){
+        let tile = new Tile(c,x,z);
+        // console.log(tile);
+        return tile.checkTile('waypoint');
     }
 
 }

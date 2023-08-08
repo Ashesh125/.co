@@ -140,3 +140,9 @@ export function generateRandomNumber01() {
         const d = 10;
         return Math.round((Math.random() * (max * d - min * d) + min * d)) / d;
       }
+
+      export function distanceFormula(pointA,pointB){
+        const deltaX = Math.abs(pointB.x - pointA.x);
+        const deltaZ = Math.abs(pointB.z - pointA.z);
+        return Math.sqrt(deltaX * deltaX + deltaZ * deltaZ);
+      }

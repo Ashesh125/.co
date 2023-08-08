@@ -14,7 +14,7 @@ $(document).ready(function() {
     });
 
     $("#random-seed-btn").on("click",() => {
-        const seed = getRandomInt(1,999999999999999);
+        const seed = getRandomInt(1,9999999999999);
         newGame(seed);
     });
 

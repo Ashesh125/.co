@@ -47,7 +47,7 @@ export class Town {
 
     async generateNewTown(seed) {
         // let rand = parseInt(Math.abs(seed).toString().charAt(0));        
-        let rand = getRandomInt(0, 7);
+        let rand = getRandomInt(0,6);  
         let layouts = await readFileContents("../json/town_layouts.json");
 
         return layouts[rand].layout;
@@ -70,7 +70,6 @@ export class Town {
                 }
             }
         }
-
         return false;
     }
 
@@ -87,7 +86,7 @@ export class Town {
             for (var z = 0; z < this.layout[x].length; z++) {
                 var div = document.createElement('div');
                 div.classList.add('tile');
-                div.innerHTML = this.id + '/' + x + ',' + z;
+                // div.innerHTML = this.id+'/'+x+','+z;
                 div.classList.add(this.getTileType(this.layout[x][z]));
 
                 div.id = this.id + '/' + x + ',' + z;
@@ -124,20 +123,21 @@ export class Town {
                 return "exit";
                 break;
 
+            case "P":
+                return "waypoint";
+                break;
+
             default:
                 return 'manxe';
                 break;
         }
     }
 
-    placePlayerinGate() {
-        //remove player from world
-        console.log(this.player);
+    placePlayerinGate(){
         $(".tile").removeClass("player");
         this.player.inPOI = this;
-        var pos = this.findValueIn2DArray(this.layout, "G");
+        var pos = this.findValueIn2DArray(this.layout, "S");
         let tile = new Tile(this.id, pos.x, pos.z);
-        console.log(this.id);
         tile.addClass('player');
         this.player.tile = new Tile(this.id, pos.x, pos.z);
     }
@@ -154,11 +154,9 @@ export class Town {
 
     findValueIn2DArray(arr, value) {
         for (let i = 0; i < arr.length; i++) {
-            for (let j = 0; j < arr[i].length; j++) {
-                if (arr[i][j] === value) {
-                    console.log(i, j);
-                    return { x: i, z: j }; // value found
-                }
+          for (let j = 0; j < arr[i].length; j++) {
+            if (arr[i][j] === value) {
+              return {x: i,z: j}; // value found
             }
         }
     }
@@ -255,5 +253,4 @@ export class Town {
             "position": this.location
         }
     }
-
 }

@@ -12,7 +12,6 @@
     <script src="../scripts/jquery/jquery.min.js"></script>
     <script src="../scripts/animejs/anime.min.js"></script>
     <script type="module" src="../scripts/world/Constants.js"></script>
-    <script type="module" src="../scripts/world/main.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </head>
@@ -262,7 +261,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="POIModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal" id="POIModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-centered">
             <div class="modal-content p-5">
                 <div class="modal-header d-flex justify-content-center">
@@ -331,11 +330,24 @@
         </div>
         <div class="offcanvas-body small">
             ...
+    </div>  
+    <div class="modal modal-md" id="waypoint-confirmation-modal" tabindex="-1" aria-labelledby="waypoint-confirmation-modal" aria-hidden="true">
+        <div class="modal-dialog modal-md modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="name">Use Waypoint</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body towns-list">
+
+                </div>
+            </div>
         </div>
     </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 
+<script type="module" src="../scripts/world/main.js"></script>
 </html>
 <style>
     * {
@@ -421,8 +433,21 @@
     }
     
     .manxe {
-        background-image: url("../sprites/player.png");
-        background-position: -50% -50%;
+        background-image: url('../sprites/NPCs/q.png');
+        background-size: 560px 480px;
+        animation: play-NPC-sprite 1s steps(3) infinite;
+        width: 60px;
+        height: 60px;
+    }
+
+
+    @keyframes play-NPC-sprite {
+        from {
+            background-position: 0 0;
+        }
+        to {
+            background-position: -140px 0; /* Adjust the value based on the total width of your sprite (frame width * number of frames) */
+        }
     }
     
     .tile {
@@ -460,13 +485,11 @@
     }
     
     .exit {
-        background-color: red;
-        background-image: url('../images/tiles/wall.png');
+        background-image: url("../images/tiles/dirt.png");
     }
     
     .gate {
-        background-color: yellow;
-        /* background-image: url('../images/tiles/gate\ \(1\).png'); */
+        background-image: url("../images/tiles/grass.png");
     }
     
     .inventory-modal-body {
@@ -648,5 +671,21 @@
         height: 8%;
         /* Set the height of the offcanvas */
         background: rgba(255, 255, 255, 0.5);
+    }
+
+    .waypoint{
+        background-image: url("../sprites/NPCs/waypint.gif");
+        background-size: 120px 120px;
+        background-position: -30px;
+        /* animation: portal-sprite 1.2s steps(8) infinite; */
+    }
+
+    @keyframes portal-sprite {
+        from {
+            background-position: 0 0;
+        }
+        to {
+            background-position: 60px 1px; /* Adjust the value based on the total width of your sprite (frame width * number of frames) */
+        }
     }
 </style>

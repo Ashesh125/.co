@@ -7,7 +7,7 @@
             "defence": { "min": 5,"max": 8 },           
             "crit": { "min": 10,"max": 15 },
             "speed": { "min": 6,"max": 9 },
-            "health": { "min": 15,"max": 24 },
+            "health": { "min": 100,"max": 120 },
             "agility": { "min": 3,"max": 6 },
             "luck": { "min": 0,"max": 0.8 }
         }
@@ -20,7 +20,7 @@
             "defence": { "min": 5,"max": 8 },           
             "crit": { "min": 10,"max": 15 },
             "speed": { "min": 6,"max": 9 },
-            "health": { "min": 15,"max": 24 },
+            "health": { "min": 55,"max": 60 },
             "agility": { "min": 3,"max": 6 },
             "luck": { "min": 0,"max": 0.8 }
         }
@@ -33,7 +33,7 @@
             "defence": { "min": 5,"max": 8 },           
             "crit": { "min": 10,"max": 15 },
             "speed": { "min": 6,"max": 9 },
-            "health": { "min": 15,"max": 24 },
+            "health": { "min": 50,"max": 60 },
             "agility": { "min": 3,"max": 6 },
             "luck": { "min": 0,"max": 0.8 }
         }

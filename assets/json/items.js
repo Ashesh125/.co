@@ -37,5 +37,5 @@ export var items =[
         "amount": 999,
         "price": 100,
         "description": "Completely Heals a characters HP"
-    }
+    },
 ]

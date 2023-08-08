@@ -6,6 +6,7 @@ import { spiralTraverseGraph, generateRandomNumber01 } from '../helpers/Helper.j
 import { Book } from './Book.js';
 // import { Audio } from '../sound/Audio.js';
 import { Item } from '../Item/Item.js';
+import { Save } from '../save/Save.js';
 
 export class World {
     constructor(noiseGenerator) {
@@ -14,7 +15,11 @@ export class World {
         this.renderDistance = 1;
         this.loadDistance = 2;
         this.coordinates = { x: 50000, z: 50000 };
+<<<<<<< HEAD
         this.player = new Player({ x: 5, z: 5 }, this.audio);
+=======
+        this.player = new Player({x:5, z:5 ,coordinates:this.coordinates},this.audio);
+>>>>>>> ee42aba (combat and town changes)
         this.currentPOI = null;
         this.item = new Item();
         this.book = new Book();
@@ -25,7 +30,9 @@ export class World {
         this.coordinates = { x: parseInt(save.world.player.position.x), z: parseInt(save.world.player.position.z) };
         this.player.x = save.world.player.tile.x;
         this.player.z = save.world.player.tile.z;
+        this.player.coordiantes = this.coordinates;
         this.player.gold = save.gold;
+        this.player.chunk_id = 5;
         this.audio.play('world');
         this.loadChunks();
         this.placePlayer();
@@ -57,16 +64,27 @@ export class World {
 
     placePlayer() {
         //remove player from world
+<<<<<<< HEAD
         console.log(this.player);
         console.log(this.coordinates);
+=======
+>>>>>>> ee42aba (combat and town changes)
         $(".tile").removeClass("player");
         //if current data doesnt exists
         if (this.player.chunk_id) {
             let tile = new Tile(this.player.chunk_id, this.player.x, this.player.z);
+            if(tile.checkTile("water")){
+                let freePosition = spiralTraverseGraph(5);
+                tile = new Tile(5, freePosition.x, freePosition.z);
+                this.player.chunk_id = 5;
+                this.player.x = freePosition.x;
+                this.player.z = freePosition.z;
+                this.player.tile = tile;
+            }
             tile.addClass('player');
             this.player.tile = new Tile(this.player.chunk_id, this.player.x, this.player.z);
         } else { // put in center of world
-            //check 0,0 is suitable
+            //check 5,5 is suitable
             this.player.chunk_id = 5;
             let id = 5;
             let freePosition = spiralTraverseGraph(id);
@@ -77,6 +95,7 @@ export class World {
             this.player.z = freePosition.z;
             this.player.tile = new Tile(id, freePosition.x, freePosition.z);
         }
+
         if (this.player.tile.checkTile('town')) {
             this.enterPOI(this.player.tile.getPOI());
         }
@@ -196,8 +215,23 @@ export class World {
     checkEncounter() {
         let encounter = this.player.tile.getEncounterChance();
         let rng = generateRandomNumber01();
-        if (false && rng <= encounter) {
-            alert("enemy");
+        if (rng <= encounter) {
+
+            this.audio.play("combat");
+            alert("Asd");
+            anime({
+                targets: '.chunk',
+                scale: [
+                  {value: .1, easing: 'easeOutSine', duration: 500},
+                  {value: 5, easing: 'easeInOutQuad', duration: 1200}
+                ],
+                delay: anime.stagger(200, {grid: [3, 3], from: 'center'}),
+                complete: function(anim) {
+                    // const save = new Save(this);
+                    // save.saveGame(this);
+                    window.location.href = "./battlefield.html";
+                  }
+              });
         }
     }
 }

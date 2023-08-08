@@ -84,6 +84,7 @@ export class Character {
         const first_name = await this.getFirstName(13);
         const last_name = await this.getLastName(13);
         const saying = await this.getSaying(13);
+        let health = this.calculateStat("health", type);
         var character = {
             "name": first_name + " " + last_name,
             "gender": "male",
@@ -94,10 +95,11 @@ export class Character {
                 "attack": this.calculateStat("attack", type),
                 "crit": this.calculateStat("crit", type),
                 "defence": this.calculateStat("defence", type),
-                "health": this.calculateStat("health", type),
+                "health": health,
                 "agility": this.calculateStat("agility", type),
                 "speed": this.calculateStat("speed", type),
-                "luck": this.calculateStat("luck", type)
+                "luck": this.calculateStat("luck", type),
+                "currentHp": health
             }
         };
 
