@@ -19,7 +19,7 @@ body {
 
 .card {
     background-color: #5C5470;
-    position: absolute;
+    /* position: absolute; */
 }
 
 .list-group {
@@ -38,7 +38,6 @@ body {
     color: #FFFFFF;
 }
 
-
 .list-group-item {
     background-color: transparent;
     font-style: normal;
@@ -51,9 +50,9 @@ body {
     border: 0px;
 }
 
-.load-body{
+.load-body {
     width: 100%;
-    border: 2px solid gray; 
+    border: 2px solid gray;
     border-radius: 10px;
     /* border-image: url("../images/pngwing.com.png");
     border-image-slice: 5 fill;
@@ -61,11 +60,11 @@ body {
     border-image-outset: 25px; */
 }
 
-.load-body:hover{
+.load-body:hover {
     cursor: pointer;
     border: 4px solid blue;
 }
 
-.fs-10{
+.fs-10 {
     font-size: 14px;
 }

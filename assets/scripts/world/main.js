@@ -7,9 +7,6 @@ import { Commands } from '../Commands/Commands.js';
 
 
 $(document).ready(function() {
-
-
-
     $('#profile-body').addClass("d-none");
     //   };
     $("#toggle-btn").on('click', function() {
@@ -32,7 +29,7 @@ $(document).ready(function() {
     //     "seed": 514105
     // };
     // const game = {
-    //     "id" : 1,
+    //     "id": 1,
     //     "name": "Test Save",
     //     "gold": 1000,
     //     "party_members": 5,
@@ -52,7 +49,7 @@ $(document).ready(function() {
         const world = new World(noiseGenerator);
         world.loadSaveState(save);
 
-        const command = new Commands(world,saveObj);
+        const command = new Commands(world, saveObj);
         $(document).keydown(function(event) {
             // console.log("key:"+event.key);
             world.action(event.key);
@@ -84,14 +81,12 @@ $(document).ready(function() {
     // $('.player').append(
     //   "<img width='60px' height='60px' src='../images/skull.png'>"
     // );
-    $("#menu-icon-settings").on('click',function(){
-      $('#menuModal').modal('toggle');
+    $("#menu-icon-settings").on('click', function() {
+        $('#menuModal').modal('toggle');
     });
 
     $(document).on('ended', 'audio', function() {
         this.currentTime = 0;
         this.world.audio.play();
-      });
- });
-
- 
+    });
+});

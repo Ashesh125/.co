@@ -63,16 +63,16 @@
                     <a class="btn btn-primary" id="command-btn" data-bs-toggle="offcanvas" href="#command" role="button" aria-controls="offcanvasExample">
                         /
                       </a>
-                    </div>
+                </div>
             </div>
         </div>
     </div>
     <div class="offcanvas offcanvas-sm offcanvas-bottom custom-offcanvas" tabindex="-1" id="command" aria-labelledby="offcanvasExampleLabel">
         <div class="offcanvas-header">
             <input type="text" class="form-control " id="command-input">
-          <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
-      </div>
+    </div>
     <div class="modal fade" id="inventory-modal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content text-center">
@@ -83,26 +83,26 @@
                 <!-- ---------------------inventory content------------- -->
                 <div class="modal-body inventory-modal-body d-flex flex-wrap d-block p-1" id="inventory-body">
                     <div class="inventory-content border-end">
-                        <div class="inventory-title my-1">
+                        <h5 class="inventory-title my-4">
                             Inventory
-                        </div>
-                        <div class="inventory-holder" >
+                        </h5>
+                        <div class="inventory-holder">
                             <div class="m-3 inventory-left-holder d-flex flex-wrap">
-                              
+
                             </div>
 
                         </div>
 
                     </div>
                     <div class="inventory-content">
-                        <div class="inventory-title mt-5">
-                            INVENTORY
-                        </div>
+                        <h5 class="inventory-title my-4">
+                            Inventory
+                        </h5>
                         <div class="inventory-holder">
                             <div class="inventory-right-holder">
-                                <div class="inventory-data"></div>
-                            </div>
 
+
+                            </div>
                         </div>
 
                     </div>
@@ -111,8 +111,8 @@
                 <!-- ---------------------profile content------------ -->
                 <div class="modal-body profile-modal-body d-flex flex-wrap d-none p-1" id="profile-body">
                     <div class="profile-content">
-                        <div class="profile-title my-5">
-                            suja maharjan
+                        <div class="profile-title my-4">
+                            profile
                         </div>
                         <div class="profile-holder">
                             <div class="profile-left-holder d-flex" id="profile-detail">
@@ -123,8 +123,8 @@
 
                     </div>
                     <div class="profile-content">
-                        <div class="profile-title mt-5">
-                            suja maharjan
+                        <div class="profile-title my-4">
+                            profile
                         </div>
                         <div class="profile-holder ">
                             <div class="profile-detail d-flex" id="profile-detail-holder">
@@ -322,6 +322,17 @@
                 </div>
             </div>
         </div>
+    </div>
+    <!-- <script type="module" src="../dist/bundle.js"></script> -->
+    <div class="offcanvas offcanvas-bottom" tabindex="-1" id="command" aria-labelledby="offcanvasBottomLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasBottomLabel">Offcanvas bottom</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body small">
+            ...
+        </div>
+    </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 
@@ -394,6 +405,7 @@
     
     .town {
         background-color: red;
+        background-image: url('../images/tiles/pixelhouse.png');
     }
     
     .port {
@@ -423,36 +435,38 @@
         background-color: blueviolet;
     }
     
-
     @keyframes play-sprite {
         from {
             background-position: 0 0;
         }
         to {
-            background-position: 241px 0; /* Adjust the value based on the total width of your sprite (frame width * number of frames) */
+            background-position: 241px 0;
+            /* Adjust the value based on the total width of your sprite (frame width * number of frames) */
         }
     }
     
-    .grass+.player{
+    .grass+.player {
         z-index: 5;
         background-image: url('../sprites/player2.png');
         background-size: 240px 60px;
-         animation: play-sprite 1.2s steps(4) infinite;
-    }       
+        animation: play-sprite 1.2s steps(4) infinite;
+    }
     
     .player {
         z-index: 5;
         background-image: url('../sprites/player2.png');
         background-size: 240px 60px;
-         animation: play-sprite 1.2s steps(4) infinite;
+        animation: play-sprite 1.2s steps(4) infinite;
     }
-
+    
     .exit {
         background-color: red;
+        background-image: url('../images/tiles/wall.png');
     }
     
     .gate {
         background-color: yellow;
+        /* background-image: url('../images/tiles/gate\ \(1\).png'); */
     }
     
     .inventory-modal-body {
@@ -465,7 +479,6 @@
         /* background-size: 930px 480px; */
         font-family: 'Graduate';
         font-size: 16px;
-        text-decoration: underline;
         line-height: 35px;
         font-weight: 500;
     }
@@ -480,6 +493,10 @@
         border-radius: 5px;
         margin: 0px 6px 6px 9px;
         background-image: url('../images/tiles/item-holder.png');
+    }
+    
+    .inventory-title {
+        text-decoration: underline;
     }
     
     .inventory-data {
@@ -536,7 +553,7 @@
     }
     
     .table>:not(caption)>*>* {
-        padding: .5rem .5rem;
+        /* padding: .5rem .5rem; */
         background-color: var(--bs-table-bg);
         border-bottom-width: 0px;
         box-shadow: inset 0 0 0 9999px var(--bs-table-accent-bg)
@@ -586,48 +603,50 @@
             /* Change width to 100% for smaller screens */
         }
     }
-    #party-info{
+    
+    #party-info {
         position: absolute;
         border-radius: 10px;
         width: 300px;
         height: 100px;
-        background-color: rgba(255, 255, 255, 0.5); 
+        background-color: rgba(255, 255, 255, 0.5);
         bottom: 10px;
         left: 10px;
     }
-
-    .menu-icon:hover{
+    
+    .menu-icon:hover {
         border: 2px solid blue;
     }
-
-    #gold:hover{
+    
+    #gold:hover {
         cursor: auto;
     }
-
-    .item-sprite{
+    
+    .item-sprite {
         width: 38px;
         height: 38px;
         margin-top: 10px;
     }
-
-    .inventory-info:hover{
+    
+    .inventory-info:hover {
         /* width: 60px;
         height: 60px;
         border-radius: 5px;
         margin: 0px 6px 6px 9px; */
         background-image: url('../images/tiles/item-holder-selected.png');
     }
-
-
-    .inventory-info:hover .item-sprite{
+    
+    .inventory-info:hover .item-sprite {
         width: 44px;
         height: 44px;
         margin-top: 8px;
     }
-
+    
     .custom-offcanvas {
-        width: 100%; /* Set the width of the offcanvas */
-        height: 8%; /* Set the height of the offcanvas */
+        width: 100%;
+        /* Set the width of the offcanvas */
+        height: 8%;
+        /* Set the height of the offcanvas */
         background: rgba(255, 255, 255, 0.5);
     }
 </style>

@@ -6,7 +6,7 @@ $(document).ready(function() {
     let selectedClasses = ['Warrior', 'Warrior', 'Warrior'];
     $('[data-toggle="tooltip"]').tooltip();
 
-    $("#party-name-btn").click(() => {
+    $("#party-name-btn").on("click", () => {
         character.saveCharacterData();
     });
 

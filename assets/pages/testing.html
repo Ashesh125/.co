@@ -18,7 +18,37 @@
 
 
     <script>
+        var jsonData = [{
+            "name": "John Doe",
+            "age": 25,
+            "email": "johndoe@example.com"
+        }, {
+            "name": "suja",
+            "age": 25,
+            "email": "suja@example.com"
+        }];
         $(document).ready(function() {
+            $("#exportButton").click(function() {
+                // Convert JSON to string
+                var jsonString = JSON.stringify(jsonData);
+
+                // Create a Blob with the JSON data
+                var blob = new Blob([jsonString], {
+                    type: "application/json"
+                });
+
+                // Create a temporary anchor element
+                var downloadLink = $("<a></a>")
+                    .attr("href", URL.createObjectURL(blob))
+                    .attr("download", "data.json");
+
+                // Append the anchor to the document and click it programmatically
+                $("body").append(downloadLink);
+                downloadLink[0].click();
+
+                // Clean up
+                downloadLink.remove();
+            });
             $("#importButton").click(function() {
                 var fileInput = $("#importFile")[0];
 
