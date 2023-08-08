@@ -4,7 +4,7 @@ import { Player } from '../entities/Player.js';
 import { Town } from '../POI/Town.js';
 import { spiralTraverseGraph, generateRandomNumber01 } from '../helpers/Helper.js';
 import { Book } from './Book.js';
-import { Audio } from '../sound/Audio.js';
+// import { Audio } from '../sound/Audio.js';
 import { Item } from '../Item/Item.js';
 
 export class World {
@@ -14,9 +14,11 @@ export class World {
         this.renderDistance = 1;
         this.loadDistance = 2;
         this.coordinates = { x: 50000, z: 50000 };
-        this.player = new Player({x:5, z:5},this.audio);
+        this.player = new Player({ x: 5, z: 5 }, this.audio);
         this.currentPOI = null;
         this.item = new Item();
+        this.book = new Book();
+
     }
 
     loadSaveState(save) {
@@ -50,12 +52,12 @@ export class World {
         }
         if (this.loadDistance > this.renderDistance) {
             this.loadDistance = 2
-        }            
+        }
     }
 
     placePlayer() {
         //remove player from world
-        console.log(this.player);        
+        console.log(this.player);
         console.log(this.coordinates);
         $(".tile").removeClass("player");
         //if current data doesnt exists
@@ -98,8 +100,7 @@ export class World {
             case "I":
             case "i":
                 $("#inventory-modal").modal("toggle");
-                const book = new Book();
-                // book.getCharacterData();
+
                 break;
                 // case "c":
                 //     $("#character-profile-modal").modal("toggle");

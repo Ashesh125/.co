@@ -2,17 +2,17 @@ export class Book {
     constructor() {
 
         this.charactersData = JSON.parse(localStorage.getItem("characters"));
+        this.getCharacterData();
 
     }
     getCharacterData() {
-
+        $('.profile-info').off('mouseenter mouseleave');
         if (this.charactersData && this.charactersData.length > 0) {
             $('#profile-detail').empty(); // Clear previous content, if any
-
-            this.charactersData.forEach((charactersArray) => {
-                charactersArray.forEach((character) => {
-                    $('#profile-detail').append(`<div class="profile-info" id="${character.name}">${character.name}</div>`);
-                });
+            $('#profile-info').empty();
+            console.log(this.charactersData);
+            this.charactersData.forEach(character => {
+                $('#profile-detail').append(`<div class="profile-info" id="${character.name}">${character.name}</div>`);
             });
             $('.profile-info').hover(
                 (event) => {
@@ -36,12 +36,10 @@ export class Book {
     findCharacterByName(name) {
         let foundCharacter = null;
 
-        this.charactersData.forEach((charactersArray) => {
-            charactersArray.forEach((character) => {
-                if (character.name === name) {
-                    foundCharacter = character;
-                }
-            });
+        this.charactersData.forEach((character) => {
+            if (character.name === name) {
+                foundCharacter = character;
+            }
         });
 
         return foundCharacter;

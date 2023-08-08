@@ -7,9 +7,6 @@ import { Commands } from '../Commands/Commands.js';
 
 
 $(document).ready(function() {
-
-
-
     $('#profile-body').addClass("d-none");
     //   };
     $("#toggle-btn").on('click', function() {

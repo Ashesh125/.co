@@ -223,13 +223,13 @@ export class Town {
                     );
                     if (distance < nextMinDistance) {
                         nextMinDistance = distance;
-                        this.to = townI.id;
+                        nextMinId = townI.id;
                     }
 
                 }
             }
             town.from = this.from;
-            town.to = this.to;
+            town.to = nextMinId;
 
             console.log("town", town);
             console.log("Current Index:", currentIndex);

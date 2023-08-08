@@ -6,7 +6,7 @@ export class Character {
         this.classes = classesList;
         classesList.then((classes) => {
             this.addGender();
-            this.addclassGroup(classes);    
+            this.addclassGroup(classes);
         });
         this.characterArr = [];
     }
@@ -28,54 +28,55 @@ export class Character {
 
     addclassGroup(classes) {
         var selects = document.getElementsByClassName('class-name');
-            for (var j = 0; j < selects.length; j++) {
-                var select = selects[j];
-                for (var i = 0; i < classes.length; i++) {
-                    var optn = classes[i].name;
-                    var el = document.createElement("option");
-                    el.textContent = optn;
-                    el.value = optn;
-                    select.appendChild(el);
-                }
+        for (var j = 0; j < selects.length; j++) {
+            var select = selects[j];
+            for (var i = 0; i < classes.length; i++) {
+                var optn = classes[i].name;
+                var el = document.createElement("option");
+                el.textContent = optn;
+                el.value = optn;
+                select.appendChild(el);
             }
+        }
     }
 
-    loadStarters(){
+    loadStarters() {
         let count = 3;
         let types = [];
 
-        this.classes.then((classes) => { 
-                for(let i =0; i<count; i++){
-                    types[i] = classes[getRandomInt(0,classes.length - 1)];
-                    $("#class-name-"+i).val(types[i].name);
-                    let newChar = this.newCharacter(types[i]);
-                    newChar.then((data) => {
-                        this.characterArr[i] = data;
-                        this.assignCharacter(i, data);
-                    });
+        this.classes.then((classes) => {
+            for (let i = 0; i < count; i++) {
+                types[i] = classes[getRandomInt(0, classes.length - 1)];
+                $("#class-name-" + i).val(types[i].name);
+                let newChar = this.newCharacter(types[i]);
+                newChar.then((data) => {
+                    this.characterArr[i] = data;
+                    this.assignCharacter(i, data);
+                });
 
-        }});
+            }
+        });
     }
 
-    loadOne(id,type){
-        this.classes.then((classes) => { 
+    loadOne(id, type) {
+        this.classes.then((classes) => {
             type = classes.filter(item => item.name === type);
             let newChar = this.newCharacter(type[0]);
             newChar.then((data) => {
                 this.characterArr[id] = data;
-                this.assignCharacter(id, data); 
+                this.assignCharacter(id, data);
             });
         });
     }
 
     saveCharacterData() {
         var party = $('#party-name-input').val();
-        if(!party){
+        if (!party) {
             alert("Assign a Party Name!!!!!!!!!!!");
-        }else{
+        } else {
             localStorage.setItem("characters", JSON.stringify(this.characterArr));
-            localStorage.setItem("party", party);  
-            location.href = "./seedGeneration.html";  
+            localStorage.setItem("party", party);
+            location.href = "./seedGeneration.html";
         }
     }
 
@@ -90,7 +91,7 @@ export class Character {
             "class": type.name,
             "saying": saying,
             "stats": {
-                "attack": this.calculateStat("attack",type),
+                "attack": this.calculateStat("attack", type),
                 "crit": this.calculateStat("crit", type),
                 "defence": this.calculateStat("defence", type),
                 "health": this.calculateStat("health", type),
@@ -99,45 +100,45 @@ export class Character {
                 "luck": this.calculateStat("luck", type)
             }
         };
-        
+
         return character;
     }
 
 
 
     calculateStat(statType, classType) {
-        let min,max = 0;
+        let min, max = 0;
         switch (statType) {
             case "attack":
                 min = classType.stats.attack.min;
                 max = classType.stats.attack.max;
                 break;
-                
+
             case "crit":
                 min = classType.stats.crit.min;
                 max = classType.stats.crit.max;
                 break;
-                
+
             case "defence":
                 min = classType.stats.defence.min;
                 max = classType.stats.defence.max;
                 break;
-                
+
             case "health":
                 min = classType.stats.health.min;
                 max = classType.stats.health.max;
                 break;
-                
+
             case "agility":
                 min = classType.stats.agility.min;
                 max = classType.stats.agility.max;
                 break;
-                
+
             case "speed":
                 min = classType.stats.speed.min;
                 max = classType.stats.speed.max;
                 break;
-                
+
             case "luck":
                 min = classType.stats.luck.min;
                 max = classType.stats.luck.max;
@@ -145,7 +146,7 @@ export class Character {
 
             default:
                 break;
-        }   
+        }
 
         return getRandomStat(min, max);
     }
@@ -185,7 +186,7 @@ export class Character {
 
         return names[rand];
     }
-    
+
 
     async getCharacterClasses() {
         let classes = await readFileContents("../json/classes.json");
