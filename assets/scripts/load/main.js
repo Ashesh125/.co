@@ -1,4 +1,5 @@
 import { Load } from "../load/Load.js";
+import Swal from "../../../node_modules/sweetalert2/src/sweetalert2.js";
 
 $(document).ready(function() {
     const load = new Load();
@@ -12,13 +13,21 @@ $(document).ready(function() {
     });
 
     $(".delete-save").on("click", (event) => {
-        if (confirm("Sure Delete Save???")) {
-            const id = $(event.currentTarget).attr("id").split('-');
-            var saves = JSON.parse(localStorage.getItem('saves'));
-            const updatedSaves = saves.filter(save => parseInt(save.id) !== parseInt(id[2]));
-            localStorage.setItem('saves', JSON.stringify(updatedSaves));
-            $("#load-body-" + id[2]).addClass('d-none');
-        }
+        Swal.fire({
+            title: 'Do you want to delete the Save?',
+            showCancelButton: true,
+            confirmButtonText: 'Delete',
+          }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                const id = $(event.currentTarget).attr("id").split('-');
+                var saves = JSON.parse(localStorage.getItem('saves'));
+                const updatedSaves = saves.filter(save => parseInt(save.id) !== parseInt(id[2]));
+                localStorage.setItem('saves', JSON.stringify(updatedSaves));
+                $("#load-body-" + id[2]).addClass('d-none');
+                Swal.fire('Deleted!', '', 'success')
+            }
+          });
     });
 
     $(".load-save").on("click", (event) => {

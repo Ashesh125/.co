@@ -8,5 +8,7 @@ $(document).ready(function(){
 
     const combat = new Combat();
 
-
+    $("#attack").on("click",function(){
+        combat.attack();
+    });
 });

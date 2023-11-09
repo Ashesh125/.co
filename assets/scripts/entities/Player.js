@@ -1,6 +1,8 @@
 import { Tile } from "../world/Tile.js";
 import { distanceFormula } from "../helpers/Helper.js";
-import { World } from "../world/World.js";
+import { readFileContents } from "../helpers/Helper.js";
+import { Item } from "../Item/Item.js";
+import { items } from "../../json/items.js";
 
 export class Player{
 
@@ -47,9 +49,6 @@ export class Player{
         if(this.checkObstackle(this.inPOI.id,next_position.x,next_position.z)){
             console.log('obstackle at:'+this.inPOI.id+"/"+next_position.x+","+next_position.z);
             return false;
-        }else if(this.checkManxe(this.inPOI.id,next_position.x,next_position.z)){
-            console.log('manxe at:'+this.inPOI.id+"/"+next_position.x+","+next_position.z);
-            return false;
         }else if(this.checkExit(this.inPOI.id,next_position.x,next_position.z)){
             this.x = this.inPOI.location.x;
             this.z = this.inPOI.location.z;
@@ -80,6 +79,18 @@ export class Player{
                     `);
                 }
             });
+            return false;
+        }if(this.check(this.inPOI.id,next_position.x,next_position.z,'manxe')){
+            var escapedId = jQuery.escapeSelector(this.inPOI.id+"/"+next_position.x+","+next_position.z);
+            let type = '';
+            if(this.check(this.inPOI.id,next_position.x,next_position.z,'merchant')){     
+                this.interactNPC($("#"+escapedId).attr('data-number'),'merchant');
+            }else if(this.check(this.inPOI.id,next_position.x,next_position.z,'healer')){  
+                this.interactNPC($("#"+escapedId).attr('data-number'),'healer');
+            }else if(this.check(this.inPOI.id,next_position.x,next_position.z,'guild')){      
+                this.interactNPC($("#"+escapedId).attr('data-number'),'guild');
+            }
+
             return false;
         }else{   
             this.x = next_position.x;
@@ -170,4 +181,69 @@ export class Player{
         return tile.checkTile('waypoint');
     }
 
+    check(c,x,z,type){
+        let tile = new Tile(c,x,z);
+        // console.log(tile);
+        return tile.checkTile(type);
+    }
+
+    async interactNPC(id,type){
+        let idParts = id.match(/.{2}|.{2}|.{2}|.{1}|.{2}|.{1}/g);
+        const first_name = id[5] == "1" ? await this.getMaleFirstName(idParts[1]) :  await this.getFemaleFirstName(idParts[1]) ;
+        const last_name = await this.getLastName(idParts[2]);
+        let allItems = new Item();
+        let temp = '';
+        let selling_item ,buying_item;
+        console.log(idParts);
+        switch(type){
+            case "merchant":
+                $("#merchant-name").text(`${first_name} ${last_name}`);
+                temp = idParts[3].split('');
+                selling_item = allItems.items[temp[1]];
+                $("#dialogue-merchant").html(`Do You want to buy a <img src="${selling_item.sprite}"> ${selling_item.name} for just for <img src="../sprites/Golden Coin.png"> ${selling_item.price}?`);
+                $("#selling-item-price").val(selling_item.price);
+                $("#selling-item-id").val(selling_item.id);
+                $("#merchant-modal").modal('toggle');
+                break;
+
+            case "healer":    
+                $("#healer-name").text(`${first_name} ${last_name}`);
+
+                $("#healer-modal").modal('toggle');
+                break;
+            
+            case "guild":     
+                var sellItems = allItems.items.filter(function(item) {
+                    return item.type === 'sell';
+                });
+                let qty = Math.floor(Math.random() * 5) + 1;
+                $("#guild-name").text(`${first_name} ${last_name}`);    
+                temp = idParts[3].split('');
+                buying_item = sellItems[Math.floor(Math.random() * sellItems.length)];
+                $("#dialogue-guild").html(`Do You want to sell ${qty} <img src="${buying_item.sprite}"> ${buying_item.name}${qty > 1 ?"s":""} for just for <img src="../sprites/Golden Coin.png"> ${buying_item.price * qty}?`);
+                $("#buying-item-price").val(buying_item.price * qty);
+                $("#buying-item-id").val(buying_item.id);
+                $("#buying-item-qty").val(qty);
+                $("#guild-modal").modal('toggle');
+                break;
+        }
+    }
+
+    async getMaleFirstName(seed) {
+        let names = await readFileContents("../json/male_names.json");
+
+        return names[seed];
+    }
+
+    async getFemaleFirstName(seed) {
+        let names = await readFileContents("../json/female_names.json");
+
+        return names[seed];
+    }
+
+    async getLastName(seed) {
+        let names = await readFileContents("../json/last_names.json");
+
+        return names[seed];
+    }
 }

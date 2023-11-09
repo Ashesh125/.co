@@ -1,8 +1,10 @@
+import Swal from "../../../node_modules/sweetalert2/src/sweetalert2.js";
+
 export class Load {
 
     constructor() {
         this.loadedSaves = false;
-        this.saves = this.getAll();
+        this.saves = this.getAll() || [];
         this.showSaves();
     }
 
@@ -48,26 +50,46 @@ export class Load {
             "seed": save.world.seed
         };
     }
+    
     importJSON(event) {
         var fileInput = event.target;
-
+    
         // Check if a file was selected
         if (fileInput.files.length > 0) {
             var file = fileInput.files[0];
             var reader = new FileReader();
-
+    
             reader.onload = function(event) {
                 var importedData = event.target.result;
-                var jsonData = JSON.parse(importedData);
-                localStorage.setItem("saves", JSON.stringify(jsonData));
-                // Handle the imported data as needed
-                console.log(jsonData);
+                var jsonData = JSON.parse(JSON.parse(importedData));
+    
+                // Retrieve existing data from local storage
+                var existingData = localStorage.getItem("saves");
+                var existingArray = existingData ? JSON.parse(existingData) : [];
+
+                // Append each object from importedData's array to existingArray
+                // if (Array.isArray(jsonData)) {
+                    jsonData.forEach(function(item) {
+                        existingArray.push(item);
+                    });
+                // }
+    
+                localStorage.setItem("saves", JSON.stringify(existingArray));
+
             };
-
-
+    
             reader.readAsText(file);
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Imported Successfully',
+                showConfirmButton: false,
+                timer: 1500
+              });
+              setTimeout(function() {
+                window.location.reload();
+              }, 1500);
         }
-
     }
     exportJSON() {
         var jsonData = localStorage.getItem("saves");

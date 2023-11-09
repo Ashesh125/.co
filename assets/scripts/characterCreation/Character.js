@@ -70,14 +70,9 @@ export class Character {
     }
 
     saveCharacterData() {
-        var party = $('#party-name-input').val();
-        if (!party) {
-            alert("Assign a Party Name!!!!!!!!!!!");
-        } else {
-            localStorage.setItem("characters", JSON.stringify(this.characterArr));
-            localStorage.setItem("party", party);
-            location.href = "./seedGeneration.html";
-        }
+        localStorage.setItem("characters", JSON.stringify(this.characterArr));
+        localStorage.setItem("party", party);
+        location.href = "./seedGeneration.html";
     }
 
     async newCharacter(type) {
@@ -86,15 +81,18 @@ export class Character {
         const saying = await this.getSaying(13);
         let health = this.calculateStat("health", type);
         var character = {
+            'id': getRandomInt(1,9999999),
             "name": first_name + " " + last_name,
             "gender": "male",
             "sprite": "asd",
             "class": type.name,
             "saying": saying,
+            "trait": getRandomInt(0, 2),
+            "status": "active",
             "stats": {
                 "attack": this.calculateStat("attack", type),
                 "crit": this.calculateStat("crit", type),
-                "defence": this.calculateStat("defence", type),
+                "defense": this.calculateStat("defense", type),
                 "health": health,
                 "agility": this.calculateStat("agility", type),
                 "speed": this.calculateStat("speed", type),
@@ -121,9 +119,9 @@ export class Character {
                 max = classType.stats.crit.max;
                 break;
 
-            case "defence":
-                min = classType.stats.defence.min;
-                max = classType.stats.defence.max;
+            case "defense":
+                min = classType.stats.defense.min;
+                max = classType.stats.defense.max;
                 break;
 
             case "health":
@@ -158,7 +156,7 @@ export class Character {
         $("#review-" + id).text(character.saying);
         $('#attack-stat-' + id).text(character.stats.attack);
         $('#crit-stat-' + id).text(character.stats.crit);
-        $('#defence-stat-' + id).text(character.stats.defence);
+        $('#defense-stat-' + id).text(character.stats.defense);
         $('#health-stat-' + id).text(character.stats.health);
         $('#agility-stat-' + id).text(character.stats.agility);
         $('#speed-stat-' + id).text(character.stats.speed);

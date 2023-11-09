@@ -1,5 +1,7 @@
-import { readFileContents } from "../helpers/Helper.js";
 import { items } from "../../json/items.js";
+import Swal from "../../../node_modules/sweetalert2/src/sweetalert2.js";
+import { distanceFormula } from "../helpers/Helper.js";
+import { animateHeal } from "../helpers/Animations.js";
 
 export class Item {
 
@@ -7,60 +9,18 @@ export class Item {
         this.items = items;
         this.inventoryStorage = JSON.parse(localStorage.getItem('inventory')) || []; // Array of objects from local storage
         this.inventory = this.getInventory(this.items);
-        this.addInModal(this.inventory);
     }
 
-    addInModal(inventory) {
-        console.log(inventory);
+    addInModal() {
+        $(".inventory-left-holder").empty()
+        let inventory = this.inventory;
+        console.log('inventory local storage:',this.inventoryStorage);
+        console.log('inventory:',this.inventory);
         inventory.forEach(element => {
-            let block = `<div class="inventory-info aligns-items-center justify-content-center mb-4"><img src="${element.sprite}" class="item-sprite" id="${element.id}"><div class="mt-2">${element.quantity}</div></div>`;
+            let block = `<div class="inventory-info aligns-items-center justify-content-center m-1 mb-4"><img src="${element.sprite}" class="item-sprite" id="${element.id}"><div class="mt-2">${element.quantity}</div></div>`;
             $(".inventory-left-holder").append(block);
         });
-        $('.item-sprite').on('click', (event) => {
-            const id = $(event.currentTarget).attr('id');
-            console.log('id', id);
-            const clickedElement = inventory.find(element => element.id == id);
-
-            if (clickedElement) {
-                $(".inventory-right-holder").empty(); // Clear the contents before appending
-
-                let block = `<div id="inventory-detail" class="d-flex">
-                <div class="inventory-info aligns-items-center justify-content-center mb-2">
-                    <img src="${clickedElement.sprite}" class="item-sprite" id="${clickedElement.id}">
-                </div>
-                <div id="inventory-form mt-5">
-                    <div class="input-group input-group-sm m-3">
-                        <input type="text" class="form-control character-data" id="item-name" value="${clickedElement.name}" readonly>
-                    </div>
-
-                </div>
-                
-                </div>
-                <table class="table border-1 table-sm" style="font-size:13px; padding:0px;">
-                    <thead>
-                        <tr>
-                        <th scope="col">Type</th>
-                        <th scope="col">Amount</th>
-                        <th scope="col">Quantity</th>
-                        <th scope="col">Price</th>
-                        </tr>
-                    </thead>
-                    <tbody  class="table-group-divider">
-                        <tr>
-                        <td>${clickedElement.type}</td>
-                        <td>${clickedElement.amount}</td>
-                        <td>${clickedElement.quantity}</td>
-                        <td>${clickedElement.price}</td>
-                        </tr>
-                        <tr>
-                        
-                    </tbody>
-                </table>
-                <div class="description">${clickedElement.description}</div>`;
-                $(".inventory-right-holder").append(block);
-            }
-
-        });
+        
     }
 
     getInventory(items){
@@ -78,15 +38,17 @@ export class Item {
     addInInventory(id, qty) {
         const itemId = parseInt(id);
         const quantity = parseInt(qty);
+        console.log('adding',id,qty)
         const existingItem = this.inventoryStorage.find(item => item.id === itemId);
 
         if (existingItem) {
-            existingItem.quantity = quantity;
+            existingItem.quantity += quantity;
         } else {
             this.inventoryStorage.push({ "id": itemId, "quantity": quantity });
         }
-        console.log(this.inventoryStorage);
+        console.log("after added",this.inventoryStorage);
         localStorage.setItem('inventory', JSON.stringify(this.inventoryStorage));
+
         this.inventoryStorage = JSON.parse(localStorage.getItem('inventory')) || [];
     }
 
@@ -103,12 +65,103 @@ export class Item {
             } else if (quantity === existingItem.quantity) {
                 this.inventoryStorage.splice(itemIndex, 1);
             } else {
-                alert("cannot remove move items than u have");
+                Swal.fire('You do not have Enough items!!!');
+                return false;
             }
 
             localStorage.setItem('inventory', JSON.stringify(this.inventoryStorage));
             this.inventoryStorage = JSON.parse(localStorage.getItem('inventory')) || [];
+            return true;
+        } else {
+            Swal.fire('You do not have that item!!!');
+            return false;
         }
+    }
+
+    useCharacterConsumable(id,characterId){
+        var usedItem = this.inventory.find(function (element) {
+            return element.id === id;
+        });
+
+        const characters = JSON.parse(localStorage.getItem("characters"));
+        const character = characters.find(character => character.id === parseInt(characterId));
+
+        switch(usedItem.type){
+            case 'heal':
+                if(character.stats.currentHp < character.stats.health){
+                    character.stats.currentHp += usedItem.amount;
+                    if(character.stats.currentHp > character.stats.health){
+                        character.stats.currentHp = character.stats.health;
+                    }
+                }
+                animateHeal(character.id);
+                const updatedCharacters = characters.map(c => {
+                    if (c.id === characterId) {
+                        return character;
+                    }
+                    return c;
+                });
+                
+                localStorage.setItem("characters", JSON.stringify(updatedCharacters));
+                console.log(JSON.parse(localStorage.getItem('characters')))
+                break;
+
+        }  
+        
+        this.removeFromInventory(id,1);  
+    }    
+
+
+    useWorldConsumable(id,world){
+        let towns;
+        var usedItem = this.inventory.find(function (element) {
+            return element.id === id;
+        });
+        switch(usedItem.type){
+            case 'warp_town':
+                $(".towns-list").empty();
+                $("#waypoint-confirmation-modal").modal('toggle');
+                towns = JSON.parse(localStorage.getItem('towns'));
+                towns.forEach(town => {
+                        let gold_cost = 0;
+                        $(".towns-list").append(`
+                            <div class="border border-1 m-1 p-2 town-block">
+                                <div class="fs-6">(${town.id})</div>
+                                <div>${town.name} <span class="float-end">
+                                    <span class="icon gold-icon col-2">
+                                        <img src="../sprites/Golden Coin.png">
+                                        <span>${gold_cost}</span>
+                                    </span>
+                                </div>
+                                <div><button class='btn btn-primary teleport-btn' id="teleport-${town.id}-${gold_cost}">Teleport</button></div>
+                            </div>
+                        `);
+                    
+                });
+                break;    
+
+            case "warp_nearest_town":
+                let nearestTown;
+                let lowestGoldCost = Infinity; 
+                towns = JSON.parse(localStorage.getItem('towns'));
+                towns.forEach(town => {
+                    const gold_cost = Math.ceil(distanceFormula(town.coordinates, { x: parseInt(world.player.coordinates.x), z: parseInt(world.player.coordinates.z) }) / 2);
+                    if (gold_cost < lowestGoldCost) {
+                        lowestGoldCost = gold_cost;
+                        nearestTown = town;
+                    }
+                });
+                if (nearestTown) {
+                    world.coordinates.x = nearestTown.coordinates.x;
+                    world.coordinates.z = nearestTown.coordinates.z;
+        
+                    world.player.x = nearestTown.position.x;
+                    world.player.z = nearestTown.position.z;
+                } 
+                break;
+        }
+
+        this.removeFromInventory(id,1);
     }
 
 }

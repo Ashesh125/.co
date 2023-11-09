@@ -11,13 +11,15 @@
     </style>
     <script src="../scripts/jquery/jquery.min.js"></script>
     <script src="../scripts/animejs/anime.min.js"></script>
+    <link rel="stylesheet" href="../../node_modules/sweetalert2/dist/sweetalert2.min.css">
     <script type="module" src="../scripts/world/Constants.js"></script>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </head>
 
 <body>
-    <audio controls class="d-none" id="audio"><source id="audio-source" src="" type="audio/mpeg"></audio>
+
     <div class="container-main" id="container">
         <div class="chunk-row" id="chunk-row-0">
             <div class="chunk" id="chunk-1"></div>
@@ -46,7 +48,7 @@
                 <div class="icon menu-icon border border-2 border-dark m-1">
                     <img src="../sprites/Book 2.png">
                 </div>
-                <div class="icon menu-icon border border-2 border-dark m-1">
+                <div class="icon menu-icon border border-2 border-dark m-1" id="inventory-button" data-toggle="tooltip" data-placement="top" title="Inventory">
                     <img src="../sprites/Bag.png">
                 </div>
                 <div class="icon menu-icon border border-2 border-dark m-1">
@@ -63,7 +65,7 @@
                         /
                       </a>
                 </div>
-            </div>
+            
         </div>
     </div>
     <div class="offcanvas offcanvas-sm offcanvas-bottom custom-offcanvas" tabindex="-1" id="command" aria-labelledby="offcanvasExampleLabel">
@@ -72,6 +74,87 @@
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
     </div>
+    
+    <div class="modal" id="POIModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content p-5">
+                <div class="modal-header d-flex justify-content-center">
+                    <h3 class="modal-title" id="POIname"></h3>
+                </div>
+                <div class="modal-body poi-modal-body d-flex justify-content-center">
+                    <div class="POI-chunk" id="POI-chunk">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- modal for healer -->
+    <div class="modal" id="healer-modal" tabindex="-1" aria-labelledby="healer-modal" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="healer-name"></h3>
+                    <span class="fs-10">(Healer)</span>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Do You Want To Heal??
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Yes</button>
+                  </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- modal for merchant -->
+    <div class="modal" id="merchant-modal" tabindex="-1" aria-labelledby="merchant-modal" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="merchant-name"></h3>
+                    <span class="fs-10">(Merchant)</span>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body ">
+                    <div id="dialogue-merchant"></div>
+                    <input type="hidden" id="selling-item-price">
+                    <input type="hidden" id="selling-item-id">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="buy-from-merchant">Buy</button>
+                  </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- modal for guild -->
+    <div class="modal" id="guild-modal" tabindex="-1" aria-labelledby="guild-modal" aria-hidden="true">
+        <div class="modal-dialog  modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="guild-name"></h3>
+                    <span class="fs-10">(Guild Master)</span>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="dialogue-guild"></div>
+                    <input type="hidden" id="buying-item-price">
+                    <input type="hidden" id="buying-item-id">
+                    <input type="hidden" id="buying-item-qty">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="sell-to-guild">Yes</button>
+                  </div>
+            </div>
+        </div>
+    </div>
+
     <div class="modal fade" id="inventory-modal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content text-center">
@@ -95,13 +178,20 @@
                     </div>
                     <div class="inventory-content">
                         <h5 class="inventory-title my-4">
-                            Inventory
+                            Inventory Detail
                         </h5>
                         <div class="inventory-holder">
-                            <div class="inventory-right-holder">
+                            <div class="inventory-right-holder px-3 py-1">
+                             
+                            </div>   
+                            <div class="dropup-center dropup ">
+                                <button class="btn btn-secondary use-item-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                  Use
+                                </button>
+                                <ul class="dropdown-menu character-list-2">
+                                </ul>
+                              </div>
 
-
-                            </div>
                         </div>
 
                     </div>
@@ -179,12 +269,12 @@
                                             <td>
                                                 <div class="bonus-detail d-flex justify-content-between ">
                                                     <div class="bonus-img m-auto">
-                                                        <img src="../images/defence.png">
+                                                        <img src="../images/defense.png">
                                                     </div>
                                                     <div class="bonus-data m-auto">
-                                                        DEFENCE
+                                                        defense
                                                     </div>
-                                                    <div class="bonus-rank p-1 bg-white m-auto" id="defence-stat">
+                                                    <div class="bonus-rank p-1 bg-white m-auto" id="defense-stat">
                                                         7.5
                                                     </div>
                                                 </div>
@@ -261,77 +351,10 @@
             </div>
         </div>
     </div>
-    <div class="modal" id="POIModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl modal-dialog-centered">
-            <div class="modal-content p-5">
-                <div class="modal-header d-flex justify-content-center">
-                    <h3 class="modal-title" id="POIname"></h3>
-                </div>
-                <div class="modal-body poi-modal-body d-flex justify-content-center">
-                    <div class="POI-chunk" id="POI-chunk">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="menuModal" tabindex="-1" aria-labelledby="menuModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-sm modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="modal-title" id="name">MENU</h3>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body d-flex flex-column justify-content-center ">
-                    <button type="button" class="btn btn-primary save-button m-2" id="save-button-menu">Save</button>
-                    <button type="button" class="btn btn-primary save-quit-button m-2" id="save-quit-button-menu">Save and Quit</button>
-                    <button type="button" class="btn btn-primary quit-button m-2" id="quit-button-menu">Quit</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="menuModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-md modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="modal-title" id="name">Confirmation</h3>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body d-flex flex-column justify-content-center">
-                    Exit without Saving ???
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary exit-button">Exit</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="pop-up" tabindex="-1" aria-labelledby="pop-upModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-md modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="modal-title" id="name">ALERT</h3>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body d-flex flex-column justify-content-center" id="pop-up-content">
 
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- <script type="module" src="../dist/bundle.js"></script> -->
-    <div class="offcanvas offcanvas-bottom" tabindex="-1" id="command" aria-labelledby="offcanvasBottomLabel">
-        <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasBottomLabel">Offcanvas bottom</h5>
-            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body small">
-            ...
-    </div>  
-    <div class="modal modal-md" id="waypoint-confirmation-modal" tabindex="-1" aria-labelledby="waypoint-confirmation-modal" aria-hidden="true">
+
+    <!-- modal for waypoint -->
+    <div class="modal" id="waypoint-confirmation-modal" tabindex="-1" aria-labelledby="waypoint-confirmation-modal" aria-hidden="true">
         <div class="modal-dialog modal-md modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -344,9 +367,38 @@
             </div>
         </div>
     </div>
+
+    <div class="modal" id="menuModal" tabindex="-1" aria-labelledby="menuModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="name">MENU</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body d-flex flex-column justify-content-center ">
+                    <audio class="w-100" controls id="audio"><source id="audio-source" src="" type="audio/mpeg"></audio>
+                    <button type="button" class="btn btn-primary save-button m-2" id="save-button-menu">Save</button>
+                    <button type="button" class="btn btn-primary save-quit-button m-2" id="save-quit-button-menu">Save and Quit</button>
+                    <button type="button" class="btn btn-primary quit-button m-2" id="quit-button-menu">Quit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="offcanvas offcanvas-bottom" tabindex="-1" id="command" aria-labelledby="offcanvasBottomLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasBottomLabel">Offcanvas bottom</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body small">
+            ...
+        </div>
+    </div>  
+
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
 <script type="module" src="../scripts/world/main.js"></script>
 </html>
 <style>
@@ -362,6 +414,11 @@
     
     .poi-modal-body {
         height: 700px;
+        display: grid;
+        grid-template-columns: repeat(11, 1fr);
+        grid-template-rows: repeat(11, 1fr);
+        grid-column-gap: 0px;
+        grid-row-gap: 0px;
     }
     
     .container-main {
@@ -382,17 +439,22 @@
     }
     
     .chunk-row {
-        display: flex;
-        justify-content: center;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(1, 1fr);
+        grid-column-gap: 0px;
+        grid-row-gap: 0px;
         width: 1800px;
-        flex-direction: row;
     }
     
     .chunk {
         height: 600px;
         width: 600px;
-        display: flex;
-        flex-wrap: wrap;
+        display: grid;
+        grid-template-columns: repeat(10, 1fr);
+        grid-template-rows: repeat(10, 1fr);
+        grid-column-gap: 0px;
+        grid-row-gap: 0px;
     }
     
     #chunk-row-0 {
@@ -429,26 +491,14 @@
     }
     
     .forest {
-        background-image: url('../images/tiles/tree.png');
+        background-image: url('../images/tiles/trees.png');
     }
     
     .manxe {
-        background-image: url('../sprites/NPCs/q.png');
-        background-size: 560px 480px;
-        animation: play-NPC-sprite 1s steps(3) infinite;
         width: 60px;
         height: 60px;
     }
 
-
-    @keyframes play-NPC-sprite {
-        from {
-            background-position: 0 0;
-        }
-        to {
-            background-position: -140px 0; /* Adjust the value based on the total width of your sprite (frame width * number of frames) */
-        }
-    }
     
     .tile {
         width: 60px;
@@ -469,21 +519,74 @@
             /* Adjust the value based on the total width of your sprite (frame width * number of frames) */
         }
     }
+
+    @keyframes play-NPC-sprite {
+        from {
+            background-position: 0 0;
+        }
+        to {
+            background-position: 180px 0;
+            /* Adjust the value based on the total width of your sprite (frame width * number of frames) */
+        }
+    }
     
-    .grass+.player {
+    .grass.player {
         z-index: 5;
         background-image: url('../sprites/player2.png');
         background-size: 240px 60px;
         animation: play-sprite 1.2s steps(4) infinite;
     }
     
+    .forest.player{
+        z-index: 5;
+        background-image: url('../sprites/player-trees.png');
+        background-size: 240px 60px;
+        animation: play-sprite 1.2s steps(4) infinite;
+    }
+
+    .sand.player{
+        z-index: 5;
+        background-image: url('../sprites/player-sand.png');
+        background-size: 240px 60px;
+        animation: play-sprite 1.2s steps(4) infinite;
+    }
+
+    .dirt.player{
+        z-index: 5;
+        background-image: url('../sprites/player-dirt.png');
+        background-size: 240px 60px;
+        animation: play-sprite 1.2s steps(4) infinite;
+    }
+
+    .tile.gate.player{
+        z-index: 5;
+        background-image: url('../sprites/player2.png');
+        background-size: 240px 60px;
+        animation: play-sprite 1.2s steps(4) infinite;
+    }
+
     .player {
         z-index: 5;
         background-image: url('../sprites/player2.png');
         background-size: 240px 60px;
         animation: play-sprite 1.2s steps(4) infinite;
     }
+
+    .healer.manxe{
+        background-image: url('../sprites/test/13.png');
+        animation: play-NPC-sprite 1.4s steps(3) infinite;
+    }
     
+    .merchant.manxe{
+        background-image: url('../sprites/test/12.png');
+        animation: play-NPC-sprite 1.4s steps(3) infinite;
+    }
+
+    .guild.manxe{
+        background-image: url('../sprites/test/11.png');
+        animation: play-NPC-sprite 1.4s steps(3) infinite;
+    }
+
     .exit {
         background-image: url("../images/tiles/dirt.png");
     }
@@ -514,7 +617,6 @@
         width: 60px;
         height: 60px;
         border-radius: 5px;
-        margin: 0px 6px 6px 9px;
         background-image: url('../images/tiles/item-holder.png');
     }
     
@@ -687,5 +789,18 @@
         to {
             background-position: 60px 1px; /* Adjust the value based on the total width of your sprite (frame width * number of frames) */
         }
+    }
+    
+    .fs-10{
+        font-size: 16px;
+    }
+
+    .character-list-2 li:hover{
+        background-color: #53505a;
+    }
+
+    .progress .progress-bar {
+        -webkit-transition: none !important;
+        transition: none !important;
     }
 </style>

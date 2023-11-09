@@ -45,15 +45,13 @@ export function readFileContents(path) {
         });
 }
 
-export function spiralTraverseGraph(chunk_id) {
+export function spiralTraverseGraph(chunk_id,x,z) {
     const directions = [
         [0, 1],
         [1, 0],
         [0, -1],
         [-1, 0]
     ]; // Right, Down, Left, Up
-    let x = 5;
-    let z = 5;
     let directionIndex = 0;
     let steps = 1;
     let count = 0;
