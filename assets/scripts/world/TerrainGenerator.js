@@ -47,8 +47,7 @@ export class TerrainGenerator {
                     div.classList.add('sand');
                 } else if (h.toFixed(4) == level[TileType.Port.value]) {
                     div.classList.add('town');
-                    div.classList.add('town-' + (h.toFixed(5) * 100000));
-
+                    div.classList.add('town-'+ (h.toFixed(8)*100000000));
                 } else if (h < level[TileType.Grass.value]) {
                     div.classList.add('grass');
                 } else if ((h.toFixed(4)) == level[TileType.Town.value]) {

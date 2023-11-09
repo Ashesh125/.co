@@ -6,59 +6,108 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="../scripts/jquery/jquery.min.js"></script>
     <title>Document</title>
+    <style>
+        #maze {
+            display: grid;
+            grid-template-columns: repeat(11, 60px);
+            /* Adjust based on your maze size */
+            grid-template-rows: repeat(11, 60px);
+            /* Adjust based on your maze size */
+            /* Gap between cells */
+            border: 1px solid black;
+        }
+        
+        .tile{
+            width: 60px;
+            height: 60px;
+        }
+
+        .town {
+            width: 40px;
+            height: 40px;
+            background-color: white;
+        }
+        
+        .dirt {
+            background-color: brown;
+        }
+        
+        .grass {
+            background-color: green;
+        }
+        
+        .water {
+            background-color: blue;
+        }
+        
+        .gate {
+            background-color: yellow;
+        }
+
+        .waypoint{
+            background-color: red;
+        }
+    </style>
+
 </head>
 
 <body>
+    <div id="maze">
+        <!-- Your 2D grid representation of the towns (div elements for cells) -->
+        <!-- You can add classes 'town' for valid towns and 'wall' for blocked cells -->
+    </div>
+    <script>
+        $(document).ready(function() {
+            const layout = [
+            ["X","X","X","X","X","X","X","X","X","X","X"],
+            ["X","G","S","S","G","G","G","G","G","G","X"],
+            ["X","G","W","G","W","G","G","G","G","G","X"],
+            ["X","G","W","G","W","W","G","G","G","G","X"],
+            ["X","W",123121,"G","W","P","G","G","G","G","X"],
+            ["X","D","G","G","W","G","G",15821,15821,"G","X"],
+            ["X","G","W","G","W","G","G","G","G","G","X"],
+            ["X","W","W","G","G","G","G","G","G","G","X"],
+            ["X","W","W","W","W","G","G","G","G","G","X"],
+            ["X","G","W","G","W","W","W","W","W","W","W"],
+            ["X","X","X","X","X","X","X","X","X","X","X"]
+          ]
+            let type = "";
+          for(let i = 0;i<layout.length;i++){
+            for(let j = 0;j<layout[i].length;j++){
+                console.log(layout[i][j])
+                switch(layout[i][j]){
+                    case "W":
+                        type = "water";
+                        break;
+
+                    case "G":
+                        type = "grass";
+                        break;
+
+                    case "P":
+                        type = "waypoint";
+                        break;
+
+                    case "X":
+                    case "D":
+                        type = "dirt";
+                        break; 
+                    
+                    case "S":
+                        type = "gate";
+                        break;    
+                    default:
+                        type = "manxe"
+                        break;
+                }
+                $("#maze").append(`<div class="tile ${type}"></div>`);
+            }
+          }
+        });
+    </script>
+
 
 </body>
-<script>
-    $(document).ready(function() {
-        var array = [{
-            "id": "1",
-            "name": "suja mahrjan",
-            "gender": "female",
-            "stats": {
-                "attack": "3.3",
-                "health": "2.3",
-                "crit": "2.3",
-            }
-        }, {
-            "id": "4",
-            "name": "rass mahrjan",
-            "gender": "female",
-            "stats": {
-                "attack": "2.3",
-                "health": "2.3",
-                "crit": "2.3",
-            }
-        }, {
-            "id": "2",
-            "name": "kriti mahrjan",
-            "gender": "female",
-            "stats": {
-                "attack": "1.2",
-                "health": "2.3",
-                "crit": "2.3",
-            }
-        }];
 
-        console.log(sortById(array));
-    });
-
-    function sortById(array) {
-        let arr = array; // Get the array from the class property
-        let length = arr.length;
-        for (let i = 0; i < length; i++) {
-            let j = i - 1;
-            let current = arr[i];
-            while (j > -1 && parseInt(arr[j].stats.attack) > parseInt(current.stats.attack)) {
-                arr[j + 1] = arr[j];
-                j = j - 1;
-            }
-            arr[j + 1] = current;
-        }
-        return arr;
-    }
-</script>
 
 </html>

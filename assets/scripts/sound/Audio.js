@@ -14,6 +14,10 @@ export class Audio{
             case "world":
                 src = "../music/route-110.mp3";
                 break;
+
+            case "combat":
+                src = "../music/battle-ost.mp3"
+                break;
         }
         this.audioElement.attr("src",src);
         console.log(this.audioElement[0]);

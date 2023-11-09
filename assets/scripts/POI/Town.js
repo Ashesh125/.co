@@ -47,7 +47,7 @@ export class Town {
 
     async generateNewTown(seed) {
         // let rand = parseInt(Math.abs(seed).toString().charAt(0));        
-        let rand = getRandomInt(0, 7);
+        let rand = getRandomInt(0,6);  
         let layouts = await readFileContents("../json/town_layouts.json");
 
         return layouts[rand].layout;
@@ -70,7 +70,6 @@ export class Town {
                 }
             }
         }
-
         return false;
     }
 
@@ -82,15 +81,35 @@ export class Town {
 
     generate() {
         var b = document.getElementById('POI-chunk');
-
+        let tileType = '';
         for (var x = 0; x < this.layout.length; x++) {
             for (var z = 0; z < this.layout[x].length; z++) {
                 var div = document.createElement('div');
                 div.classList.add('tile');
-                div.innerHTML = this.id + '/' + x + ',' + z;
-                div.classList.add(this.getTileType(this.layout[x][z]));
+                tileType = this.getTileType(this.layout[x][z]);
 
+                if(tileType == 'manxe'){
+                    let idParts =  this.layout[x][z].match(/.{1,2}/g);
+                    let special = idParts[3].split('');
+                    switch(special[0]){
+                        case "1":
+                            div.classList.add("merchant");
+                            break;
+
+                        case "2":    
+                            div.classList.add("healer");
+                            break;
+
+                        case "3":
+                            div.classList.add("guild");
+                            break;
+                    }
+                    div.setAttribute('data-number', this.layout[x][z]);
+                }
                 div.id = this.id + '/' + x + ',' + z;
+                
+                // div.innerHTML = this.id+'/'+x+','+z;
+                div.classList.add(tileType);
                 b.appendChild(div);
             }
         }
@@ -117,12 +136,20 @@ export class Town {
                 break;
 
             case 'G':
-                return "gate";
+                return "grass";
                 break;
 
             case 'X':
                 return "exit";
                 break;
+
+            case "P":
+                return "waypoint";
+                break;
+
+            case "S":
+                return "gate";
+                break;    
 
             default:
                 return 'manxe';
@@ -130,14 +157,11 @@ export class Town {
         }
     }
 
-    placePlayerinGate() {
-        //remove player from world
-        console.log(this.player);
+    placePlayerinGate(){
         $(".tile").removeClass("player");
         this.player.inPOI = this;
-        var pos = this.findValueIn2DArray(this.layout, "G");
+        var pos = this.findValueIn2DArray(this.layout, "S");
         let tile = new Tile(this.id, pos.x, pos.z);
-        console.log(this.id);
         tile.addClass('player');
         this.player.tile = new Tile(this.id, pos.x, pos.z);
     }
@@ -156,31 +180,20 @@ export class Town {
         for (let i = 0; i < arr.length; i++) {
             for (let j = 0; j < arr[i].length; j++) {
                 if (arr[i][j] === value) {
-                    console.log(i, j);
-                    return { x: i, z: j }; // value found
+                    return {x: i,z: j}; // value found
                 }
             }
         }
     }
-
-    addNewVisitedTown() {
+    addNewVisitedTown(){
         const existingTowns = JSON.parse(localStorage.getItem('towns'));
         const newTown = this.createTownObject();
-
-
-
-
         existingTowns.push(newTown);
         localStorage.setItem('towns', JSON.stringify(existingTowns));
         this.onEnterTown(existingTowns);
-
-
-
     }
 
     onEnterTown(existingTowns) {
-
-
         const calculateDistance = (x1, z1, x2, z2) => {
             // Distance formula: sqrt((x2 - x1)^2 + (z2 - z1)^2)
             return Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((z2 - z1), 2));
@@ -255,5 +268,4 @@ export class Town {
             "position": this.location
         }
     }
-
 }

@@ -45,15 +45,13 @@ export function readFileContents(path) {
         });
 }
 
-export function spiralTraverseGraph(chunk_id) {
+export function spiralTraverseGraph(chunk_id,x,z) {
     const directions = [
         [0, 1],
         [1, 0],
         [0, -1],
         [-1, 0]
     ]; // Right, Down, Left, Up
-    let x = 5;
-    let z = 5;
     let directionIndex = 0;
     let steps = 1;
     let count = 0;
@@ -139,4 +137,10 @@ export function generateRandomNumber01() {
        export function getRandomStat(min, max) {
         const d = 10;
         return Math.round((Math.random() * (max * d - min * d) + min * d)) / d;
+      }
+
+      export function distanceFormula(pointA,pointB){
+        const deltaX = Math.abs(pointB.x - pointA.x);
+        const deltaZ = Math.abs(pointB.z - pointA.z);
+        return Math.sqrt(deltaX * deltaX + deltaZ * deltaZ);
       }

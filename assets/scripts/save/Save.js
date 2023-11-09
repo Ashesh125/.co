@@ -79,13 +79,14 @@ export class Save{
         return {
             "id": this.game.id,
             "name": this.game.name,
-            "gold": this.game.gold,
+            "gold": world.player.gold,
             "party_members": this.game.party,
           
             "world": {
                 "seed": this.game.seed,
                 "player": {
                   "position": world.coordinates,
+                  "chunk_id": world.player.chunk_id,
                   "tile":{
                       "x":world.player.x,
                       "z":world.player.z
