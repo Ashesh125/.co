@@ -16,7 +16,7 @@ export class World {
         this.renderDistance = 1;
         this.loadDistance = 2;
         this.coordinates = { x: 50000, z: 50000 };
-        this.player = new Player({x:5, z:5 ,coordinates:this.coordinates},this.audio);
+        this.player = new Player({ x: 5, z: 5, coordinates: this.coordinates }, this.audio);
         this.currentPOI = null;
         this.item = new Item();
         this.encounter = false;
@@ -55,7 +55,7 @@ export class World {
         }
         if (this.loadDistance > this.renderDistance) {
             this.loadDistance = 2
-        }            
+        }
     }
 
     placePlayer() {
@@ -64,8 +64,8 @@ export class World {
         //if current data doesnt exists
         if (this.player.chunk_id) {
             let tile = new Tile(this.player.chunk_id, this.player.x, this.player.z);
-            if(tile.checkTile("water")){
-                let freePosition = spiralTraverseGraph(5,this.player.x,this.player.z);
+            if (tile.checkTile("water")) {
+                let freePosition = spiralTraverseGraph(5, this.player.x, this.player.z);
                 tile = new Tile(5, freePosition.x, freePosition.z);
                 this.player.chunk_id = 5;
                 this.player.x = freePosition.x;
@@ -78,7 +78,7 @@ export class World {
             //check 5,5 is suitable
             this.player.chunk_id = 5;
             let id = 5;
-            let freePosition = spiralTraverseGraph(id,5,5);
+            let freePosition = spiralTraverseGraph(id, 5, 5);
             let tile = new Tile(id, freePosition.x, freePosition.z);
             tile.addClass('player');
             this.player.chunk_id = id;
@@ -136,7 +136,7 @@ export class World {
                         }
 
                         this.placePlayer();
-                        if(this.encounter){this.checkEncounter()};
+                        if (this.encounter) { this.checkEncounter() };
                     }
                     break;
 
@@ -148,7 +148,7 @@ export class World {
                         }
 
                         this.placePlayer();
-                        if(this.encounter){this.checkEncounter()};
+                        if (this.encounter) { this.checkEncounter() };
                     }
                     break;
 
@@ -160,7 +160,7 @@ export class World {
                         }
 
                         this.placePlayer();
-                        if(this.encounter){this.checkEncounter()};
+                        if (this.encounter) { this.checkEncounter() };
                     }
                     break;
 
@@ -171,7 +171,7 @@ export class World {
                             this.loadChunks();
                         }
                         this.placePlayer();
-                        if(this.encounter){this.checkEncounter()};
+                        if (this.encounter) { this.checkEncounter() };
                     }
                     break;
             }
@@ -213,37 +213,37 @@ export class World {
             anime({
                 targets: '.chunk',
                 scale: [
-                  {value: .1, easing: 'easeOutSine', duration: 500},
-                  {value: 5, easing: 'easeInOutQuad', duration: 1200}
+                    { value: .1, easing: 'easeOutSine', duration: 500 },
+                    { value: 5, easing: 'easeInOutQuad', duration: 1200 }
                 ],
-                delay: anime.stagger(200, {grid: [3, 3], from: 'center'}),
+                delay: anime.stagger(200, { grid: [3, 3], from: 'center' }),
                 complete: function(anim) {
                     // const save = new Save(this);
                     // save.saveGame(this);
                     window.location.href = "./battlefield.html";
-                  }
-              });
+                }
+            });
         }
     }
 
-    buy(value){
-        if(value < this.player.gold){
+    buy(value) {
+        if (value < this.player.gold) {
             this.player.gold -= parseInt(value);
-            $("#gold").val(this.player.gold);    
-            this.item.addInInventory( $('#selling-item-id').val() ,1);
+            $("#gold").val(this.player.gold);
+            this.item.addInInventory($('#selling-item-id').val(), 1);
 
             $("#merchant-modal").modal("toggle");
-        }else{
+        } else {
             Swal.fire('Not enough Gold!!!');
         }
     }
 
-    sell(value){
-        if(this.item.removeFromInventory( $('#buying-item-id').val() ,$("#buying-item-qty").val())){
+    sell(value) {
+        if (this.item.removeFromInventory($('#buying-item-id').val(), $("#buying-item-qty").val())) {
             this.player.gold += parseInt(value);
-            $("#gold").val(this.player.gold);        
+            $("#gold").val(this.player.gold);
         }
-        
+
         $("#guild-modal").modal("toggle");
     }
 }
