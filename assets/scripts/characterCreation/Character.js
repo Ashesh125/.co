@@ -69,9 +69,9 @@ export class Character {
         });
     }
 
-    saveCharacterData() {
+    saveCharacterData(name) {
         localStorage.setItem("characters", JSON.stringify(this.characterArr));
-        localStorage.setItem("party", party);
+        localStorage.setItem("party", name);
         location.href = "./seedGeneration.html";
     }
 
@@ -81,7 +81,7 @@ export class Character {
         const saying = await this.getSaying(13);
         let health = this.calculateStat("health", type);
         var character = {
-            'id': getRandomInt(1,9999999),
+            'id': getRandomInt(1, 9999999),
             "name": first_name + " " + last_name,
             "gender": "male",
             "sprite": "asd",

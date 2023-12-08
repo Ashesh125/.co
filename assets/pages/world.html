@@ -65,347 +65,366 @@
                         /
                       </a>
                 </div>
-            
+
+            </div>
         </div>
-    </div>
-    <div class="offcanvas offcanvas-sm offcanvas-bottom custom-offcanvas" tabindex="-1" id="command" aria-labelledby="offcanvasExampleLabel">
-        <div class="offcanvas-header">
-            <input type="text" class="form-control " id="command-input">
-            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        <div class="offcanvas offcanvas-sm offcanvas-bottom custom-offcanvas" tabindex="-1" id="command" aria-labelledby="offcanvasExampleLabel">
+            <div class="offcanvas-header">
+                <input type="text" class="form-control " id="command-input">
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
         </div>
-    </div>
-    
-    <div class="modal" id="POIModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl modal-dialog-centered">
-            <div class="modal-content p-5">
-                <div class="modal-header d-flex justify-content-center">
-                    <h3 class="modal-title" id="POIname"></h3>
-                </div>
-                <div class="modal-body poi-modal-body d-flex justify-content-center">
-                    <div class="POI-chunk" id="POI-chunk">
+
+        <div class="modal" id="POIModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-dialog-centered">
+                <div class="modal-content p-5">
+                    <div class="modal-header d-flex justify-content-center">
+                        <h3 class="modal-title" id="POIname"></h3>
+                    </div>
+                    <div class="modal-body poi-modal-body d-flex justify-content-center">
+                        <div class="POI-chunk" id="POI-chunk">
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
 
-    <!-- modal for healer -->
-    <div class="modal" id="healer-modal" tabindex="-1" aria-labelledby="healer-modal" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="modal-title" id="healer-name"></h3>
-                    <span class="fs-10">(Healer)</span>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <!-- modal for healer -->
+        <div class="modal" id="healer-modal" tabindex="-1" aria-labelledby="healer-modal" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="healer-name"></h3>
+                        <span class="fs-10">(Healer)</span>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Do You Want To Heal??
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Yes</button>
+                    </div>
                 </div>
-                <div class="modal-body">
-                    Do You Want To Heal??
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Yes</button>
-                  </div>
             </div>
         </div>
-    </div>
-    
-    <!-- modal for merchant -->
-    <div class="modal" id="merchant-modal" tabindex="-1" aria-labelledby="merchant-modal" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="modal-title" id="merchant-name"></h3>
-                    <span class="fs-10">(Merchant)</span>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+        <!-- modal for merchant -->
+        <div class="modal" id="merchant-modal" tabindex="-1" aria-labelledby="merchant-modal" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="merchant-name"></h3>
+                        <span class="fs-10">(Merchant)</span>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body ">
+                        <div id="dialogue-merchant"></div>
+                        <input type="hidden" id="selling-item-price">
+                        <input type="hidden" id="selling-item-id">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="buy-from-merchant">Buy</button>
+                    </div>
                 </div>
-                <div class="modal-body ">
-                    <div id="dialogue-merchant"></div>
-                    <input type="hidden" id="selling-item-price">
-                    <input type="hidden" id="selling-item-id">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="buy-from-merchant">Buy</button>
-                  </div>
             </div>
         </div>
-    </div>
 
-    <!-- modal for guild -->
-    <div class="modal" id="guild-modal" tabindex="-1" aria-labelledby="guild-modal" aria-hidden="true">
-        <div class="modal-dialog  modal-lg modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="modal-title" id="guild-name"></h3>
-                    <span class="fs-10">(Guild Master)</span>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <!-- modal for guild -->
+        <div class="modal" id="guild-modal" tabindex="-1" aria-labelledby="guild-modal" aria-hidden="true">
+            <div class="modal-dialog  modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="guild-name"></h3>
+                        <span class="fs-10">(Guild Master)</span>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="dialogue-guild"></div>
+                        <input type="hidden" id="buying-item-price">
+                        <input type="hidden" id="buying-item-id">
+                        <input type="hidden" id="buying-item-qty">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="sell-to-guild">Yes</button>
+                    </div>
                 </div>
-                <div class="modal-body">
-                    <div id="dialogue-guild"></div>
-                    <input type="hidden" id="buying-item-price">
-                    <input type="hidden" id="buying-item-id">
-                    <input type="hidden" id="buying-item-qty">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="sell-to-guild">Yes</button>
-                  </div>
             </div>
         </div>
-    </div>
 
-    <div class="modal fade" id="inventory-modal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content text-center">
-                <div class="modal-header text-center ">
-                    <h3 class="modal-title text-center w-100" id="name">MENU</h3>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <!-- ---------------------inventory content------------- -->
-                <div class="modal-body inventory-modal-body d-flex flex-wrap d-block p-1" id="inventory-body">
-                    <div class="inventory-content border-end">
-                        <h5 class="inventory-title my-4">
-                            Inventory
-                        </h5>
-                        <div class="inventory-holder">
-                            <div class="m-3 inventory-left-holder d-flex flex-wrap">
+        <div class="modal fade" id="inventory-modal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content text-center">
+                    <div class="modal-header text-center ">
+                        <h3 class="modal-title text-center w-100" id="name">MENU</h3>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <!-- ---------------------inventory content------------- -->
+                    <div class="modal-body inventory-modal-body d-flex flex-wrap d-block p-1 hidden" id="inventory-body">
+                        <div class="inventory-content border-end">
+                            <h5 class="inventory-title my-4">
+                                Inventory
+                            </h5>
+                            <div class="inventory-holder">
+                                <div class="m-3 inventory-left-holder d-flex flex-wrap">
+
+                                </div>
 
                             </div>
 
                         </div>
+                        <div class="inventory-content">
+                            <h5 class="inventory-title my-4">
+                                Inventory Detail
+                            </h5>
+                            <div class="inventory-holder">
+                                <div class="inventory-right-holder px-3 py-1">
 
-                    </div>
-                    <div class="inventory-content">
-                        <h5 class="inventory-title my-4">
-                            Inventory Detail
-                        </h5>
-                        <div class="inventory-holder">
-                            <div class="inventory-right-holder px-3 py-1">
-                             
-                            </div>   
-                            <div class="dropup-center dropup ">
-                                <button class="btn btn-secondary use-item-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                </div>
+                                <div class="dropup-center dropup ">
+                                    <button class="btn btn-secondary use-item-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                   Use
                                 </button>
-                                <ul class="dropdown-menu character-list-2">
-                                </ul>
-                              </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-                <!-- ---------------------profile content------------ -->
-                <div class="modal-body profile-modal-body d-flex flex-wrap d-none p-1" id="profile-body">
-                    <div class="profile-content">
-                        <div class="profile-title my-4">
-                            profile
-                        </div>
-                        <div class="profile-holder">
-                            <div class="profile-left-holder d-flex" id="profile-detail">
+                                    <ul class="dropdown-menu character-list-2">
+                                    </ul>
+                                </div>
 
                             </div>
 
                         </div>
 
                     </div>
-                    <div class="profile-content">
-                        <div class="profile-title my-4">
-                            profile
+                    <!-- ---------------------profile content------------ -->
+                    <div class="modal-body profile-modal-body d-flex flex-wrap d-none p-1" id="profile-body">
+                        <div class="profile-content">
+                            <div class="profile-title my-4">
+                                profile
+                            </div>
+                            <div class="profile-holder">
+                                <div class="profile-left-holder d-flex" id="profile-detail">
+
+                                </div>
+
+                            </div>
+
                         </div>
-                        <div class="profile-holder ">
-                            <div class="profile-detail d-flex" id="profile-detail-holder">
-                                <div class="profile-img m-4"></div>
+                        <div class="profile-content">
+                            <div class="profile-title my-4">
+                                profile
+                            </div>
+                            <div class="profile-holder ">
+                                <div class="profile-detail d-flex" id="profile-detail-holder">
+                                    <div class="profile-img m-4"></div>
 
-                                <div id="profile-form mt-4">
-                                    <div class="input-group input-group-sm my-2">
-                                        <input type="text" class="form-control character-data" id="username" readonly>
+                                    <div id="profile-form mt-4">
+                                        <div class="input-group input-group-sm my-2">
+                                            <input type="text" class="form-control character-data" id="username" readonly>
+                                        </div>
+
+                                        <div class="input-group input-group-sm my-2">
+                                            <input type="text" class="form-control character-data" id="gender" readonly>
+                                        </div>
+                                        <div class="input-group input-group-sm my-2">
+                                            <input type="text" class="form-control character-data" id="class-name" readonly>
+                                        </div>
                                     </div>
 
-                                    <div class="input-group input-group-sm my-2">
-                                        <input type="text" class="form-control character-data" id="gender" readonly>
-                                    </div>
-                                    <div class="input-group input-group-sm my-2">
-                                        <input type="text" class="form-control character-data" id="class-name" readonly>
+                                </div>
+                                <div class="stats-holder mb-2">
+                                    <div class="text-dark text-start mx-3 form-control-lg">STATS</div>
+                                    <div class="bonus-section mx-4 align-items-center">
+                                        <table class="table bonus-table">
+                                            <tr>
+                                                <td>
+                                                    <div class="bonus-detail d-flex justify-content-between" id="stats-detail">
+                                                        <div class="bonus-img m-auto" data-toggle="tooltip" data-placement="top" title="Hooray!">
+                                                            <img src="../images/iron_sword.png">
+                                                        </div>
+                                                        <div class="bonus-data m-auto">
+                                                            ATTACK
+                                                        </div>
+                                                        <div class="bonus-rank p-1 bg-white m-auto" id="attack-stat">
+                                                            7.5
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="bonus-detail d-flex justify-content-between ">
+                                                        <div class="bonus-img m-auto">
+                                                            <img src="../images/wooden.png">
+                                                        </div>
+                                                        <div class="bonus-data m-auto">
+                                                            CRIT
+                                                        </div>
+                                                        <div class="bonus-rank p-1 bg-white m-auto" id="crit-stat">
+                                                            7.5
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="bonus-detail d-flex justify-content-between ">
+                                                        <div class="bonus-img m-auto">
+                                                            <img src="../images/defense.png">
+                                                        </div>
+                                                        <div class="bonus-data m-auto">
+                                                            defense
+                                                        </div>
+                                                        <div class="bonus-rank p-1 bg-white m-auto" id="defense-stat">
+                                                            7.5
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="bonus-detail d-flex justify-content-between ">
+                                                        <div class="bonus-img m-auto">
+                                                            <img src="../images/boot.png">
+                                                        </div>
+                                                        <div class="bonus-data m-auto">
+                                                            AGILITY
+                                                        </div>
+                                                        <div class="bonus-rank p-1 bg-white m-auto" id="agility-stat">
+                                                            7.5
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="bonus-detail d-flex justify-content-between ">
+                                                        <div class="bonus-img m-auto">
+                                                            <img src="../images/speed.png">
+                                                        </div>
+                                                        <div class="bonus-data m-auto">
+                                                            SPEED
+                                                        </div>
+                                                        <div class="bonus-rank p-1 bg-white m-auto" id="speed-stat">
+                                                            7.5
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="bonus-detail d-flex justify-content-between ">
+                                                        <div class="bonus-img m-auto">
+                                                            <img src="../images/luck.png">
+                                                        </div>
+                                                        <div class="bonus-data m-auto">
+                                                            LUCK
+                                                        </div>
+                                                        <div class="bonus-rank p-1 bg-white m-auto" id="luck-stat">
+                                                            7.5
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="bonus-detail d-flex justify-content-between ">
+                                                        <div class="bonus-img m-auto">
+                                                            <img src="../images/health.png">
+                                                        </div>
+                                                        <div class="bonus-data m-auto ">
+                                                            HEALTH
+                                                        </div>
+                                                        <div class="bonus-rank p-1 bg-white m-auto" id="health-stat">
+                                                            7.5
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
                                     </div>
                                 </div>
 
                             </div>
-                            <div class="stats-holder mb-2">
-                                <div class="text-dark text-start mx-3 form-control-lg">STATS</div>
-                                <div class="bonus-section mx-4 align-items-center">
-                                    <table class="table bonus-table">
-                                        <tr>
-                                            <td>
-                                                <div class="bonus-detail d-flex justify-content-between" id="stats-detail">
-                                                    <div class="bonus-img m-auto" data-toggle="tooltip" data-placement="top" title="Hooray!">
-                                                        <img src="../images/iron_sword.png">
-                                                    </div>
-                                                    <div class="bonus-data m-auto">
-                                                        ATTACK
-                                                    </div>
-                                                    <div class="bonus-rank p-1 bg-white m-auto" id="attack-stat">
-                                                        7.5
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="bonus-detail d-flex justify-content-between ">
-                                                    <div class="bonus-img m-auto">
-                                                        <img src="../images/wooden.png">
-                                                    </div>
-                                                    <div class="bonus-data m-auto">
-                                                        CRIT
-                                                    </div>
-                                                    <div class="bonus-rank p-1 bg-white m-auto" id="crit-stat">
-                                                        7.5
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="bonus-detail d-flex justify-content-between ">
-                                                    <div class="bonus-img m-auto">
-                                                        <img src="../images/defense.png">
-                                                    </div>
-                                                    <div class="bonus-data m-auto">
-                                                        defense
-                                                    </div>
-                                                    <div class="bonus-rank p-1 bg-white m-auto" id="defense-stat">
-                                                        7.5
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="bonus-detail d-flex justify-content-between ">
-                                                    <div class="bonus-img m-auto">
-                                                        <img src="../images/iron_sword.png">
-                                                    </div>
-                                                    <div class="bonus-data m-auto">
-                                                        AGILITY
-                                                    </div>
-                                                    <div class="bonus-rank p-1 bg-white m-auto" id="agility-stat">
-                                                        7.5
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="bonus-detail d-flex justify-content-between ">
-                                                    <div class="bonus-img m-auto">
-                                                        <img src="../images/speed.png">
-                                                    </div>
-                                                    <div class="bonus-data m-auto">
-                                                        SPEED
-                                                    </div>
-                                                    <div class="bonus-rank p-1 bg-white m-auto" id="speed-stat">
-                                                        7.5
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="bonus-detail d-flex justify-content-between ">
-                                                    <div class="bonus-img m-auto">
-                                                        <img src="../images/iron_sword.png">
-                                                    </div>
-                                                    <div class="bonus-data m-auto">
-                                                        LUCK
-                                                    </div>
-                                                    <div class="bonus-rank p-1 bg-white m-auto" id="luck-stat">
-                                                        7.5
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="bonus-detail d-flex justify-content-between ">
-                                                    <div class="bonus-img m-auto">
-                                                        <img src="../images/health.png">
-                                                    </div>
-                                                    <div class="bonus-data m-auto">
-                                                        HEALTH
-                                                    </div>
-                                                    <div class="bonus-rank p-1 bg-white m-auto" id="health-stat">
-                                                        7.5
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
 
                         </div>
 
                     </div>
 
-                </div>
-                <div>
-                    <button id="toggle-btn" class="m-1">Profile</button>
+                    <!---------------Town content-->
+                    <div class="modal-body town-modal-body " id="town-body">
+                        <div class="town-content">
+                            <div class="town-title">
+                                Towns
+                            </div>
+                            <div id="town-content-holder">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-start mt-5 mb-3 ms-3">
+                        <button class="toggle-btn p-2" id="inventory-btn"> <img  src="../sprites/Bag.png" class="icon-btn"></button>
+                        <button class="toggle-btn" id="profile-btn"> <img  src="../sprites/Book 2.png" class="icon-btn"></button>
+                        <button class="toggle-btn" id="town-btn"><img  src="../images/tiles/woodenhouse.png" class="icon-btn"></button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
 
-    <!-- modal for waypoint -->
-    <div class="modal" id="waypoint-confirmation-modal" tabindex="-1" aria-labelledby="waypoint-confirmation-modal" aria-hidden="true">
-        <div class="modal-dialog modal-md modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="modal-title" id="name">Use Waypoint</h3>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body towns-list">
+        <!-- modal for waypoint -->
+        <div class="modal" id="waypoint-confirmation-modal" tabindex="-1" aria-labelledby="waypoint-confirmation-modal" aria-hidden="true">
+            <div class="modal-dialog modal-md modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="name">Use Waypoint</h3>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body towns-list">
 
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal" id="menuModal" tabindex="-1" aria-labelledby="menuModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-sm modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="modal-title" id="name">MENU</h3>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body d-flex flex-column justify-content-center ">
-                    <audio class="w-100" controls id="audio"><source id="audio-source" src="" type="audio/mpeg"></audio>
-                    <button type="button" class="btn btn-primary save-button m-2" id="save-button-menu">Save</button>
-                    <button type="button" class="btn btn-primary save-quit-button m-2" id="save-quit-button-menu">Save and Quit</button>
-                    <button type="button" class="btn btn-primary quit-button m-2" id="quit-button-menu">Quit</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="offcanvas offcanvas-bottom" tabindex="-1" id="command" aria-labelledby="offcanvasBottomLabel">
-        <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasBottomLabel">Offcanvas bottom</h5>
-            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        <div class="modal" id="menuModal" tabindex="-1" aria-labelledby="menuModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="name">MENU</h3>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body d-flex flex-column justify-content-center ">
+                        <audio class="w-100" controls id="audio"><source id="audio-source" src="" type="audio/mpeg"></audio>
+                        <button type="button" class="btn btn-primary save-button m-2" id="save-button-menu">Save</button>
+                        <button type="button" class="btn btn-primary save-quit-button m-2" id="save-quit-button-menu">Save and Quit</button>
+                        <button type="button" class="btn btn-primary quit-button m-2" id="quit-button-menu">Quit</button>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="offcanvas-body small">
-            ...
+
+        <div class="offcanvas offcanvas-bottom" tabindex="-1" id="command" aria-labelledby="offcanvasBottomLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasBottomLabel">Offcanvas bottom</h5>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body small">
+                ...
+            </div>
         </div>
-    </div>  
 
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
 <script type="module" src="../scripts/world/main.js"></script>
+
 </html>
 <style>
     * {
         margin: 0px;
         padding: 0px;
         font-family: 'Graduate';
+    }
+    
+    .hidden {
+        display: none;
     }
     
     body {
@@ -498,7 +517,6 @@
         width: 60px;
         height: 60px;
     }
-
     
     .tile {
         width: 60px;
@@ -519,7 +537,7 @@
             /* Adjust the value based on the total width of your sprite (frame width * number of frames) */
         }
     }
-
+    
     @keyframes play-NPC-sprite {
         from {
             background-position: 0 0;
@@ -537,56 +555,56 @@
         animation: play-sprite 1.2s steps(4) infinite;
     }
     
-    .forest.player{
+    .forest.player {
         z-index: 5;
         background-image: url('../sprites/player-trees.png');
         background-size: 240px 60px;
         animation: play-sprite 1.2s steps(4) infinite;
     }
-
-    .sand.player{
+    
+    .sand.player {
         z-index: 5;
         background-image: url('../sprites/player-sand.png');
         background-size: 240px 60px;
         animation: play-sprite 1.2s steps(4) infinite;
     }
-
-    .dirt.player{
+    
+    .dirt.player {
         z-index: 5;
         background-image: url('../sprites/player-dirt.png');
         background-size: 240px 60px;
         animation: play-sprite 1.2s steps(4) infinite;
     }
-
-    .tile.gate.player{
+    
+    .tile.gate.player {
         z-index: 5;
         background-image: url('../sprites/player2.png');
         background-size: 240px 60px;
         animation: play-sprite 1.2s steps(4) infinite;
     }
-
+    
     .player {
         z-index: 5;
         background-image: url('../sprites/player2.png');
         background-size: 240px 60px;
         animation: play-sprite 1.2s steps(4) infinite;
     }
-
-    .healer.manxe{
+    
+    .healer.manxe {
         background-image: url('../sprites/test/13.png');
         animation: play-NPC-sprite 1.4s steps(3) infinite;
     }
     
-    .merchant.manxe{
+    .merchant.manxe {
         background-image: url('../sprites/test/12.png');
         animation: play-NPC-sprite 1.4s steps(3) infinite;
     }
-
-    .guild.manxe{
+    
+    .guild.manxe {
         background-image: url('../sprites/test/11.png');
         animation: play-NPC-sprite 1.4s steps(3) infinite;
     }
-
+    
     .exit {
         background-image: url("../images/tiles/dirt.png");
     }
@@ -596,13 +614,9 @@
     }
     
     .inventory-modal-body {
-        /* position: fixed; */
-        /* border: 1px solid black; */
-        /* align-items: center; */
         background-position: center;
         background-size: cover;
         background-repeat: no-repeat;
-        /* background-size: 930px 480px; */
         font-family: 'Graduate';
         font-size: 16px;
         line-height: 35px;
@@ -633,17 +647,13 @@
     }
     
     .profile-modal-body {
-        /* position: fixed; */
-        /* border: 1px solid black; */
-        /* align-items: center; */
-        /* background: url('../images/menuu.png'); */
         background-position: center;
         background-size: cover;
         background-repeat: no-repeat;
-        /* background-size: 930px 480px; */
     }
     
-    .profile-title {
+    .profile-title,
+    .town-title {
         font-family: 'Graduate';
         font-size: 16px;
         text-decoration: underline;
@@ -714,12 +724,13 @@
         border-radius: 5px;
     }
     
-    #toggle-btn {
+    .toggle-btn {
         background-color: #373243;
         border-color: #373243;
         color: #FFFFFF;
         border-radius: 5px;
         padding: 5px 6px 5px;
+        margin-right: 10px;
     }
     
     @media screen and (max-width: 768px) {
@@ -765,6 +776,7 @@
         width: 44px;
         height: 44px;
         margin-top: 8px;
+        cursor: pointer;
     }
     
     .custom-offcanvas {
@@ -774,33 +786,39 @@
         /* Set the height of the offcanvas */
         background: rgba(255, 255, 255, 0.5);
     }
-
-    .waypoint{
+    
+    .waypoint {
         background-image: url("../sprites/NPCs/waypint.gif");
         background-size: 120px 120px;
         background-position: -30px;
         /* animation: portal-sprite 1.2s steps(8) infinite; */
     }
-
+    
     @keyframes portal-sprite {
         from {
             background-position: 0 0;
         }
         to {
-            background-position: 60px 1px; /* Adjust the value based on the total width of your sprite (frame width * number of frames) */
+            background-position: 60px 1px;
+            /* Adjust the value based on the total width of your sprite (frame width * number of frames) */
         }
     }
     
-    .fs-10{
+    .fs-10 {
         font-size: 16px;
     }
-
-    .character-list-2 li:hover{
+    
+    .character-list-2 li:hover {
         background-color: #53505a;
     }
-
+    
     .progress .progress-bar {
         -webkit-transition: none !important;
         transition: none !important;
+    }
+    
+    .icon-btn {
+        width: 40px;
+        height: 40px;
     }
 </style>
