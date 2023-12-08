@@ -44,10 +44,8 @@ export class Player {
         let next_position = { x: null, z: null };
         next_position.x = this.tile.position.x + x;
         next_position.z = this.tile.position.z + z;
-
-        console.log("s", this.inPOI.id, next_position.x, next_position.z);
-        if (this.checkObstackle(this.inPOI.id, next_position.x, next_position.z)) {
-            console.log('obstackle at:' + this.inPOI.id + "/" + next_position.x + "," + next_position.z);
+        if(this.checkObstackle(this.inPOI.id,next_position.x,next_position.z)){
+            console.log('obstackle at:'+this.inPOI.id+"/"+next_position.x+","+next_position.z);
             return false;
         } else if (this.checkExit(this.inPOI.id, next_position.x, next_position.z)) {
             this.x = this.inPOI.location.x;
@@ -104,7 +102,6 @@ export class Player {
         $(".tile").removeClass("player");
 
         let tile = new Tile(c, x, z);
-        console.log(tile);
         tile.addClass('player');
     }
 
@@ -153,7 +150,11 @@ export class Player {
         } else {
             this.x = next_position.x;
             this.z = next_position.z;
+<<<<<<< HEAD
             console.log('new positoin:' + next_position.c + "/" + next_position.x + "," + next_position.z);
+=======
+            // console.log('new positoin:'+next_position.c+"/"+next_position.x+","+next_position.z);
+>>>>>>> 766e12f (combat continued)
             return true;
         }
     }

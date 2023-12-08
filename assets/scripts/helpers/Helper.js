@@ -144,3 +144,67 @@ export function generateRandomNumber01() {
         const deltaZ = Math.abs(pointB.z - pointA.z);
         return Math.sqrt(deltaX * deltaX + deltaZ * deltaZ);
       }
+
+      export function getAddOrSubtractToReachB(pointA, pointB) {
+        const Bx = pointB.x - pointA.x;
+        const Bz = pointB.z - pointA.z;
+    
+        let xDirection = "";
+        let zDirection = "";
+    
+        if (Bx > 0) {
+            xDirection = "Add";
+        } else if (Bx < 0) {
+            xDirection = "Subtract";
+        } else {
+            xDirection = "No change";
+        }
+    
+        if (Bz > 0) {
+            zDirection = "Add";
+        } else if (Bz < 0) {
+            zDirection = "Subtract";
+        } else {
+            zDirection = "No change";
+        }
+    
+        return { xDirection, zDirection };
+    }
+
+    export function moveInDir(dir,px,pz){
+
+        if(dir.xDirection == "Subtract" && dir.zDirection == "No change"){
+            //left
+            return {a: [px,0], b:[-1,0], c: [px,9]};
+        }else if(dir.xDirection == "Subtract" && dir.zDirection == "Add"){
+            //top left
+            return {a: [0,0], b:[-1,0], c:[0,9]};
+        }else if(dir.xDirection == "Subtract" && dir.zDirection == "Subtract"){
+            //bottom left
+            return {a: [9,0], b:[-1,0], c:[9,9]};
+        }else if(dir.xDirection == "Add" && dir.zDirection == "No change"){
+            //right
+            return {a: [px,9], b:[1,0], c:[px,0]};
+        }else if(dir.xDirection == "Add" && dir.zDirection == "Add"){
+            //top right
+            return {a: [0,9], b:[0,1], c:[9,9]};
+        }else if(dir.xDirection == "Add" && dir.zDirection == "Subtract"){
+            //bottom right
+            return {a: [9,9], b:[0,-1], c:[0,9]};
+        }else if(dir.xDirection == "No change" && dir.zDirection == "No change"){
+            //same
+            return {a: [px,pz], b:[0,0], c:[0,0]};
+        }else if(dir.xDirection == "No change" && dir.zDirection == "Add"){
+            //top
+            return {a: [0,pz], b:[0,1], c:[9,pz]};
+        }else if(dir.xDirection == "No change" && dir.zDirection == "Subtract"){
+            //bottom
+            return {a: [9,pz], b:[0,-1], c:[0,pz]};
+        }
+    }
+
+    export function inSameChunk(current,next){
+        return next.x === current.x && next.z === current.z;
+    }
+    
+    

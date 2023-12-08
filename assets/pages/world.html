@@ -217,8 +217,9 @@
                             </div>
                             <div class="profile-holder ">
                                 <div class="profile-detail d-flex" id="profile-detail-holder">
-                                    <div class="profile-img m-4"></div>
-
+                                    <div class="profile-img m-4">
+                                        <img id="character-img" src="">
+                                    </div>
                                     <div id="profile-form mt-4">
                                         <div class="input-group input-group-sm my-2">
                                             <input type="text" class="form-control character-data" id="username" readonly>
@@ -512,7 +513,15 @@
     .forest {
         background-image: url('../images/tiles/trees.png');
     }
+
+    .path {
+        background-image: url('../images/tiles/wall.png');
+    }
     
+    .bridge{
+        background-image: url('../images/tiles/bridge.png');
+    }
+
     .manxe {
         width: 60px;
         height: 60px;
@@ -820,5 +829,10 @@
     .icon-btn {
         width: 40px;
         height: 40px;
+    }
+    
+    .character-img,#character-img{
+        width: 60px;
+        height: 60px;
     }
 </style>

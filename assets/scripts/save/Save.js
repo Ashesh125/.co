@@ -9,6 +9,7 @@ export class Save{
             this.save = this.initialSave();
             this.saves.push(this.save);
             localStorage.setItem('towns',JSON.stringify([]));
+            localStorage.setItem('paths',JSON.stringify([]));
             localStorage.setItem('saves', JSON.stringify(this.saves));
             
         }else{
@@ -21,6 +22,7 @@ export class Save{
                 localStorage.setItem('towns',JSON.stringify(this.save.towns));
                 localStorage.setItem('characters',JSON.stringify(this.save.characters));
                 localStorage.setItem('inventory',JSON.stringify(this.save.inventory));
+                localStorage.setItem('paths',JSON.stringify(this.save.paths))
             } 
         }
 
@@ -63,8 +65,8 @@ export class Save{
                     "id": 2,
                     "quantity": 1,
                 }
-
-            ]
+            ],
+            "paths": []
         }
     }
     
@@ -101,7 +103,8 @@ export class Save{
             "characters": JSON.parse(localStorage.getItem('characters')),
             "dead_characters":[],
             "towns": JSON.parse(localStorage.getItem('towns')),
-            "inventory": JSON.parse(localStorage.getItem('inventory'))
+            "inventory": JSON.parse(localStorage.getItem('inventory')),
+            "paths": JSON.parse(localStorage.getItem('paths')),
         }
     }
 
@@ -113,6 +116,7 @@ export class Save{
 
     
     getSave(){
+        console.log(this.save);
         return this.save;
     }
 }

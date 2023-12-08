@@ -2,6 +2,7 @@
     {
         "id": "00",
         "name": "Warrior",
+        "sprite": "lyon.png",
         "stats": {
             "attack": { "min": 6,"max": 12 },
             "defense": { "min": 5,"max": 8 },           
@@ -15,6 +16,7 @@
     {
         "id": "01",
         "name": "Thief",
+        "sprite": "c.png",
         "stats": {
             "attack": { "min": 6,"max": 12 },
             "defense": { "min": 5,"max": 8 },           
@@ -28,6 +30,7 @@
     {
         "id": "02",
         "name": "Rogue",
+        "sprite": "c.png",
         "stats": {
             "attack": { "min": 6,"max": 12 },
             "defense": { "min": 5,"max": 8 },           
@@ -41,6 +44,7 @@
     {
         "id": "03",
         "name": "Knight",
+        "sprite": "greatknight2.png",
         "stats": {
             "attack": { "min": 8, "max": 15 },
             "defense": { "min": 10, "max": 18 },
@@ -54,6 +58,7 @@
     {
         "id": "04",
         "name": "Wizard",
+        "sprite": "mage1.png",
         "stats": {
             "attack": { "min": 5, "max": 10 },
             "defense": { "min": 6, "max": 12 },
@@ -67,6 +72,7 @@
     {
         "id": "05",
         "name": "Archer",
+        "sprite": "m.png",
         "stats": {
             "attack": { "min": 7, "max": 14 },
             "defense": { "min": 7, "max": 14 },
@@ -80,6 +86,7 @@
     {
         "id": "06",
         "name": "Paladin",
+        "sprite": "greatknight.png",
         "stats": {
             "attack": { "min": 8, "max": 14 },
             "defense": { "min": 12, "max": 16 },
@@ -93,6 +100,7 @@
     {
         "id": "07",
         "name": "Sorcerer",
+        "sprite": "summoner.png",
         "stats": {
             "attack": { "min": 6, "max": 12 },
             "defense": { "min": 6, "max": 12 },
@@ -106,6 +114,7 @@
     {
         "id": "08",
         "name": "Ranger",
+        "sprite": "ranger.png",
         "stats": {
             "attack": { "min": 7, "max": 14 },
             "defense": { "min": 8, "max": 15 },
@@ -119,6 +128,7 @@
     {
         "id": "09",
         "name": "Warlock",
+        "sprite": "summoner.png",
         "stats": {
             "attack": { "min": 5, "max": 11 },
             "defense": { "min": 7, "max": 14 },
@@ -132,6 +142,7 @@
     {
         "id": "10",
         "name": "Cleric",
+        "sprite": "c.png",
         "stats": {
             "attack": { "min": 7, "max": 14 },
             "defense": { "min": 10, "max": 16 },
@@ -145,6 +156,7 @@
     {
         "id": "11",
         "name": "Monk",
+        "sprite": "a.png",
         "stats": {
             "attack": { "min": 8, "max": 15 },
             "defense": { "min": 8, "max": 15 },
@@ -158,6 +170,7 @@
     {
         "id": "12",
         "name": "Druid",
+        "sprite": "c.png",
         "stats": {
             "attack": { "min": 6, "max": 12 },
             "defense": { "min": 7, "max": 14 },
@@ -171,6 +184,7 @@
     {
         "id": "13",
         "name": "Alchemist",
+        "sprite": "a.png",
         "stats": {
             "attack": { "min": 5, "max": 11 },
             "defense": { "min": 6, "max": 12 },
@@ -184,6 +198,7 @@
     {
         "id": "14",
         "name": "Assassin",
+        "sprite": "a.png",
         "stats": {
             "attack": { "min": 8, "max": 14 },
             "defense": { "min": 6, "max": 12 },
@@ -197,6 +212,7 @@
     {
         "id": "15",
         "name": "Mystic",
+        "sprite": "hector.png",
         "stats": {
             "attack": { "min": 7, "max": 14 },
             "defense": { "min": 7, "max": 14 },
@@ -210,6 +226,7 @@
     {
         "id": "16",
         "name": "Witch",
+        "sprite": "mage1.png",
         "stats": {
             "attack": { "min": 6, "max": 12 },
             "defense": { "min": 5, "max": 10 },
@@ -223,6 +240,7 @@
     {
         "id": "17",
         "name": "Beastmaster",
+        "sprite": "c.png",
         "stats": {
             "attack": { "min": 9, "max": 16 },
             "defense": { "min": 9, "max": 16 },
@@ -236,6 +254,7 @@
     {
         "id": "18",
         "name": "Shaman",
+        "sprite": "c.png",
         "stats": {
             "attack": { "min": 7, "max": 14 },
             "defense": { "min": 8, "max": 15 },
@@ -249,6 +268,7 @@
     {
         "id": "19",
         "name": "Inquisitor",
+        "sprite": "lord.png",
         "stats": {
             "attack": { "min": 8, "max": 15 },
             "defense": { "min": 7, "max": 14 },
@@ -262,6 +282,7 @@
     {
         "id": "99",
         "name": "DEVS",
+        "sprite": "lord.png",
         "stats": {
             "attack": { "min": 98,"max": 99 },
             "defense": { "min": 98,"max": 99 },           

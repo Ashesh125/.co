@@ -26,6 +26,10 @@ export class ChunkManager{
         return this.getChunkAt(x, z).element
     }
 
+    getMainChunk(x,z){
+        return this.terrainGenerator.getChunk(new Chunk({ x, z }, 0));
+    }
+
     load(x, z){
         var chunk = this.getChunk(x, z);
         chunk.load(this.terrainGenerator)

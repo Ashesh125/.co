@@ -13,7 +13,7 @@ export class Book {
             $(".character-list-2").empty();
 
             this.charactersData.forEach(character => {
-                $('#profile-detail').append(`<div class="profile-info" id="${character.name}">${character.name}</div>`);
+                $('#profile-detail').append(`<div class="profile-info" id="${character.name}"><img class="character-img" id="sprite-0" src="http://127.0.0.1:5502/assets/sprites/classes/${character.sprite}"></div>`);
                 $('.character-list-2').append(`<li class="character-item p-2" data-character-id="${character.id}">
                     <div class="d-flex healthBar">
                         <div class="profile-info"></div>
@@ -63,7 +63,7 @@ export class Book {
     }
 
     displayCharacterDetails(character) {
-        $('.profile-img').text(character.name);
+        $('#character-img').attr("src",`http://127.0.0.1:5502/assets/sprites/classes/${character.sprite}`);;
         $('#username').val(character.name);
         $('#gender').val(character.gender);
         $('#class-name').val(character.class);

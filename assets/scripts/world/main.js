@@ -63,8 +63,7 @@ $(document).ready(function() {
 
 
         var saveObj = new Save(game);
-
-        let save = saveObj.getSave();
+        let save = saveObj.getSave(); 
         const noiseGenerator = new NoiseGenerator(save.world.seed);
         const world = new World(noiseGenerator);
         world.loadSaveState(save);
