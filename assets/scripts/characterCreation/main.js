@@ -1,4 +1,3 @@
-
 import { Character } from "./Character.js";
 import Swal from "../../../node_modules/sweetalert2/src/sweetalert2.js";
 
@@ -18,8 +17,8 @@ $(document).ready(function() {
                 confirmButtonText: 'Close'
             });
         } else {
-            character.saveCharacterData();
-        }    
+            character.saveCharacterData(party);
+        }
     });
 
 

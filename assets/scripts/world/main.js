@@ -6,24 +6,39 @@ import { Save } from "../save/Save.js";
 import { Commands } from '../Commands/Commands.js';
 
 $(document).ready(function() {
-
-
-
-
     $('#profile-body').addClass("d-none");
-    //   };
-    $("#toggle-btn").on('click', function() {
-        if ($("#profile-body").hasClass("d-none")) {
-            $("#inventory-body").addClass("d-none");
-            $('#profile-body').removeClass("d-none");
-            // $("#toggle-btn").text("Inventory");
-        } else {
-            $("#inventory-body").removeClass("d-none");
-            $("#profile-body").addClass("d-none");
-            // $("#toggle-btn").text("Profile");
-        }
-        $(this).text($("#inventory-body").is(":visible") ? "Profile" : "Inventory");
+    $('#town-body').addClass("d-none");
+
+
+    // Add click event handlers using jQuery
+    $('#inventory-btn').on('click', function() {
+        $('#inventory-body').removeClass("d-none");
+        $('#profile-body, #town-body').addClass("d-none");
     });
+
+    $('#profile-btn').on('click', function() {
+        $('#profile-body').removeClass("d-none");
+        $('#inventory-body, #town-body').addClass("d-none");
+    });
+
+    $('#town-btn').on('click', function() {
+        $('#town-body').removeClass("d-none");
+        $('#inventory-body, #profile-body').addClass("d-none");
+    });
+
+    //   };
+    // $("#toggle-btn").on('click', function() {
+    //     if ($("#profile-body").hasClass("d-none")) {
+    //         $("#inventory-body").addClass("d-none");
+    //         $('#profile-body').removeClass("d-none");
+    //         // $("#toggle-btn").text("Inventory");
+    //     } else {
+    //         $("#inventory-body").removeClass("d-none");
+    //         $("#profile-body").addClass("d-none");
+    //         // $("#toggle-btn").text("Profile");
+    //     }
+    //     $(this).text($("#inventory-body").is(":visible") ? "Profile" : "Inventory");
+    // });
     // const game = {
     //     "id": 2,
     //     "name": "Test Save 2",
@@ -49,13 +64,13 @@ $(document).ready(function() {
 
         var saveObj = new Save(game);
 
-        let save = saveObj.getSave();   
+        let save = saveObj.getSave();
         const noiseGenerator = new NoiseGenerator(save.world.seed);
         const world = new World(noiseGenerator);
-        world.loadSaveState(save);   
+        world.loadSaveState(save);
         console.log(JSON.parse(localStorage.getItem("characters")));
         $("#gold").val(world.player.gold);
-        const command = new Commands(world,saveObj);
+        const command = new Commands(world, saveObj);
         $(document).keydown(function(event) {
             world.action(event.key);
 
@@ -69,7 +84,7 @@ $(document).ready(function() {
                 title: 'Game has been Saved',
                 showConfirmButton: false,
                 timer: 1500
-              });
+            });
         });
 
         $('.save-quit-button').on('click', function() {
@@ -81,9 +96,9 @@ $(document).ready(function() {
                 showConfirmButton: false,
                 timer: 1500
             });
-              setTimeout(function() {            
+            setTimeout(function() {
                 window.location.href = "./mainpage.html";
-              }, 1500);
+            }, 1500);
         });
 
         $('.quit-button').on('click', function() {
@@ -91,54 +106,54 @@ $(document).ready(function() {
                 title: 'Exit without Saving ???',
                 showCancelButton: true,
                 confirmButtonText: 'Exit',
-              }).then((result) => {
+            }).then((result) => {
                 /* Read more about isConfirmed, isDenied below */
                 if (result.isConfirmed) {
                     window.location.href = "./mainpage.html";
-                } 
-              })
+                }
+            })
         });
 
         $(".towns-list").on("click", ".teleport-btn", function(event) {
             let id = $(this).attr('id').split("-");
             let towns = JSON.parse(localStorage.getItem("towns"));
             let foundTown = towns.find((town) => town.id === id[1]);
-            
-            if(world.player.gold > parseInt(id[2]) ){
+
+            if (world.player.gold > parseInt(id[2])) {
                 world.player.gold -= parseInt(id[2]);
                 if (foundTown) {
                     world.coordinates.x = foundTown.coordinates.x;
                     world.coordinates.z = foundTown.coordinates.z;
-        
+
                     world.player.x = foundTown.position.x;
                     world.player.z = foundTown.position.z;
-                } 
+                }
                 saveObj.saveGame(world);
-                window.location.reload();            
-            }else{
+                window.location.reload();
+            } else {
                 Swal.fire('Not enough Gold!!!');
             }
         });
 
 
-        $('#inventory-button').on("click",function(){
+        $('#inventory-button').on("click", function() {
             world.action("I");
         });
 
-        $("#buy-from-merchant").on("click",function(){
+        $("#buy-from-merchant").on("click", function() {
             world.buy($('#selling-item-price').val());
             saveObj.saveGame(world);
         });
 
-        $("#sell-to-guild").on("click",function(){
+        $("#sell-to-guild").on("click", function() {
             world.sell($('#buying-item-price').val());
             saveObj.saveGame(world);
         });
-        
-        $('.inventory-left-holder').on('click','.item-sprite', (event) => {
+
+        $('.inventory-left-holder').on('click', '.item-sprite', (event) => {
             const id = $(event.currentTarget).attr('id');
             const clickedElement = world.item.inventory.find(element => element.id == id);
-        
+
             if (clickedElement) {
                 $(".inventory-right-holder").empty(); // Clear the contents before appending
 
@@ -171,12 +186,12 @@ $(document).ready(function() {
                     </tbody>
                 </table>
                 <div class="description">${clickedElement.description}</div>`;
-            
-                if(clickedElement.consumable && clickedElement.type !=='heal'){
+
+                if (clickedElement.consumable && clickedElement.type !== 'heal') {
                     block += `<button id='toggle-btn' class='p-2 mx-2 consume-btn' data-attribute='${clickedElement.id}'>Use</button>`;
                     $(".use-item-btn").hide();
-                }else if(clickedElement.consumable && clickedElement.type ==='heal'){
-                    $(".use-item-btn").data("item-id",clickedElement.id);
+                } else if (clickedElement.consumable && clickedElement.type === 'heal') {
+                    $(".use-item-btn").data("item-id", clickedElement.id);
                     $(".use-item-btn").show();
                 }
 
@@ -186,12 +201,12 @@ $(document).ready(function() {
 
             $(".inventory-right-holder").one("click", ".consume-btn", function() {
                 const dataAttribute = $(this).data("attribute");
-                world.item.useWorldConsumable(dataAttribute,world);  
+                world.item.useWorldConsumable(dataAttribute, world);
 
-                switch(dataAttribute){
+                switch (dataAttribute) {
                     case 6:
                         saveObj.saveGame(world);
-                        window.location.reload();   
+                        window.location.reload();
                 }
             });
 
@@ -200,12 +215,7 @@ $(document).ready(function() {
                 const itemId = $(".use-item-btn").data("item-id");
                 const characterId = $(this).data("character-id");
 
-                world.item.useCharacterConsumable(itemId,characterId);    anime({
-                    targets: `#${id}-healthBar`,
-                    width: '100%',
-                    duration: 1000, 
-                    easing: 'easeOutElastic',
-                  });
+                world.item.useCharacterConsumable(itemId, characterId);
             });
         });
     } else {
@@ -218,7 +228,7 @@ $(document).ready(function() {
         $('#menuModal').modal('toggle');
     });
 
- 
+
 
 
     $(document).on('ended', 'audio', function() {
