@@ -1,7 +1,24 @@
 import { Audio } from "../sound/Audio.js";
 import { Algorithms } from "../helpers/Algorithms.js";
 import { Enemies } from "../../json/enemy.js";
-import { getRandomStat,getRandomInt } from "../helpers/Helper.js";
+import { getRandomStat,getRandomInt,replaceObjectById } from "../helpers/Helper.js";
+import Swal from "../../../node_modules/sweetalert2/src/sweetalert2.js";
+import Loot from "../../json/loot.js";
+import {items} from "../../json/items.js";
+import { Item } from "../Item/Item.js";
+import { Save } from "../save/Save.js";
+
+const Toast = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 2000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.onmouseenter = Swal.stopTimer;
+      toast.onmouseleave = Swal.resumeTimer;
+    }
+  });
 
 export class Combat{
 
@@ -12,25 +29,46 @@ export class Combat{
         this.all = this.getTurnOrder();     
         this.turnCount = 0;
         this.initialize();
-        console.log(this.all);
+        this.killed = {
+            "player": [],
+            "enemy": []
+        };
+        this.loot = [];
+        this.item = new Item();
+        this.totalGold = 0;
     }
 
-    initialize(){
+    setNav(type){
+        $(".nav-bar").empty();
         this.all.forEach((e,i) => {
             $(".nav-bar").append(`<div class="turn-order" id='turn-order-${e.id}'><img src="http://127.0.0.1:5502/assets/sprites/classes/${e.sprite}" class="img-thumbnail" alt="..."></div>`);
         });
 
+        if(type === 1){
+            anime({
+                targets: `#turn-order-${this.all[this.turnCount % this.all.length].id}`,
+                scale: [0.1, 1.5], 
+                duration: 600, 
+                easing: 'easeOutQuad'       
+            });
+        }
+        
+    }
+
+    initialize(){
+        this.setNav(0);
+
         this.characters.forEach(character => {
             $(".footer-info .player-side").append(`
-                <div class="footer-detail" id='footer-detail-${character.id}'>
+                <div class="footer-detail d-flex" id='footer-detail-${character.id}'>
                     <div class="info">
-                        <img src="http://127.0.0.1:5502/assets/sprites/classes/${character.sprite}" class="img-thumbnail" alt="...">
+                        <img class='character-img bg-light' src="http://127.0.0.1:5502/assets/sprites/classes/${character.sprite}" class="img-thumbnail" alt="...">
                     </div>
                     <div class="result ms-3">
                         <div class="title">${character.name}</div>
                         <div>
                             <img src="../sprites/heart.png" class="stat-icon">
-                            ${character.stats.health}/${character.stats.currentHp}
+                            ${character.stats.health}/<span id='currentHp-${character.id}'>${character.stats.currentHp}</span>
                         </div>
                     </div>
                 </div>`
@@ -47,15 +85,15 @@ export class Combat{
 
         this.enemy.forEach(enemy => {
             $(".footer-info .enemy-side").append(`
-                <div class="footer-detail col-3 enemy-detail" id='footer-detail-${enemy.id}'>
+                <div class="footer-detail d-flex col-3 enemy-detail" id='footer-detail-${enemy.id}'>
                     <div class="info">
-                        <img src="http://127.0.0.1:5502/assets/sprites/classes/${enemy.sprite}" class="img-thumbnail" alt="...">
+                        <img  class='character-img bg-light'  src="http://127.0.0.1:5502/assets/sprites/classes/${enemy.sprite}" class="img-thumbnail" alt="...">
                     </div>
                     <div class="result ms-3">
                         <div class="title">${enemy.name}</div>
                         <div>
                             <img src="../sprites/heart.png" class="stat-icon">
-                            ${enemy.stats.health}/${enemy.stats.currentHp}
+                            ${enemy.stats.health}/<span id='currentHp-${enemy.id}'>${enemy.stats.currentHp}</span>
                         </div>
                     </div>
                 </div>`
@@ -65,12 +103,18 @@ export class Combat{
                 <div class="col-4 box-2" id='sprite-${enemy.id}'>
                     <div>
                         <img class='combat-sprite eneny-sprite' src="http://127.0.0.1:5502/assets/sprites/classes/${enemy.sprite}" class="img-thumbnail" alt="...">
-                    </div>              
+                    </div>           
                 </div>
             `);
         });
-
-        this.animations();
+        setTimeout(()=>{
+            if(this.all[this.turnCount].type === "monster"){
+                this.attack();
+            }
+        },1200);
+        this.makeDropDown();
+        this.initialAnimation();
+     
     }
 
     initialAnimation(){
@@ -80,23 +124,11 @@ export class Combat{
             duration: 600, 
             easing: 'easeOutQuad' 
         });
-    }
-
-    animations(){
-        let first = this.all[0];
-        
-        anime({
-            targets: `#turn-order-${this.all[this.turnCount % 6].id}`,
-            scale: [0.1, 1.5], 
-            duration: 600, 
-            easing: 'easeOutQuad'       
-        });
-
         this.animateFirstTurn();
     }
-
+    
     animateFirstTurn(){
-        const first = this.all[this.turnCount % 6];
+        const first = this.all[this.turnCount % this.all.length];
         this.turnAnimate(first);
     }
 
@@ -107,7 +139,7 @@ export class Combat{
     getEnemy(){
         const enemies = Enemies;
 
-        const numberOfEnemies = 3; 
+        const numberOfEnemies = 3; // Number of random enemies you want to retrieve
         const shuffledEnemies = enemies.sort(() => Math.random() - 0.5);
         const enemiesWithTraits = shuffledEnemies.slice(0, numberOfEnemies).map(enemy => ({
             ...enemy,
@@ -140,7 +172,8 @@ export class Combat{
                 "speed": this.calculateStat("speed", type),
                 "luck": this.calculateStat("luck", type),
                 "currentHp": health
-            }
+            },
+            "loot_table_id": type.loot_table_id
         };
 
         return enemy;
@@ -159,10 +192,22 @@ export class Combat{
     }
 
     turn(){
-        this.attack();
+        $("#attack").click();
     }
 
-    turnAnimate(target){
+    turnAnimate(target){     
+        Toast.fire({
+            width: '400px',
+            title: `<img class='character-img me-3' src='http://127.0.0.1:5502/assets/sprites/classes/${target.sprite}'>${target.name}'s turn `
+          });
+
+        anime({
+            targets: `#turn-order-${target.id}`,
+            scale: [0.1, 1.5], 
+            duration: 600, 
+            easing: 'easeOutQuad'       
+        });
+        
         if(target.type === 'player'){
             anime({
                 targets: `#sprite-${target.id}`,
@@ -181,8 +226,8 @@ export class Combat{
     }
 
     endTurnAnimate(turn){
-        const previous = this.all[(turn + 5) % 6];
-        const target = this.all[turn % 6];
+        const previous = this.all[(turn + this.all.length-1) % this.all.length];
+        const target = this.all[turn % this.all.length];
         anime({
             targets: `#turn-order-${previous.id}`,
             scale: [1.5, 1], 
@@ -197,7 +242,7 @@ export class Combat{
             easing: 'easeOutQuad' 
           });
 
-        this.turnAnimate(target);
+        // this.turnAnimate(target);
         if(previous.type === 'player'){
             anime({
                 targets: `#sprite-${previous.id}`,
@@ -219,19 +264,32 @@ export class Combat{
     endTurn(){
         this.turnCount++;
         this.endTurnAnimate(this.turnCount);
-        if(this.all[this.turnCount % 6].type !== 'player'){
-            this.turn(this.turnCount);
-        }
+    
+        setTimeout(() => {
+            if (this.all[this.turnCount % this.all.length].type !== 'player') {
+              this.turn(this.turnCount);
+            } else {
+                $(".actions").show();
+            }
+        }, 3000);
     }
 
-    attack(){
-        let turn = this.turnCount % 6;
+    attack(target){
+        let whom;
+        let turn = this.turnCount % this.all.length;
         let who = this.all[turn];
-        // alert(`${turn}-${who.name}`)
-        this.turnAnimate(turn);
-        let whom = this.getTarget(who);
-
+        if(who.type === 'player'){
+            whom = this.all.find(function(obj) {
+                return obj.id == target;
+              });
+            this.damage(who,whom);
+        }else{
+            whom = this.getTarget(who);
+        }
         this.endTurn();
+        setTimeout(() => {
+            this.turnAnimate(this.all[this.turnCount % this.all.length]);
+        },1000);
     }
 
 
@@ -307,28 +365,64 @@ export class Combat{
         }
     }
 
-    damage(attacker,defender){
-        console.log(attacker,"attacking",defender);
+    async damage(attacker,defender){
         const dodgeChance = Math.random() * 100 <= defender.stats.agility ? true : false;
         if(!dodgeChance){
-            const baseDamage = Math.max(1, attacker.stats.attack - defender.stats.defense);
+            const baseDamage = Math.max(1, attacker.stats.attack +10 - defender.stats.defense);
             const critMultiplier = Math.random() * 100 <= attacker.stats.crit ? 1.2 : 1;
-            const damage = baseDamage * critMultiplier;
-            if(defender.stats.currentHp > damage){
-                defender.stats.currentHp -= damage;
-                this.all = this.all.map(obj => {
-                if (obj.id === defender.id) {
-                    return {...defender};
-                } else {
-                    return obj; 
-                }
+            const damage = (baseDamage * critMultiplier).toFixed(1);
+            if(parseInt(defender.stats.currentHp) > damage){
+                defender.stats.currentHp = (defender.stats.currentHp - damage).toFixed(1);
+                console.log(attacker,'damage',defender,'by',damage,)
+                setTimeout(() => {
+                    Toast.fire({    
+                        title :`<img class='character-img me-3' src='http://127.0.0.1:5502/assets/sprites/classes/${defender.sprite}'>${defender.name} took ${damage} damage`
+                    });
+                    $(`#currentHp-${defender.id}`).text(defender.stats.currentHp);
+                    this.all = this.all.map(obj => {
+                        if (obj.id === defender.id) {
+                            return {...defender};
+                        } else {
+                            return obj; 
+                        }
+                        });
+                    },10);
+            }else if(parseInt(defender.stats.currentHp) <= damage){
+                setTimeout(() => {
+                Toast.fire({    
+                    title :`<img class='character-img me-3' src='http://127.0.0.1:5502/assets/sprites/classes/${defender.sprite}'>${defender.name} Was Killed`
                 });
-            }else if(defender.stats.currentHp < damage){
-                alert("killed");
+                $(`#currentHp-${defender.id}`).text(0);
+
+                if(defender.type === "monster"){
+                    this.killed['enemy'].push(defender);
+                    setTimeout(() => {
+                        this.getLoot(defender);
+                    },10);    
+                    this.enemy = this.enemy.filter(entity => entity.id !== defender.id);
+                    this.makeDropDown();    
+                }else{
+                    this.killed['player'].push(defender);
+                    this.characters = this.characters.filter(entity => entity.id !== defender.id);
+                }
                 this.all = this.all.filter(entity => entity.id !== defender.id);
+               
+                this.setNav(1);
+
+                $(`#sprite-${defender.id}`).css('visibility', 'hidden');
+                setTimeout(() => {
+                    if(this.enemy.length === 0){
+                        this.endCombat();
+                    }
+                },100);
+                
+                }, 10);
+                console.log("new array",this.all);
             }
         }else{
-            alert("missed");
+            Toast.fire({    
+                title :`<img class='character-img me-3' src='http://127.0.0.1:5502/assets/sprites/classes/${attacker.sprite}'>${attacker.name} Missed`
+            });
         }
     }
 
@@ -377,4 +471,76 @@ export class Combat{
         return getRandomStat(min, max);
     }
 
+    makeDropDown(){
+        $("#enemy-dropdown").empty();
+        this.enemy.forEach(enemy => {
+            $("#enemy-dropdown").append(`
+            <li class='attackEnemy' data-attribute='${enemy.id}'>
+                <div class='d-flex col-12'>
+                    <img class='character-img' src="http://127.0.0.1:5502/assets/sprites/classes/${enemy.sprite}">
+                    <span class='text-center'>${enemy.name}</span>
+                </div>
+            </li>
+            `)
+        });
+    }
+
+    getLoot(target){
+        let table = Loot.find(function(obj) {
+            return obj.id === target.loot_table_id;
+        });
+
+        let gold = getRandomInt(table.gold.min,table.gold.max);       
+        Toast.fire({
+            title: `${target.name} dropped ${gold}  <img class='character-img' src="http://127.0.0.1:5502/assets/sprites/Golden%20Coin.png">`
+        });
+        this.totalGold += gold;
+        $("#temp-gold-holder").val(this.totalGold);
+        let loot = this.calculateLootDrop(table.items);
+        if(loot.length > 1){
+            loot.forEach(loot => {
+                this.item.addInInventory(loot.item_id,loot.qty);
+            });
+        }else if(loot){
+            this.item.addInInventory(loot.item_id,loot.qty);
+        }
+    }
+
+    calculateLootDrop(lootData) {
+        const totalChance = lootData.reduce((acc, item) => acc + item.chance, 0);
+    
+        const randomNumber = Math.floor(Math.random() * totalChance) + 1;
+      
+        let cumulativeChance = 0;
+        for (const item of lootData) {
+          cumulativeChance += item.chance;
+          if (randomNumber <= cumulativeChance) {
+            return {
+              "item_id": item.item_id,
+              "qty": Math.floor(Math.random() * (item.qty.max - item.qty.min + 1)) + item.qty.min
+            };
+          }
+        }
+      
+        return null;
+    }
+
+    endCombat(){
+        let saves = JSON.parse(localStorage.getItem('saves'));
+        let gameState = JSON.parse(localStorage.getItem('gameState'));
+    
+        let save = saves.find(function(obj) {
+            return obj.id == gameState.id;
+          });
+          
+        save.gold = parseInt(save.gold) + this.totalGold;
+        gameState.gold = parseInt(gameState.gold) + this.totalGold;
+        save.inventory = JSON.parse(localStorage.getItem('inventory'));
+        save.characters = this.all.filter(obj => obj.type === 'player' && obj.stats.currentHp > 0);
+        saves = replaceObjectById(saves,save);
+
+        localStorage.setItem('gameState',JSON.stringify(gameState));
+        localStorage.setItem('saves',JSON.stringify(saves));
+        window.location.href = `http://127.0.0.1:5502/assets/pages/world.html`;
+    }
 }

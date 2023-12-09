@@ -118,9 +118,8 @@ body {
 .actions{
     position: absolute;
     top: 20vh;
-    width: 14vw;
+    width: 10vw;
     margin-left: 64px;
-    background-color: red;
     height: 50vh;
 }
 
@@ -129,3 +128,17 @@ body {
     height: 120px;
 }
 
+.character-img{
+    width: 60px;
+    height: 60px;
+}
+
+.attackEnemy:hover{
+    cursor: pointer;
+    background: gray;
+}
+
+.dmg-text{
+    transform: translateY(80px);
+    display: none;
+}

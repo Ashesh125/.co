@@ -17,7 +17,7 @@ export class World {
         this.renderDistance = 1;
         this.loadDistance = 2;
         this.coordinates = { x: 50000, z: 50000 };
-        this.player = new Player({x:5, z:5 ,coordinates:this.coordinates},this.audio);
+        this.player = new Player({x:5, z:5 ,coordinates:this.coordinates,gold: parseInt($("#gold").val())},this.audio);
         this.currentPOI = null; 
         this.item = new Item();
         this.encounter = true;
@@ -279,6 +279,7 @@ export class World {
         let encounter = this.player.tile.getEncounterChance();
         let rng = generateRandomNumber01();
         if (rng <= encounter) {
+            $(".save-button").click();
             this.audio.play("combat");
             anime({
                 targets: '.chunk',
@@ -288,9 +289,10 @@ export class World {
                 ],
                 delay: anime.stagger(200, { grid: [3, 3], from: 'center' }),
                 complete: function(anim) {
-                    // const save = new Save(this);
-                    // save.saveGame(this);
-                    window.location.href = "./battlefield.html";
+
+                    setTimeout(() => {
+                        window.location.href = "./battlefield.html";
+                    },2000);
                 }
             });
         }
@@ -301,7 +303,7 @@ export class World {
             this.player.gold -= parseInt(value);
             $("#gold").val(this.player.gold);
             this.item.addInInventory($('#selling-item-id').val(), 1);
-
+            this.updateGold();
             $("#merchant-modal").modal("toggle");
         } else {
             Swal.fire('Not enough Gold!!!');
@@ -313,7 +315,22 @@ export class World {
             this.player.gold += parseInt(value);
             $("#gold").val(this.player.gold);
         }
-
+        this.updateGold();
         $("#guild-modal").modal("toggle");
+    }
+
+    healAll(value){
+        this.player.gold -= parseInt(value);
+        let characters = JSON.parse(localStorage.getItem("characters"));
+        characters.forEach(character => {
+            character.stats.currentHp = character.stats.health;
+        });
+        localStorage.setItem("characters", JSON.stringify(characters));
+        this.updateGold();
+        $("#healer-modal").modal("toggle");
+    }
+    
+    updateGold(){
+        $("#gold").val(this.player.gold);
     }
 }

@@ -1,11 +1,11 @@
-export const loot = [
+const Loot = [
     {
         "id": 1,
         "gold" : {min: 1, max: 3},
         "items": [
             {
                 "item_id": 10,
-                "chance": 80,
+                "chance": 100,
                 "qty": {min: 2, max: 5},
             },
             {
@@ -64,3 +64,5 @@ export const loot = [
         ]
     },
 ];
+
+export default Loot;

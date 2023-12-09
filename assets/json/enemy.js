@@ -12,7 +12,8 @@ export var Enemies = [
             "currentHp": 25,
             "agility": { "min": 5, "max": 7 },
             "luck": { "min": 0, "max": 0.3 }
-        }
+        },
+        "loot_table_id" : 1
     },
     {
         "id": "e01",
@@ -27,7 +28,8 @@ export var Enemies = [
             "currentHp": 30,
             "agility": { "min": 4, "max": 6 },
             "luck": { "min": 0, "max": 0.4 }
-        }
+        },
+        "loot_table_id" : 1
     },
     {
         "id": "e02",
@@ -42,7 +44,8 @@ export var Enemies = [
             "currentHp": 35,
             "agility": { "min": 5, "max": 7 },
             "luck": { "min": 0, "max": 0.4 }
-        }
+        },
+        "loot_table_id" : 1
     },
     {
         "id": "e03",
@@ -57,7 +60,8 @@ export var Enemies = [
             "currentHp": 45,
             "agility": { "min": 6, "max": 8 },
             "luck": { "min": 0, "max": 0.5 }
-        }
+        },
+        "loot_table_id" : 1
     },
     {
         "id": "e04",
@@ -72,7 +76,8 @@ export var Enemies = [
             "currentHp": 90,
             "agility": { "min": 7, "max": 9 },
             "luck": { "min": 0, "max": 0.6 }
-        }
+        },
+        "loot_table_id" : 1
     },
     {
         "id": "e05",
@@ -87,7 +92,8 @@ export var Enemies = [
             "currentHp": 40,
             "agility": { "min": 6, "max": 8 },
             "luck": { "min": 0, "max": 0.4 }
-        }
+        },
+        "loot_table_id" : 1
     },
     {
         "id": "e06",
@@ -102,7 +108,8 @@ export var Enemies = [
             "currentHp": 50,
             "agility": { "min": 7, "max": 9 },
             "luck": { "min": 0, "max": 0.5 }
-        }
+        },
+        "loot_table_id" : 1
     },
     {
         "id": "e07",
@@ -117,7 +124,8 @@ export var Enemies = [
             "currentHp": 55,
             "agility": { "min": 4, "max": 6 },
             "luck": { "min": 0, "max": 0.4 }
-        }
+        },
+        "loot_table_id" : 1
     },
     // {
     //     "id": "e08",
@@ -132,7 +140,8 @@ export var Enemies = [
     //         "currentHp": 20,
     //         "agility": { "min": 3, "max": 5 },
     //         "luck": { "min": 0, "max": 0.2 }
-    //     }
+    //     },
+    //    "loot_table_id" : 1
     // },
     {
         "id": "e09",
@@ -147,7 +156,8 @@ export var Enemies = [
             "currentHp": 65,
             "agility": { "min": 8, "max": 10 },
             "luck": { "min": 0, "max": 0.6 }
-        }
+        },
+        "loot_table_id" : 1
     },
     {
         "id": "e10",
@@ -162,7 +172,8 @@ export var Enemies = [
             "currentHp": 50,
             "agility": { "min": 6, "max": 8 },
             "luck": { "min": 0, "max": 0.5 }
-        }
+        },
+        "loot_table_id" : 1
     },{
         "id": "e12",
         "name": "Harpy",
@@ -176,7 +187,8 @@ export var Enemies = [
             "currentHp": 40,
             "agility": { "min": 8, "max": 10 },
             "luck": { "min": 0, "max": 0.4 }
-        }
+        },
+        "loot_table_id" : 1
     },
     {
         "id": "e13",
@@ -191,7 +203,8 @@ export var Enemies = [
             "currentHp": 35,
             "agility": { "min": 6, "max": 8 },
             "luck": { "min": 0, "max": 0.4 }
-        }
+        },
+        "loot_table_id" : 1
     },
     {
         "id": "e14",
@@ -206,7 +219,8 @@ export var Enemies = [
             "currentHp": 25,
             "agility": { "min": 4, "max": 6 },
             "luck": { "min": 0, "max": 0.3 }
-        }
+        },
+        "loot_table_id" : 1
     },
     {
         "id": "e15",
@@ -221,7 +235,8 @@ export var Enemies = [
             "currentHp": 60,
             "agility": { "min": 5, "max": 7 },
             "luck": { "min": 0, "max": 0.4 }
-        }
+        },
+        "loot_table_id" : 1
     },
     {
         "id": "e16",
@@ -236,7 +251,8 @@ export var Enemies = [
             "currentHp": 45,
             "agility": { "min": 6, "max": 8 },
             "luck": { "min": 0, "max": 0.5 }
-        }
+        },
+        "loot_table_id" : 1
     },
     {
         "id": "e17",
@@ -251,7 +267,8 @@ export var Enemies = [
             "currentHp": 35,
             "agility": { "min": 8, "max": 10 },
             "luck": { "min": 0, "max": 0.4 }
-        }
+        },
+        "loot_table_id" : 1
     },
     {
         "id": "e18",
@@ -266,7 +283,8 @@ export var Enemies = [
             "currentHp": 75,
             "agility": { "min": 4, "max": 6 },
             "luck": { "min": 0, "max": 0.4 }
-        }
+        },
+        "loot_table_id" : 1
     },
     {
         "id": "e19",
@@ -281,7 +299,8 @@ export var Enemies = [
             "currentHp": 30,
             "agility": { "min": 7, "max": 9 },
             "luck": { "min": 0, "max": 0.3 }
-        }
+        },
+        "loot_table_id" : 1
     }
 ];
 

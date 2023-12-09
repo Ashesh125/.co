@@ -67,7 +67,7 @@ $(document).ready(function() {
         const noiseGenerator = new NoiseGenerator(save.world.seed);
         const world = new World(noiseGenerator);
         world.loadSaveState(save);
-        console.log(JSON.parse(localStorage.getItem("characters")));
+        console.log(world);
         $("#gold").val(world.player.gold);
         const command = new Commands(world, saveObj);
         $(document).keydown(function(event) {
@@ -146,6 +146,11 @@ $(document).ready(function() {
 
         $("#sell-to-guild").on("click", function() {
             world.sell($('#buying-item-price').val());
+            saveObj.saveGame(world);
+        });
+
+        $("#heal-btn").on("click", function() {
+            world.healAll(15);
             saveObj.saveGame(world);
         });
 

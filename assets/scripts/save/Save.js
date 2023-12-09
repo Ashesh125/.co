@@ -45,7 +45,8 @@ export class Save{
                   "tile":{
                       "x": 5,
                       "z": 5
-                  }
+                  },
+                  "gold": 100
                 }
             },
             "dates" :{
@@ -90,8 +91,8 @@ export class Save{
                   "position": world.coordinates,
                   "chunk_id": world.player.chunk_id,
                   "tile":{
-                      "x":world.player.x,
-                      "z":world.player.z
+                      "x": world.player.inPOI ? world.player.inPOI.location.x : world.player.x,
+                      "z": world.player.inPOI ? world.player.inPOI.location.z : world.player.z
                   }
                 }
             },

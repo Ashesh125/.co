@@ -14,15 +14,17 @@ export class Book {
 
             this.charactersData.forEach(character => {
                 $('#profile-detail').append(`<div class="profile-info" id="${character.name}"><img class="character-img" id="sprite-0" src="http://127.0.0.1:5502/assets/sprites/classes/${character.sprite}"></div>`);
-                $('.character-list-2').append(`<li class="character-item p-2" data-character-id="${character.id}">
+                $('.character-list-2').append(`<li class="character-item p-2" style='width:300px;background-color:gray' data-character-id="${character.id}">
                     <div class="d-flex healthBar">
-                        <div class="profile-info"></div>
+                        <div class="profile-info d-flex flex-row">
+                            <img class="character-img" id="sprite-0" src="http://127.0.0.1:5502/assets/sprites/classes/${character.sprite}"></div>
+                            <span>${character.name}</span>
+                        </div>
                         <div class="d-flex flex-column pt-2 w-75">
                         <div class="progress" role="progreissbar" aria-label="Basic example" aria-valuenow="${(character.stats.currentHp / character.stats.health) * 100}" aria-valuemin="0" aria-valuemax="100">
                             <div class="progress-bar bg-danger" id="${character.id}-healthBar" style="width: ${(character.stats.health > 0 ? (character.stats.currentHp / character.stats.health) * 100 : 0)}%"></div>
                          </div>
                         <div>
-                            <span>${character.stats.health}</span>/<span id="${character.id}-healthValue">${character.stats.currentHp}</span></div>
                         </div>
                         </div>
                     </li>`);
@@ -70,7 +72,8 @@ export class Book {
         $('#attack-stat').text(character.stats.attack);
         $('#crit-stat').text(character.stats.crit);
         $('#luck-stat').text(character.stats.luck);
-        $('#health-stat').text(character.stats.health);
+        $('#health-stat').text(character.stats.health);        
+        $('#hp-stat').text(character.stats.currentHp);
         $('#speed-stat').text(character.stats.speed);
         $('#defense-stat').text(character.stats.defense);
 

@@ -207,4 +207,9 @@ export function generateRandomNumber01() {
         return next.x === current.x && next.z === current.z;
     }
     
+    export function pause(milliseconds) {
+        return new Promise(resolve => {
+            setTimeout(resolve, milliseconds);
+        });
+    }
     

@@ -14,7 +14,6 @@ export class Player {
         this.chunkChanged = false;
         this.tile = new Tile(this.chunk_id, this.x, this.z);
         this.sprite = null;
-        this.gold = game.gold;
         this.inPOI = null;
         this.coordinates = game.coordinates;
         this.audio = audio;
@@ -150,11 +149,7 @@ export class Player {
         } else {
             this.x = next_position.x;
             this.z = next_position.z;
-<<<<<<< HEAD
-            console.log('new positoin:' + next_position.c + "/" + next_position.x + "," + next_position.z);
-=======
             // console.log('new positoin:'+next_position.c+"/"+next_position.x+","+next_position.z);
->>>>>>> 766e12f (combat continued)
             return true;
         }
     }
