@@ -103,13 +103,14 @@ export class World {
         const parts = POI.split("-");
         this.currentPOI = new Town(parts[1], this.player, this.coordinates); 
         this.audio.play("town");
-        if(!this.currentPOI.needsPath){
+        console.log("needs path",this.currentPOI.needsPath);
+        if(this.currentPOI.needsPath){
             this.generatePath(this.currentPOI);
         } 
     }
 
     generatePath(town){
-        if(town.needsPath){
+        if(!town.needsPath){
             return false;
         }
 

@@ -14,7 +14,7 @@ export class Town {
         this.from = null;
         this.to = null;
         this.initialize();
-        this.needsPath = false;
+        this.needsPath;
     }
 
 
@@ -22,15 +22,18 @@ export class Town {
         var POI_chunk = document.getElementById("POI-chunk");
         POI_chunk.innerHTML = "";
         let visited = this.checkTownVisited(this.id);
+
         if (visited) {
+            this.needsPath = false;
             this.readTownData(visited);
         } else {
+            this.needsPath = true;
             this.layout = await this.generateNewTown(parseInt(this.id));
             this.name = await this.getNewTownName(this.id);
             this.addNewVisitedTown();
-            this.needsPath = true;
         }
 
+        console.log(this.needsPath,visited);
         POI_chunk.style.height = (this.layout.length * 60) + "px";
         POI_chunk.style.width = (this.layout[0].length * 60) + "px";
         $('#POIModal').modal({ backdrop: 'static', keyboard: false });
