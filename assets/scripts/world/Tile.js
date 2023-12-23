@@ -1,13 +1,13 @@
 const TileType = {
-    Air: { value: 0, danger: 0 },
-    Grass: { value: 1, danger: 0.3 },
-    Water: { value: 2, danger: 0 },
-    Sand: { value: 3, danger: 0.2 },
-    Port : { value: 3.1, danger: 0 },
-    Dirt: { value: 4, danger: 0.4 },
-    Snow: { value: 5, danger: 0.3 },
-    Forest: { value: 6, danger: 0.5 },
-    Town: { value: 7, danger: 0 }
+    Air: { value: 0, danger: 0 , weight: 0},
+    Grass: { value: 1, danger: 0.3, weight: 1 },
+    Water: { value: 2, danger: 0, weight: 99 },
+    Sand: { value: 3, danger: 0.2, weight: 2 },
+    Port : { value: 3.1, danger: 0, weight: 0 },
+    Dirt: { value: 4, danger: 0.4, weight: 5 },
+    Snow: { value: 5, danger: 0.3, weight: 10 },
+    Forest: { value: 6, danger: 0.5, weight: 3 },
+    Town: { value: 7, danger: 0, weight: 0 }
   };
 
 class Tile{

@@ -20,7 +20,6 @@ export class Audio{
                 break;
         }
         this.audioElement.attr("src",src);
-        console.log(this.audioElement[0]);
         this.audioElement[0].play();
     }
 

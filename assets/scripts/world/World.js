@@ -2,12 +2,13 @@ import { ChunkManager } from './ChunkManager.js';
 import { Tile } from './Tile.js';
 import { Player } from '../entities/Player.js';
 import { Town } from '../POI/Town.js';
-import { spiralTraverseGraph, generateRandomNumber01 } from '../helpers/Helper.js';
+import { spiralTraverseGraph, generateRandomNumber01,getAddOrSubtractToReachB,moveInDir,inSameChunk } from '../helpers/Helper.js';
 import { Book } from './Book.js';
 import { Audio } from '../sound/Audio.js';
 import { Item } from '../Item/Item.js';
 import { Save } from '../save/Save.js';
 import Swal from "../../../node_modules/sweetalert2/src/sweetalert2.js";
+import { astar } from '../helpers/Algorithms.js';
 
 export class World {
     constructor(noiseGenerator) {
@@ -16,10 +17,16 @@ export class World {
         this.renderDistance = 1;
         this.loadDistance = 2;
         this.coordinates = { x: 50000, z: 50000 };
-        this.player = new Player({ x: 5, z: 5, coordinates: this.coordinates }, this.audio);
-        this.currentPOI = null;
+        this.player = new Player({x:5, z:5 ,coordinates:this.coordinates,gold: parseInt($("#gold").val())},this.audio);
+        this.currentPOI = null; 
         this.item = new Item();
-        this.encounter = false;
+        this.encounter = true;
+        this.save = this.setSave();
+    }
+
+    setSave(){
+        const game = JSON.parse(localStorage.getItem('gameState'));
+        return new Save(game);
     }
 
     loadSaveState(save) {
@@ -94,8 +101,72 @@ export class World {
 
     enterPOI(POI) {
         const parts = POI.split("-");
-        this.currentPOI = new Town(parts[1], this.player, this.coordinates);
+        this.currentPOI = new Town(parts[1], this.player, this.coordinates); 
         this.audio.play("town");
+        console.log("needs path",this.currentPOI.needsPath);
+        if(this.currentPOI.needsPath){
+            this.generatePath(this.currentPOI);
+        } 
+    }
+
+    generatePath(town){
+        if(!town.needsPath){
+            return false;
+        }
+
+        let nearestTown = this.currentPOI.getNearestTown();
+        if(!nearestTown) { return; }
+        this.getPath(town.coordinates.x,town.coordinates.z,town.location.x,town.location.z,nearestTown);
+        this.save.saveGame(this);
+        // window.location.reload();
+    }
+
+    getPath(x,z,px,pz,nearestTown){
+        console.log("initialize:",x,z,px,pz);
+        let currentMatrix = this.chunkManager.getMainChunk(x * 10, z * 10);
+ 
+        var path;
+        const start = [px,pz];
+        let end = [];
+        console.log({x: x,z: z},nearestTown.coordinates);
+        if(inSameChunk({x: x,z: z},nearestTown.coordinates)){
+            end = [nearestTown.position.x, nearestTown.position.z];
+            path = astar(currentMatrix, start, end);
+            this.storePath(path,x,z,currentMatrix);
+        }else{
+            let dir = getAddOrSubtractToReachB({x:x*10,z: z*10},{x: nearestTown.coordinates.x*10,z:nearestTown.coordinates.z*10});
+
+            const points = moveInDir(dir,px,pz);  
+     
+            const end = points.a;
+            path = astar(currentMatrix, start, end);
+            console.log("chunk:",x,z,'end:',end[0] ,end[1]);
+            console.log(dir,points,end);
+            console.log('path inbetween',path);
+            console.log("next",x + points.b[0],z + points.b[1], points.c[0] ,points.c[1]);
+            console.log("<++++++++++++++++++++++++++++++++++++++++++++++>")
+
+            this.storePath(path,x,z,currentMatrix);
+
+            this.getPath(x + points.b[0],z + points.b[1], points.c[0] ,points.c[1],nearestTown);
+        }
+    }
+
+    storePath(path,x,z,currentMatrix){
+        let paths = JSON.parse(localStorage.getItem('paths'));
+        path.forEach(function (element) {
+            const modifiedPath = [x * 10 + element[0], z * 10 + element[1]];
+           
+            const exists = paths.some(existingPath => {  
+                return existingPath[0] === modifiedPath[0] && existingPath[1] === modifiedPath[1];
+            });
+
+            if (!exists && (currentMatrix ? currentMatrix[element[0]][element[1]] !== 0 : false)) {
+                paths.push(modifiedPath);
+            }
+        });
+
+        localStorage.setItem('paths', JSON.stringify(paths));
     }
 
     action(key) {
@@ -209,6 +280,7 @@ export class World {
         let encounter = this.player.tile.getEncounterChance();
         let rng = generateRandomNumber01();
         if (rng <= encounter) {
+            $(".save-button").click();
             this.audio.play("combat");
             anime({
                 targets: '.chunk',
@@ -218,9 +290,10 @@ export class World {
                 ],
                 delay: anime.stagger(200, { grid: [3, 3], from: 'center' }),
                 complete: function(anim) {
-                    // const save = new Save(this);
-                    // save.saveGame(this);
-                    window.location.href = "./battlefield.html";
+
+                    setTimeout(() => {
+                        window.location.href = "./battlefield.html";
+                    },2000);
                 }
             });
         }
@@ -231,7 +304,7 @@ export class World {
             this.player.gold -= parseInt(value);
             $("#gold").val(this.player.gold);
             this.item.addInInventory($('#selling-item-id').val(), 1);
-
+            this.updateGold();
             $("#merchant-modal").modal("toggle");
         } else {
             Swal.fire('Not enough Gold!!!');
@@ -243,7 +316,22 @@ export class World {
             this.player.gold += parseInt(value);
             $("#gold").val(this.player.gold);
         }
-
+        this.updateGold();
         $("#guild-modal").modal("toggle");
+    }
+
+    healAll(value){
+        this.player.gold -= parseInt(value);
+        let characters = JSON.parse(localStorage.getItem("characters"));
+        characters.forEach(character => {
+            character.stats.currentHp = character.stats.health;
+        });
+        localStorage.setItem("characters", JSON.stringify(characters));
+        this.updateGold();
+        $("#healer-modal").modal("toggle");
+    }
+    
+    updateGold(){
+        $("#gold").val(this.player.gold);
     }
 }

@@ -1,5 +1,5 @@
 import { Tile } from "../world/Tile.js";
-import { getRandomInt, readFileContents } from "../helpers/Helper.js";
+import { getRandomInt, readFileContents, distanceFormula } from "../helpers/Helper.js";
 import { readFile } from "../helpers/Helper.js";
 
 export class Town {
@@ -14,6 +14,7 @@ export class Town {
         this.from = null;
         this.to = null;
         this.initialize();
+        this.needsPath;
     }
 
 
@@ -21,14 +22,18 @@ export class Town {
         var POI_chunk = document.getElementById("POI-chunk");
         POI_chunk.innerHTML = "";
         let visited = this.checkTownVisited(this.id);
+
         if (visited) {
+            this.needsPath = false;
             this.readTownData(visited);
         } else {
+            this.needsPath = true;
             this.layout = await this.generateNewTown(parseInt(this.id));
             this.name = await this.getNewTownName(this.id);
             this.addNewVisitedTown();
         }
 
+        console.log(this.needsPath,visited);
         POI_chunk.style.height = (this.layout.length * 60) + "px";
         POI_chunk.style.width = (this.layout[0].length * 60) + "px";
         $('#POIModal').modal({ backdrop: 'static', keyboard: false });
@@ -65,11 +70,13 @@ export class Town {
                     this.layout = towns[i].layout;
                     this.name = towns[i].name;
                     this.coordinates = towns[i].coordinates;
-
+                    this.from = towns[i].from;
+                    this.to = towns[i].to;
                     return true;
                 }
             }
         }
+
         return false;
     }
 
@@ -168,7 +175,6 @@ export class Town {
 
     placePlayer() {
         //remove player from world
-        console.log(this.player);
         $(".tile").removeClass("player");
         let tile = new Tile(this.id, this.player.x, this.player.z);
         tile.addClass('player');
@@ -185,6 +191,7 @@ export class Town {
             }
         }
     }
+    
     addNewVisitedTown(){
         const existingTowns = JSON.parse(localStorage.getItem('towns'));
         const newTown = this.createTownObject();
@@ -241,15 +248,10 @@ export class Town {
 
                 }
             }
-            town.from = this.from;
-            town.to = nextMinId;
 
-            console.log("town", town);
-            console.log("Current Index:", currentIndex);
-            console.log("Previous Min Distance:", previousMinDistance);
-            console.log("Previous Min ID:", previousMinId);
-            console.log("Next Min Distance:", nextMinDistance);
-            console.log("Next Min ID:", nextMinId);
+            
+            town.from = parseInt(this.from);
+            town.to = parseInt(nextMinId);  
         });
         localStorage.setItem('towns', JSON.stringify(existingTowns));
     }
@@ -268,4 +270,23 @@ export class Town {
             "position": this.location
         }
     }
+
+    getNearestTown(){
+        let nearestTown;
+        const towns = JSON.parse(localStorage.getItem('towns'));
+        let lowestGoldCost = Infinity; 
+
+        towns.forEach(town => {
+            if(this.id !== town.id){
+                const gold_cost = Math.ceil(distanceFormula(town.coordinates, this.coordinates) / 2);
+                if (gold_cost < lowestGoldCost) {
+                    lowestGoldCost = gold_cost;
+                    nearestTown = town;
+                }
+            }
+        });
+
+        return nearestTown;
+    }
+
 }

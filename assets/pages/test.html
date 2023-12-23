@@ -9,9 +9,11 @@
     <style>
         #maze {
             display: grid;
-            grid-template-columns: repeat(11, 60px);
+            width: 600px;
+            height: 600px;
+            grid-template-columns: repeat(30, 60px);
             /* Adjust based on your maze size */
-            grid-template-rows: repeat(11, 60px);
+            grid-template-rows: repeat(30, 60px);
             /* Adjust based on your maze size */
             /* Gap between cells */
             border: 1px solid black;
@@ -20,6 +22,8 @@
         .tile{
             width: 60px;
             height: 60px;
+            border: 1px solid black;
+            text-align: center;
         }
 
         .town {
@@ -58,52 +62,227 @@
     </div>
     <script>
         $(document).ready(function() {
-            const layout = [
-            ["X","X","X","X","X","X","X","X","X","X","X"],
-            ["X","G","S","S","G","G","G","G","G","G","X"],
-            ["X","G","W","G","W","G","G","G","G","G","X"],
-            ["X","G","W","G","W","W","G","G","G","G","X"],
-            ["X","W",123121,"G","W","P","G","G","G","G","X"],
-            ["X","D","G","G","W","G","G",15821,15821,"G","X"],
-            ["X","G","W","G","W","G","G","G","G","G","X"],
-            ["X","W","W","G","G","G","G","G","G","G","X"],
-            ["X","W","W","W","W","G","G","G","G","G","X"],
-            ["X","G","W","G","W","W","W","W","W","W","W"],
-            ["X","X","X","X","X","X","X","X","X","X","X"]
-          ]
-            let type = "";
-          for(let i = 0;i<layout.length;i++){
-            for(let j = 0;j<layout[i].length;j++){
-                console.log(layout[i][j])
-                switch(layout[i][j]){
-                    case "W":
-                        type = "water";
-                        break;
+            const grid = [
+  [1, 1, 3, 2, 6, 7, 8, 9, 10, 1],
+  [2, 2, 6, 8, 1, 4, 5, 7, 9, 10],
+  [5, 1, 7, 3, 2, 6, 8, 9, 4, 10],
+  [3, 2, 6, 1, 4, 5, 7, 9, 10, 8],
+  [7, 8, 1, 4, 5, 3, 2, 6, 9, 10],
+  [1, 4, 5, 7, 9, 10, 2, 3, 6, 8],
+  [6, 9, 10, 2, 3, 8, 1, 4, 5, 7],
+  [9, 10, 8, 1, 4, 5, 7, 2, 6, 3],
+  [8, 1, 4, 5, 7, 9, 10, 3, 2, 6],
+  [10, 7, 9, 4, 5, 3, 6, 8, 1, 2],
+];
 
-                    case "G":
-                        type = "grass";
-                        break;
+class Node {
+  constructor(x, y, weight) {
+    this.x = x;
+    this.y = y;
+    this.weight = weight;
+    this.g = Infinity;
+    this.h = 0;
+    this.f = 0;
+    this.parent = null;
+  }
 
-                    case "P":
-                        type = "waypoint";
-                        break;
+  calculateHeuristic(endNode) {
+    // Calculate the Manhattan distance heuristic
+    this.h = Math.abs(this.x - endNode.x) + Math.abs(this.y - endNode.y);
+  }
+}
 
-                    case "X":
-                    case "D":
-                        type = "dirt";
-                        break; 
-                    
-                    case "S":
-                        type = "gate";
-                        break;    
-                    default:
-                        type = "manxe"
-                        break;
-                }
-                $("#maze").append(`<div class="tile ${type}"></div>`);
+function isValidCoordinate(x, y, matrix) {
+  return x >= 0 && x < matrix.length && y >= 0 && y < matrix[0].length;
+}
+
+function astar(matrix, start, end) {
+  const rows = matrix.length;
+  const cols = matrix[0].length;
+
+  const openSet = [];
+  const closedSet = [];
+
+  const startNode = new Node(start[0], start[1], matrix[start[0]][start[1]]);
+  const endNode = new Node(end[0], end[1], matrix[end[0]][end[1]]);
+
+  startNode.g = 0;
+  startNode.calculateHeuristic(endNode);
+  startNode.f = startNode.h;
+
+  openSet.push(startNode);
+
+  while (openSet.length > 0) {
+    let currentNode = openSet[0];
+    let currentIndex = 0;
+
+    // Find node with lowest f value
+    openSet.forEach((node, index) => {
+      if (node.f < currentNode.f) {
+        currentNode = node;
+        currentIndex = index;
+      }
+    });
+
+    // If reached the end node
+    if (currentNode.x === endNode.x && currentNode.y === endNode.y) {
+      const path = [];
+      let current = currentNode;
+      while (current !== null) {
+        path.push([current.x, current.y]);
+        current = current.parent;
+      }
+      return path.reverse();
+    }
+
+    // Remove current node from open set and add to closed set
+    openSet.splice(currentIndex, 1);
+    closedSet.push(currentNode);
+
+    // Generate neighbors
+    const neighbors = [
+      [currentNode.x - 1, currentNode.y],
+      [currentNode.x + 1, currentNode.y],
+      [currentNode.x, currentNode.y - 1],
+      [currentNode.x, currentNode.y + 1],
+    ];
+
+    for (let i = 0; i < neighbors.length; i++) {
+      const [x, y] = neighbors[i];
+
+      if (isValidCoordinate(x, y, matrix)) {
+        const neighbor = new Node(x, y, matrix[x][y]);
+
+        if (!closedSet.find(node => node.x === neighbor.x && node.y === neighbor.y)) {
+          const tentativeG = currentNode.g + neighbor.weight;
+
+          if (tentativeG < neighbor.g) {
+            neighbor.parent = currentNode;
+            neighbor.g = tentativeG;
+            neighbor.calculateHeuristic(endNode);
+            neighbor.f = neighbor.g + neighbor.h;
+
+            if (!openSet.find(node => node.x === neighbor.x && node.y === neighbor.y)) {
+              openSet.push(neighbor);
             }
           }
+        }
+      }
+    }
+  }
+
+  // If no path found
+  return null;
+}
+
+// Example usage
+const matrix = [
+  [1, 9, 1, 1, 2, 7, 8, 9, 10, 1],
+  [0.1, 2, 1, 9, 9, 4, 5, 7, 9, 10],
+  [1, 0.9, 1, 9, 2, 6, 8, 9, 4, 10],
+  [1, 1, 1, 9, 4, 5, 7, 9, 10, 8],
+  [9, 9, 1, 9, 5, 3, 2, 6, 9, 10],
+  [1, 4, 9, 7, 9, 10, 2, 3, 6, 8],
+  [6, 9, 10, 2, 3, 8, 1, 4, 5, 7],
+  [9, 10, 8, 1, 4, 5, 7, 2, 6, 3],
+  [8, 1, 4, 5, 7, 9, 10, 3, 2, 6],
+  [10, 7, 9, 4, 5, 3, 6, 8, 1, 2],
+];
+
+
+// Example usage:
+const pointA = { x: 5, y: 6 };
+const pointB = { x: 0, y: 0 };
+const directions = getAddOrSubtractToReachB(pointA, pointB);
+console.log(`To reach point B from point A: X - ${directions.xDirection}, Y - ${directions.yDirection}`);
+
+
+
+
+const gridOfMatrices = [
+    [matrix, matrix, matrix],
+    [matrix, matrix, matrix],
+    [matrix, matrix, matrix],
+];
+
+// Function to combine matrices based on their positions in the grid
+function combineMatricesInGrid(grid) {
+    const combinedMatrix = [];
+
+    grid.forEach(row => {
+        const rowMatrices = row.reduce((acc, matrix) => {
+            matrix.forEach((subRow, i) => {
+                if (!acc[i]) {
+                    acc[i] = [];
+                }
+                acc[i] = acc[i].concat(subRow);
+            });
+            return acc;
+        }, []);
+        combinedMatrix.push(...rowMatrices);
+    });
+
+    return combinedMatrix;
+}
+
+// Combine matrices while maintaining their positions in the grid
+const combinedMatrix = combineMatricesInGrid(gridOfMatrices);
+
+// Output the combined matrix
+console.log(combinedMatrix);
+
+
+
+const start = [0, 0];
+const end = [29, 29];
+
+const path = astar(combinedMatrix, start, end);
+var b = document.getElementById('maze');
+for (var x = 0; x < 30; x++) {
+            for (var z = 0; z < 30; z++) {
+                var div = document.createElement('div');
+                div.classList.add('tile');
+                div.id = `tile-${x}-${z}`;
+                div.innerHTML = combinedMatrix[x][z];
+                
+                b.appendChild(div);
+            }
+        }
+
+path.forEach(function(element, index) {
+  $(`#tile-${element[0]}-${element[1]}`).css({
+  'background-color': 'blue'
+    });
+});
+console.log("Path:", path);
         });
+
+        function getAddOrSubtractToReachB(pointA, pointB) {
+    const Bx = pointB.x - pointA.x;
+    const By = pointB.y - pointA.y;
+
+    let xDirection = "";
+    let yDirection = "";
+
+    if (Bx > 0) {
+        xDirection = "Add";
+    } else if (Bx < 0) {
+        xDirection = "Subtract";
+    } else {
+        xDirection = "No change";
+    }
+
+    if (By > 0) {
+        yDirection = "Add";
+    } else if (By < 0) {
+        yDirection = "Subtract";
+    } else {
+        yDirection = "No change";
+    }
+
+    return { xDirection, yDirection };
+}
+
     </script>
 
 

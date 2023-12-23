@@ -69,6 +69,7 @@ export class Commands{
         }else if(regex.gold.test(this.input.val())){
             let gold = this.input.val().split(" ");
             this.world.player.gold += parseInt(gold[1]);
+            $("#gold").val(this.world.player.gold);
         }else if(regex.exit.test(this.input.val())){
             return window.location.href = "./mainpage.html";
         }else if(regex.combat.test(this.input.val())){

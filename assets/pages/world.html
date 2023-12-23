@@ -104,7 +104,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Yes</button>
+                        <button type="button" class="btn btn-primary" id="heal-btn">Yes</button>
                     </div>
                 </div>
             </div>
@@ -217,8 +217,9 @@
                             </div>
                             <div class="profile-holder ">
                                 <div class="profile-detail d-flex" id="profile-detail-holder">
-                                    <div class="profile-img m-4"></div>
-
+                                    <div class="profile-img m-4">
+                                        <img id="character-img" src="">
+                                    </div>
                                     <div id="profile-form mt-4">
                                         <div class="input-group input-group-sm my-2">
                                             <input type="text" class="form-control character-data" id="username" readonly>
@@ -331,6 +332,19 @@
                                                             HEALTH
                                                         </div>
                                                         <div class="bonus-rank p-1 bg-white m-auto" id="health-stat">
+                                                            7.5
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="bonus-detail d-flex justify-content-between ">
+                                                        <div class="bonus-img m-auto">
+                                                            <img src="../images/health.png">
+                                                        </div>
+                                                        <div class="bonus-data m-auto ">
+                                                            HP
+                                                        </div>
+                                                        <div class="bonus-rank p-1 bg-white m-auto" id="hp-stat">
                                                             7.5
                                                         </div>
                                                     </div>
@@ -512,7 +526,15 @@
     .forest {
         background-image: url('../images/tiles/trees.png');
     }
+
+    .path {
+        background-image: url('../images/tiles/wall.png');
+    }
     
+    .bridge{
+        background-image: url('../images/tiles/bridge.png');
+    }
+
     .manxe {
         width: 60px;
         height: 60px;
@@ -579,6 +601,13 @@
     .tile.gate.player {
         z-index: 5;
         background-image: url('../sprites/player2.png');
+        background-size: 240px 60px;
+        animation: play-sprite 1.2s steps(4) infinite;
+    }
+
+    .tile.path.player {
+        z-index: 5;
+        background-image: url('../images/tiles/player-path.png');
         background-size: 240px 60px;
         animation: play-sprite 1.2s steps(4) infinite;
     }
@@ -820,5 +849,10 @@
     .icon-btn {
         width: 40px;
         height: 40px;
+    }
+
+    .character-img,#character-img{
+        width: 60px;
+        height: 60px;
     }
 </style>

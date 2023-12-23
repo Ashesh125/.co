@@ -17,7 +17,7 @@ export class Item {
         console.log('inventory local storage:',this.inventoryStorage);
         console.log('inventory:',this.inventory);
         inventory.forEach(element => {
-            let block = `<div class="inventory-info aligns-items-center justify-content-center m-1 mb-4"><img src="${element.sprite}" class="item-sprite" id="${element.id}"><div class="mt-2">${element.quantity}</div></div>`;
+            let block = `<div class="inventory-info aligns-items-center justify-content-center m-1 mb-4"><img src="${element.sprite}" class="item-sprite" id="${element.id}"><div class="mt-2" id='item-qty-${element.id}'>${element.quantity}</div></div>`;
             $(".inventory-left-holder").append(block);
         });
         
@@ -62,8 +62,10 @@ export class Item {
 
             if (quantity < existingItem.quantity) {
                 existingItem.quantity -= quantity;
+                $(`#item-qty-${id}`).text(existingItem.quantity );    
             } else if (quantity === existingItem.quantity) {
                 this.inventoryStorage.splice(itemIndex, 1);
+                $(`#item-qty-${id}`).text(0);    
             } else {
                 Swal.fire('You do not have Enough items!!!');
                 return false;
@@ -103,7 +105,6 @@ export class Item {
                 });
                 
                 localStorage.setItem("characters", JSON.stringify(updatedCharacters));
-                console.log(JSON.parse(localStorage.getItem('characters')))
                 break;
 
         }  

@@ -84,7 +84,7 @@ export class Character {
             'id': getRandomInt(1, 9999999),
             "name": first_name + " " + last_name,
             "gender": "male",
-            "sprite": "asd",
+            "sprite": type.sprite,
             "class": type.name,
             "saying": saying,
             "trait": getRandomInt(0, 2),
@@ -153,6 +153,7 @@ export class Character {
 
     assignCharacter(id, character) {
         $('#username-' + id).val(character.name);
+        $("#sprite-" + id).attr("src",`http://127.0.0.1:5502/assets/sprites/classes/${character.sprite}`);
         $("#review-" + id).text(character.saying);
         $('#attack-stat-' + id).text(character.stats.attack);
         $('#crit-stat-' + id).text(character.stats.crit);
